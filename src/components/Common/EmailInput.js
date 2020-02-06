@@ -1,11 +1,11 @@
 import React from 'react';
 
-function PasswordInput(props) {
+function EmailInput(props) {
     return (
         <div className="form-group">
             <label><strong>{props.label}</strong></label>
             <input 
-                type="password" 
+                type="email" 
                 className="form-control" 
                 id={props.id} 
                 value={props.value}
@@ -15,4 +15,4 @@ function PasswordInput(props) {
     )
 }
 
-export default PasswordInput;
+export default EmailInput;

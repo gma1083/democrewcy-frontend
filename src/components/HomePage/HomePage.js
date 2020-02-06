@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import Header from '../Common/Header'
+import PrimaryButton from '../Common/PrimaryButton';
 
 class HomePage extends Component {
     constructor(props) {
@@ -16,11 +17,18 @@ class HomePage extends Component {
                 />
                 <div className="container">
                     <h4>Welcome to Democrewcy</h4>
-                    <button 
-                        className="btn btn-primary"
-                        onClick={this.props.onClickClaimAccount}
-                    >Claim Account
-                    </button>
+                    <div className="row">
+                        <PrimaryButton
+                            label="Login"
+                            onClick={this.props.onClickLogin}
+                        />
+                    </div>
+                    <div className="row">
+                        <PrimaryButton
+                            label="Claim Account"
+                            onClick={this.props.onClickClaimAccount}
+                        />
+                    </div>
                 </div>
             </div> 
         )
