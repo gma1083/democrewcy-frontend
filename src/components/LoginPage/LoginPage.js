@@ -38,25 +38,38 @@ class LoginPage extends Component {
                     onClick={this.props.onClickHome}
                 />
                 <div className="container">
-                    <h4>Login</h4>
-                    <form>
-                        <EmailInput
-                            id="email"
-                            label="Email"
-                            value={this.state.email}
-                            onChange={this.handleChangeText}
-                        />
-                        <PasswordInput
-                            id="password"
-                            label="Password"
-                            value={this.state.password}
-                            onChange={this.handleChangeText}
-                        />
-                        <PrimaryButton
-                            label="Submit"
-                            onClick={this.handleSubmit}
-                        />
-                    </form>
+                    <h4>Welcome to Democrewcy</h4>
+                    <br />
+                    <div className="row">
+                        <div className="col-6">
+                            <h5>Login</h5>
+                            <form>
+                                <EmailInput
+                                    id="email"
+                                    label="Email"
+                                    value={this.state.email}
+                                    onChange={this.handleChangeText}
+                                />
+                                <PasswordInput
+                                    id="password"
+                                    label="Password"
+                                    value={this.state.password}
+                                    onChange={this.handleChangeText}
+                                />
+                                <PrimaryButton
+                                    label="Submit"
+                                    onClick={this.handleSubmit}
+                                />
+                            </form>
+                        </div>
+                        <div className="col-6">
+                            <h5>No Login Yet?</h5>
+                            <PrimaryButton
+                                label="Claim Account"
+                                onClick={this.props.onClickClaimAccount}
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
         )

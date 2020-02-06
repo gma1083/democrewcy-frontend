@@ -8,7 +8,8 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			currentState: 'HomePage',
+			currentState: 'LoginPage',
+			loggedIn: false,
 		};
 		this.handleClickClaimAccount = this.handleClickClaimAccount.bind(this);
 		this.handleClickHome = this.handleClickHome.bind(this);
@@ -17,7 +18,7 @@ class App extends Component {
 
 	handleClickHome() {
 		const state = Object.assign({}, this.state);
-		state.currentState = 'HomePage';
+		state.currentState = this.state.loggedIn ? 'HomePage': 'LoginPage';
 		this.setState(state);
 	}
 
@@ -53,6 +54,7 @@ class App extends Component {
 				return (
 					<LoginPage
 						onClickHome={this.handleClickHome}
+						onClickClaimAccount={this.handleClickClaimAccount}
 					/>
 				)
 			default: 

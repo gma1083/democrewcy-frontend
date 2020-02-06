@@ -10,11 +10,6 @@ class ClaimAccount extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            accountSelector : {
-                selected: null,
-                results: [],
-                value: '',
-            },
             accountId: '',
             email: '',
             password: '',
@@ -34,11 +29,12 @@ class ClaimAccount extends Component {
     handleSubmit(e) {
         e.preventDefault();
         console.log('clicked');
-        if (this.state.password.length < 7 || this.state.password !== this.state.password2) {
-            alert('wrong');
+        
+        if (this.state.password.length <= 0) {
+            alert('Please enter a password.');
         }
-        else {
-            alert('right!');
+        else if (this.state.password !== this.state.password2) {
+            alert('Your passwords do not match.');
         }
     }
 
