@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 
+import { claimAccount } from '../../backend/democrewcy';
+
 import Header from '../Common/Header'
+import RedAlert from '../Common/RedAlert';
 import PasswordInput from '../Common/PasswordInput';
 import TextInput from '../Common/TextInput';
 import EmailInput from '../Common/EmailInput';
@@ -10,31 +13,58 @@ class ClaimAccount extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            accountId: '',
-            email: '',
-            password: '',
-            password2: '',
+            user: {
+                id: '',
+                email: '',
+                password: '',
+                password2: '',
+            },
+            message: null,
         };
         this.handleChangeText = this.handleChangeText.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    setMessage(message) {
+        const state = Object.assign({}, this.state);
+        state.message = message;
+        this.setState(state);
+    }
+
     handleChangeText(e) {
         const state = Object.assign({}, this.state);
-        state[e.target.id] = e.target.value;
+        const user = Object.assign({}, this.state.user);
+        state.user = user;
+        state.user[e.target.id] = e.target.value;
 
         this.setState(state);
     }
 
-    handleSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault();
-        console.log('clicked');
+        console.log('password');
+        console.log(this.state.user.password);
+        console.log(this.state.user.password.length);
         
-        if (this.state.password.length <= 0) {
-            alert('Please enter a password.');
+        if (this.state.user.password.length <= 0) {
+            this.setMessage('Please enter a password.');
+            return;
         }
-        else if (this.state.password !== this.state.password2) {
-            alert('Your passwords do not match.');
+        else if (this.state.user.password !== this.state.user.password2) {
+            this.setMessage('Your passwords do not match.');
+            return;
+        }
+
+        const payload = Object.assign({}, this.state.user);
+        payload.className = 'User';
+        console.log(JSON.stringify(payload, null, 2));
+
+        try {
+            await claimAccount(payload);
+            this.props.onClaimAccountSuccess();
+        }
+        catch (error) {
+            this.setMessage(error.message);
         }
     }
 
@@ -46,29 +76,32 @@ class ClaimAccount extends Component {
                 />
                 <div className="container">
                     <h4>Claim Your Account</h4>
+                    <RedAlert 
+                        message={this.state.message}
+                    />
                     <form>
                         <TextInput
-                            id="accountId"
+                            id="id"
                             label="Account Key"
-                            value={this.state.accountId}
+                            value={this.state.user.id}
                             onChange={this.handleChangeText}
                         />
                         <EmailInput
                             id="email"
                             label="Email"
-                            value={this.state.email}
+                            value={this.state.user.email}
                             onChange={this.handleChangeText}
                         />
                         <PasswordInput
                             id="password"
                             label="Password"
-                            value={this.state.password}
+                            value={this.state.user.password}
                             onChange={this.handleChangeText}
                         />
                         <PasswordInput
                             id="password2"
                             label="Password Again"
-                            value={this.state.password2}
+                            value={this.state.user.password2}
                             onChange={this.handleChangeText}
                         />
                         <PrimaryButton

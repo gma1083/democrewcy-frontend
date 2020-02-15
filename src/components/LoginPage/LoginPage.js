@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 
+import { login } from '../../backend/democrewcy';
+
 import Header from '../Common/Header';
+import RedAlert from '../Common/RedAlert';
 import EmailInput from '../Common/EmailInput';
 import PasswordInput from '../Common/PasswordInput';
 import PrimaryButton from '../Common/PrimaryButton';
@@ -12,6 +15,7 @@ class LoginPage extends Component {
         this.state = {
             email: '',
             password: '',
+            message: null,
         };
 
         this.handleChangeText = this.handleChangeText.bind(this);
@@ -25,10 +29,20 @@ class LoginPage extends Component {
         this.setState(state);
     }
 
-    handleSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault();
-        console.log('clicked');
-        alert('loging in ' + this.state.email + ' with password ' + Array.from(this.state.password).reduce((acc)=> acc ? acc + '*' : '*'));
+        const response = await login(this.state.email, this.state.password);
+
+        if (response.accountId) {
+            this.props.onLogin(response.accountId);
+        }
+        else {
+            const state = Object.assign({}, this.state);
+            state.email = '';
+            state.password = '';
+            state.message = 'Invalid email or password, GO AWAY!';
+            this.setState(state);
+        }
     }
 
     render() {
@@ -39,6 +53,10 @@ class LoginPage extends Component {
                 />
                 <div className="container">
                     <h4>Welcome to Democrewcy</h4>
+                    <br />
+                        <RedAlert 
+                            message={this.state.message}
+                        />
                     <br />
                     <div className="row">
                         <div className="col-6">
