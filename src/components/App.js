@@ -4,6 +4,7 @@ import HomePage from './HomePage/HomePage';
 import ClaimAccount from './ClaimAccount/ClaimAccount';
 import LoginPage from './LoginPage/LoginPage';
 import ProfileView from './ProfileView/ProfileView';
+import CreateUser from './CreateUser/CreateUser';
 
 class App extends Component {
 	constructor(props) {
@@ -17,6 +18,7 @@ class App extends Component {
 		this.handleClickHome = this.handleClickHome.bind(this);
 		this.handleClickLogin = this.handleClickLogin.bind(this);
 		this.handleLogin = this.handleLogin.bind(this);
+		this.handleClickCreateUser = this.handleClickCreateUser.bind(this);
 	}
  
 	handleClickHome() {
@@ -43,6 +45,12 @@ class App extends Component {
 		this.setState(state);
 	}
 
+	handleClickCreateUser() {
+		const state = Object.assign({}, this.state);
+		state.currentState = 'CreateUser';
+		this.setState(state);
+	}
+
 	handleLogin(user) {
 		const state = Object.assign({}, this.state);
 		state.currentState = 'HomePage';
@@ -65,8 +73,7 @@ class App extends Component {
 				return (
 					<HomePage
 						onClickHome={this.handleClickHome}
-						onClickLogin={this.handleClickLogin}
-						onClickClaimAccount={this.handleClickClaimAccount}
+						onClickCreateUser={this.handleClickCreateUser}
 					/>
 				)
 			case 'ClaimAccount': 
@@ -87,6 +94,13 @@ class App extends Component {
 			case 'ProfileView': 
 				return (
 					<ProfileView
+						onClickHome={this.handleClickHome}
+					/>
+				)
+			case 'CreateUser':
+				return (
+					<CreateUser
+						onCreateUserSuccess={this.handleClickHome}
 						onClickHome={this.handleClickHome}
 					/>
 				)
