@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Button } from 'antd';
 import "antd/dist/antd.css";
 
 const { Header } = Layout;
@@ -10,10 +10,9 @@ export interface NavigationBarProps {
  
 const NavigationBar: React.SFC<NavigationBarProps> = () => {
   return (
-    <Header className="header">
-      <div className="logo" />
+    <Header style={{width: '100%'}}>
       <Menu
-        theme="dark"
+        theme="light"
         mode="horizontal"
         defaultSelectedKeys={['2']}
         style={{ lineHeight: '64px' }}

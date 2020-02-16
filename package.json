@@ -5,7 +5,8 @@
   "dependencies": {
   },
   "scripts": {
-    "start": "npm start --prefix client"
+    "start": "npm start --prefix client",
+    "count:client": "find client -name '*.js' | xargs wc -l"
   },
   "eslintConfig": {
     "extends": "react-app"

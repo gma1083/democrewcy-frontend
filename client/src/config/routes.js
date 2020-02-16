@@ -12,7 +12,7 @@ module.exports.private = [
     text: "Home",
     name: "Home",
     route: "/home",
-    exact: false,
+    exact: true,
     allowedRoles: ['user']
   }
 ];
