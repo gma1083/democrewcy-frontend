@@ -12,6 +12,12 @@ import {
   Checkbox, Col, Row, Radio
 } from 'antd';
 
+const { TextArea } = Input;
+
+const onChange = (e: any) => {
+  console.log(e);
+};
+
 const { Option } = Select;
 const AutoCompleteOption = AutoComplete.Option;
 
@@ -273,6 +279,28 @@ class RegistrationForm extends React.Component<RegistrationFormProps> {
             </AutoComplete>,
           )}
         </Form.Item>
+
+        <Form.Item label="clear-input">
+          {getFieldDecorator('clear-input', {
+            rules: [{ required: true, message: 'try it out' }],
+          })(
+            <Input placeholder="this one has clear" allowClear onChange={onChange} />
+          )}
+        </Form.Item>
+
+        <Form.Item label="clear-text">
+          {getFieldDecorator('clear-text', {
+            rules: [{ required: true, message: 'try it out also' }],
+          })(
+            <TextArea 
+              placeholder="textarea with clear icon" 
+              allowClear 
+              onChange={onChange} 
+              autoSize={{ minRows: 2, maxRows: 8 }}
+            />
+            )}
+        </Form.Item>
+
       </Form>
     );
   }
