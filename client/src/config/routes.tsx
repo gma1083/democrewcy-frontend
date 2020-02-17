@@ -1,4 +1,4 @@
-module.exports.public = [
+export const Public = [
   {
     text: "Landing Page",
     name: "LandingPage",
@@ -7,7 +7,14 @@ module.exports.public = [
   }
 ];
 
-module.exports.private = [
+export const Private = [
+  {
+    text: "ViewGroup",
+    name: "ViewGroup",
+    route: "/group",
+    exact: true,
+    allowedRoles: ['user']
+  },
   {
     text: "Home",
     name: "Home",

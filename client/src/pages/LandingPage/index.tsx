@@ -86,4 +86,4 @@ const LandingPage: React.SFC<LandingPageProps> = (props) => {
   );
 }
  
-export default Form.create({ name: 'normal_login' })(LandingPage);
+export default Form.create()(LandingPage);

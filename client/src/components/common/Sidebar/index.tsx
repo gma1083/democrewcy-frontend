@@ -1,14 +1,16 @@
 import React from 'react';
 import { Layout, Menu, Icon, Avatar, Button, Typography } from 'antd';
 import { NavLink } from 'react-router-dom';
+import { TaskBar } from '../index';
 import "antd/dist/antd.css";
+import { AppConsumer } from '../../../context';
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;
 
 export interface SidebarProps {
-  groups: GroupProps[],
-  users: UserProps[]
+  state: any,
+  dispatch: any
 }
 
 export interface GroupProps {
@@ -21,24 +23,29 @@ export interface UserProps {
   lastName: string
 };
 
-const Sidebar: React.SFC<SidebarProps> = (props) => {
+const SidebarPresentation: React.SFC<SidebarProps> = (props) => {
   console.log('props in sidebar')
   console.log(props);
   
   return (
     <Sider width={200} style={{ background: '#fff' }}>
-      <div style={{textAlign: 'center', paddingTop: '20px', paddingBottom: '20px'}}>
+      <div style={{textAlign: 'center', paddingTop: '20px', paddingBottom: '10px'}}>
         <NavLink key='/home' to='/home'>
           <Typography.Title level={3}>
             Democrewcy
           </Typography.Title>
         </NavLink>
       </div>
+      <TaskBar 
+        tasks={props.state.tasks} 
+        dispatchTask={(task: any) => props.dispatch({type: "SET_ACTIVE_TASK", data: { activeTask: task }})} 
+      />
       <Menu
         mode="inline"
         defaultSelectedKeys={['1']}
         defaultOpenKeys={['groups']}
         style={{ height: '100%', borderRight: 0 }}
+        inlineCollapsed={true}
       >
         <SubMenu
           key="groups"
@@ -49,7 +56,12 @@ const Sidebar: React.SFC<SidebarProps> = (props) => {
             </span>
           }
         >
-          {props.groups?.map(group => <Menu.Item key={group.name}>{group.name}</Menu.Item>)}
+          {props.state.groups?.map((group: any) => 
+            <Menu.Item key={group.name}>
+              <NavLink key='/group' to='/group'>
+                {group.name}
+              </NavLink>
+            </Menu.Item>)}
         </SubMenu>
         <SubMenu
           key="Direct Messages"
@@ -60,7 +72,7 @@ const Sidebar: React.SFC<SidebarProps> = (props) => {
             </span>
           }
         >
-          {props.users?.map(user => {
+          {props.state.users?.map((user: any) => {
             const name = `${user.firstName}.${user.lastName}`;
             return <Menu.Item key={name}>{name}</Menu.Item>
           })}
@@ -69,5 +81,13 @@ const Sidebar: React.SFC<SidebarProps> = (props) => {
     </Sider>
   );
 }
+
+const Sidebar: React.SFC<{}> = (props: any) => {
+  return (
+    <AppConsumer>
+      {(ctx: any) => <SidebarPresentation {...ctx} {...props}/>}
+    </AppConsumer>
+  )
+} 
  
 export default Sidebar;

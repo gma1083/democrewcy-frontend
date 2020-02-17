@@ -1,5 +1,5 @@
 import React, { useState} from 'react';
-import { Card, Button, PageHeader, Icon, Modal } from 'antd';
+import { Card, PageHeader, Icon, Modal } from 'antd';
 import "antd/dist/antd.css";
 import HorizontallyScrollabe from '../HorizontallyScrollable';
 
@@ -70,9 +70,9 @@ const Motion: React.SFC<Motion> = ({ title, description, proposedBy }) => {
         size="default"
         title={title}
         actions={[
-          <Button>A</Button>,
-          <Button>B</Button>,
-          <Button>C</Button>
+          <Icon type="arrow-down" />,
+          <Icon type="info-circle" />,
+          <Icon type="arrow-up" />
         ]}
       >
         <div>Description: {description}</div>
@@ -107,7 +107,7 @@ const Motions: React.SFC<MotionsProps> = ({ motions }) => {
         subTitle={<Icon type="plus-circle" onClick={() => toggleModal()}/>} 
         />
       <HorizontallyScrollabe>
-        {motions?.map(motion => <Motion {...motion}/>)}
+        {motions?.map(motion => <Motion key={motion.title} {...motion}/>)}
       </HorizontallyScrollabe>
     </React.Fragment>
   );

@@ -1,24 +1,21 @@
 import React, { useReducer } from 'react'
-import { Event, Member, Motion, Group, User } from './types';
-import { eventData } from './components/Events';
-import { memberData } from './components/Members';
-import { motionData } from './components/Motions';
-import { groupData, userData } from './types';
+import {  Group, User, Task } from './types';
+import { groupData, userData, taskData } from './types';
 
 export interface Store {
-  events: Event[],
-  members: Member[],
-  motions: Motion[],
   groups: Group[],
-  users: User[]
+  users: User[],
+  activeGroup?: Group,
+  tasks: Task[],
+  activeTask?: Task,
+  runningTask: boolean
 };
 
 const getDefaultStore = (): Store => ({
-  events: eventData,
-  members: memberData,
-  motions: motionData,
   groups: groupData,
-  users: userData
+  users: userData,
+  tasks: taskData,
+  runningTask: false
 });
 
 const reducer = (state: any, action: any) => {
@@ -31,6 +28,12 @@ const reducer = (state: any, action: any) => {
       return { ...state, members: action.data.members };
     case "SET_MOTIONS":
       return { ...state, motions: action.data.motions };
+    case "SET_ACTIVE_GROUP":
+      return { ...state, activeGroup: action.data.activeGroup };
+    case "SET_ACTIVE_TASK":
+      console.log('setting active task')
+      console.log(action.data.activeTask)
+      return { ...state, activeTask: action.data.activeTask, runningTask: true };
   }
 };
 

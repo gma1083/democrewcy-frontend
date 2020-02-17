@@ -97,7 +97,7 @@ const Members: React.SFC<MembersProps> = ({ members }) => {
     <React.Fragment>
       <PageHeader title='Members' />
       <HorizontallyScrollable>
-        {members?.map(member => <Member {...member}/>)}
+        {members?.map(member => <Member key={member.name} {...member}/>)}
       </HorizontallyScrollable>
     </React.Fragment>
   );
