@@ -7,7 +7,7 @@ export interface Store {
   users: User[],
   activeGroup?: Group,
   tasks: Task[],
-  activeTask?: Task,
+  activeTask?: Task | null,
   runningTask: boolean
 };
 
@@ -15,7 +15,8 @@ const getDefaultStore = (): Store => ({
   groups: groupData,
   users: userData,
   tasks: taskData,
-  runningTask: false
+  runningTask: false,
+  activeTask: null
 });
 
 const reducer = (state: any, action: any) => {

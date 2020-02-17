@@ -26,7 +26,25 @@ export interface UserProps {
 const SidebarPresentation: React.SFC<SidebarProps> = (props) => {
   console.log('props in sidebar')
   console.log(props);
-  
+
+  const dispatchViewGroupTask = (group: any) => {
+    props.dispatch({
+      type: "SET_ACTIVE_TASK", 
+      data: { 
+        activeTask: {
+          key: "view-group",
+          title: 'View a Group',
+          component: 'ViewGroup'
+        }
+      } 
+    });
+    props.dispatch({
+      type: 'SET_ACTIVE_GROUP',
+      data: {
+        activeGroup: group
+      }
+    })
+  }
   return (
     <Sider width={200} style={{ background: '#fff' }}>
       <div style={{textAlign: 'center', paddingTop: '20px', paddingBottom: '10px'}}>
@@ -47,6 +65,7 @@ const SidebarPresentation: React.SFC<SidebarProps> = (props) => {
         style={{ height: '100%', borderRight: 0 }}
         inlineCollapsed={true}
       >
+
         <SubMenu
           key="groups"
           title={
@@ -57,12 +76,14 @@ const SidebarPresentation: React.SFC<SidebarProps> = (props) => {
           }
         >
           {props.state.groups?.map((group: any) => 
-            <Menu.Item key={group.name}>
-              <NavLink key='/group' to='/group'>
-                {group.name}
-              </NavLink>
+            <Menu.Item 
+              key={group.name} 
+              onClick={() => dispatchViewGroupTask(group)}
+            >
+              {group.name}
             </Menu.Item>)}
         </SubMenu>
+
         <SubMenu
           key="Direct Messages"
           title={
@@ -77,6 +98,7 @@ const SidebarPresentation: React.SFC<SidebarProps> = (props) => {
             return <Menu.Item key={name}>{name}</Menu.Item>
           })}
         </SubMenu>
+
       </Menu>
     </Sider>
   );

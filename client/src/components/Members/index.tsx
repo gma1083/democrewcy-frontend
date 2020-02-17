@@ -79,6 +79,7 @@ export const Member: React.SFC<Member> = ({ name, position }) => {
         display: "flex", 
         flexDirection: "column", 
         padding: '10px',
+        height: 'fit-content'
       }}
     >
       <Card title={name}>

@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Layout, PageHeader } from 'antd';
+import React from 'react';
+import { Layout, PageHeader, Icon, Menu } from 'antd';
 import { Sidebar } from '../../components/common';
 import "antd/dist/antd.css";
 import { AppConsumer } from '../../context';
 import * as Tasks from '../../components/Tasks';
 
-const { Content } = Layout;
+const { Content, Header } = Layout;
 
 export interface HomeProps {
 
@@ -25,12 +25,14 @@ const HomePresentation: React.SFC<HomePresentationProps> = ({ state }) => {
   
   const Presentation = () => {
     let View: any = state.runningTask ? (Tasks as any)[state.activeTask.component] : HomeView;
+    
     return (
-      <Layout style={{ padding: '0 12px 12px' }}>
+      <Layout style={{ paddingTop: '12px', paddingLeft: '12px', overflow: 'hidden' }}>
         <Content  
           style={{
             background: '#fff',
-            minHeight: '100vh',
+            overflow: 'scroll',
+            height: '100vh',
           }}
         >
           <View />
@@ -41,10 +43,8 @@ const HomePresentation: React.SFC<HomePresentationProps> = ({ state }) => {
 
   return (
     <Layout>
-      <Layout>
-        <Sidebar />
-        <Presentation />
-      </Layout>
+      <Sidebar />
+      <Presentation />
     </Layout>
   );
 }

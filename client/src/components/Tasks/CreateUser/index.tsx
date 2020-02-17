@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
 import Task from '../../common/Task';
 
 interface CreateUserProps {
@@ -6,12 +6,13 @@ interface CreateUserProps {
  
  
 const CreateUser: React.SFC<CreateUserProps> = (props) => {
-  console.log('props in members')
+  console.log('props in create user')
   console.log(props)
 
+  const submit = (event: FormEvent<HTMLFormElement>) => alert('user created!');
 
   return (
-    <Task title='Create a User'>
+    <Task title='Create a User' onSubmit={submit} type='create'>
     </Task>
   );
 }

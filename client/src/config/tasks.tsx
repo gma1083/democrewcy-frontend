@@ -27,4 +27,9 @@ export default [{
   key: "view-a-profile",
   title: 'View a Profile',
   component: 'ViewProfile'
+},
+{
+  key: "view-group",
+  title: 'View a Group',
+  component: 'ViewGroup'
 }];

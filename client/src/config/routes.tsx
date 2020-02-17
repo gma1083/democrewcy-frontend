@@ -9,13 +9,6 @@ export const Public = [
 
 export const Private = [
   {
-    text: "ViewGroup",
-    name: "ViewGroup",
-    route: "/group",
-    exact: true,
-    allowedRoles: ['user']
-  },
-  {
     text: "Home",
     name: "Home",
     route: "/home",

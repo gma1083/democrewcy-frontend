@@ -66,9 +66,9 @@ const Event: React.SFC<Event> = ({ name, description, startTime, endTime }) => {
         bordered
         title={name}
         actions={[
-          <Icon type="arrow-down" />,
+          <Icon type="dislike" />,
           <Icon type="info-circle" />,
-          <Icon type="arrow-up" />
+          <Icon type="like" />
         ]}
       >
         <div>{description}</div>

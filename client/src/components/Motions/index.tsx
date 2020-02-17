@@ -70,9 +70,9 @@ const Motion: React.SFC<Motion> = ({ title, description, proposedBy }) => {
         size="default"
         title={title}
         actions={[
-          <Icon type="arrow-down" />,
+          <Icon type="dislike" />,
           <Icon type="info-circle" />,
-          <Icon type="arrow-up" />
+          <Icon type="like" />
         ]}
       >
         <div>Description: {description}</div>

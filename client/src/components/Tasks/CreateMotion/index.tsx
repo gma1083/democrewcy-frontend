@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
 import Task from '../../common/Task';
 
 interface CreateMotionProps {
@@ -6,12 +6,13 @@ interface CreateMotionProps {
  
  
 const CreateMotion: React.SFC<CreateMotionProps> = (props) => {
-  console.log('props in members')
+  console.log('props in motions')
   console.log(props)
 
+  const submit = (event: FormEvent<HTMLFormElement>) => alert('motion created!');
 
   return (
-    <Task title='Create a Motion'>
+    <Task title='Create a Motion' onSubmit={submit} type='create'>
     </Task>
   );
 }
