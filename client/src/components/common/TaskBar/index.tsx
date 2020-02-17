@@ -3,9 +3,8 @@ import './index.css';
 import { Icon, Input, AutoComplete } from 'antd';
 import { NavLink } from 'react-router-dom';
 import tasks from '../../../config/tasks';
-import * as Tasks from '../../Tasks';
-import { AppConsumer } from '../../../context';
 import { SelectValue } from 'antd/lib/select';
+import { Task } from '../../../config/types';
 
 const { Option, OptGroup } = AutoComplete;
 
@@ -15,11 +14,6 @@ const dataSource = [
     children: tasks
   }
 ];
-
-const onChange = (opt: SelectValue) => {
-  console.log(opt)
-  //return (Tasks as any)[opt];
-};
 
 const renderTitle = (title: string) => <span>{title}</span>;
 const options = dataSource
@@ -41,8 +35,8 @@ const options = dataSource
   ]);
 
 interface TaskBarProps {
-  tasks: any,
-  dispatchTask: any
+  tasks: Task[],
+  dispatchTask: Function
 };
 
 const TaskBar: React.SFC<TaskBarProps> = ({ tasks, dispatchTask }) => {
@@ -59,7 +53,7 @@ const TaskBar: React.SFC<TaskBarProps> = ({ tasks, dispatchTask }) => {
         dataSource={options}
         placeholder="Take Action"
         optionLabelProp="value"
-        onSelect={(opt: SelectValue) => dispatchTask(tasks.find((task: any) => task.title === opt))}
+        onSelect={(opt: SelectValue) => dispatchTask(tasks.find((task: Task) => task.title === opt))}
       >
         <Input suffix={<Icon type="search" className="certain-category-icon" />} />
       </AutoComplete>

@@ -9,7 +9,7 @@ const CreateUser: React.SFC<CreateUserProps> = (props) => {
   console.log('props in create user')
   console.log(props)
 
-  const submit = (event: FormEvent<HTMLFormElement>) => alert('user created!');
+  const submit = (event: FormEvent) => alert('user created!');
 
   return (
     <Task title='Create a User' onSubmit={submit} type='create'>

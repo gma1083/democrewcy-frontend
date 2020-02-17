@@ -1,16 +1,18 @@
 import React from 'react';
-import { Layout, Menu, Icon, Avatar, Button, Typography } from 'antd';
+import { Layout, Menu, Icon, Typography } from 'antd';
 import { NavLink } from 'react-router-dom';
 import { TaskBar } from '../index';
 import "antd/dist/antd.css";
 import { AppConsumer } from '../../../context';
+import { setActiveGroup, setActiveTask } from '../../../context/actions';
+import { Context, Group, Task, User } from '../../../config/types';
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;
 
 export interface SidebarProps {
-  state: any,
-  dispatch: any
+  state: Context,
+  dispatch: Function
 }
 
 export interface GroupProps {
@@ -27,24 +29,15 @@ const SidebarPresentation: React.SFC<SidebarProps> = (props) => {
   console.log('props in sidebar')
   console.log(props);
 
-  const dispatchViewGroupTask = (group: any) => {
-    props.dispatch({
-      type: "SET_ACTIVE_TASK", 
-      data: { 
-        activeTask: {
-          key: "view-group",
-          title: 'View a Group',
-          component: 'ViewGroup'
-        }
-      } 
-    });
-    props.dispatch({
-      type: 'SET_ACTIVE_GROUP',
-      data: {
-        activeGroup: group
-      }
-    })
-  }
+  const dispatchViewGroupTask = (group: Group) => {
+    props.dispatch(setActiveTask({
+      key: "view-group",
+      title: 'View a Group',
+      component: 'ViewGroup'
+    }));
+    props.dispatch(setActiveGroup(group));
+  };
+  
   return (
     <Sider width={200} style={{ background: '#fff' }}>
       <div style={{textAlign: 'center', paddingTop: '20px', paddingBottom: '10px'}}>
@@ -56,18 +49,16 @@ const SidebarPresentation: React.SFC<SidebarProps> = (props) => {
       </div>
       <TaskBar 
         tasks={props.state.tasks} 
-        dispatchTask={(task: any) => props.dispatch({type: "SET_ACTIVE_TASK", data: { activeTask: task }})} 
+        dispatchTask={(task: Task) => props.dispatch(setActiveTask(task))} 
       />
       <Menu
         mode="inline"
-        defaultSelectedKeys={['1']}
-        defaultOpenKeys={['groups']}
+        defaultOpenKeys={['Groups', 'Direct Messages']}
         style={{ height: '100%', borderRight: 0 }}
-        inlineCollapsed={true}
       >
 
         <SubMenu
-          key="groups"
+          key="Groups"
           title={
             <span>
               <Icon type="user" />
@@ -75,7 +66,7 @@ const SidebarPresentation: React.SFC<SidebarProps> = (props) => {
             </span>
           }
         >
-          {props.state.groups?.map((group: any) => 
+          {props.state.groups?.map((group: Group) => 
             <Menu.Item 
               key={group.name} 
               onClick={() => dispatchViewGroupTask(group)}
@@ -93,7 +84,7 @@ const SidebarPresentation: React.SFC<SidebarProps> = (props) => {
             </span>
           }
         >
-          {props.state.users?.map((user: any) => {
+          {props.state.users?.map((user: User) => {
             const name = `${user.firstName}.${user.lastName}`;
             return <Menu.Item key={name}>{name}</Menu.Item>
           })}

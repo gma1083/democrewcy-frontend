@@ -9,7 +9,7 @@ export interface TaskProps {
   title: string,
   subTitle?: string,
   children: any,
-  onSubmit: any,
+  onSubmit: Function,
   type: TaskType
 };
  
@@ -48,7 +48,9 @@ const Task: React.SFC<TaskProps> = ({ title, subTitle = '', children, onSubmit, 
           }}
         >
           <PageHeader title={title} subTitle={subTitle} />
-          {children}
+          <div style={{padding: '10px'}}>
+            {children}
+          </div>
         </Content>
         <Actions />
       </Layout>

@@ -2,60 +2,13 @@ import React, { useState} from 'react';
 import { Card, PageHeader, Icon, Modal } from 'antd';
 import "antd/dist/antd.css";
 import HorizontallyScrollabe from '../HorizontallyScrollable';
-
-interface Position {
-  title: string,
-  description: string
-};
-
-export interface Motion {
-  title: string,
-  description: string,
-  proposedBy: Position
-};
-
-export const motionData: Motion[] = [{
-  title: 'do the thing',
-  description: 'you know wut',
-  proposedBy: {
-    title: 'President',
-    description: 'yeah boi'
-  }
-}, {
-  title: 'not do the thing',
-  description: 'not happenin',
-  proposedBy: {
-    title: 'Vice President',
-    description: 'yeah dawg'
-  }
-}, {
-  title: 'maybe do it',
-  description: 'possible',
-  proposedBy: {
-    title: 'Secretary',
-    description: 'not sure'
-  }
-}, {
-  title: 'most likely do it',
-  description: 'likely',
-  proposedBy: {
-    title: 'Temporeum Dude',
-    description: 'tempo'
-  }
-}, {
-  title: 'Poker',
-  description: 'win big',
-  proposedBy: {
-    title: 'President',
-    description: 'ya boi'
-  }
-}];
+import { Motion } from '../../config/types';
 
 export interface MotionsProps {
   motions: Motion[]
 };
  
-const Motion: React.SFC<Motion> = ({ title, description, proposedBy }) => {
+const MotionPresentation: React.SFC<Motion> = ({ title, description, proposedBy }) => {
   return (
     <div
       style={{
@@ -107,7 +60,7 @@ const Motions: React.SFC<MotionsProps> = ({ motions }) => {
         subTitle={<Icon type="plus-circle" onClick={() => toggleModal()}/>} 
         />
       <HorizontallyScrollabe>
-        {motions?.map(motion => <Motion key={motion.title} {...motion}/>)}
+        {motions?.map(motion => <MotionPresentation key={motion.title} {...motion}/>)}
       </HorizontallyScrollabe>
     </React.Fragment>
   );

@@ -9,7 +9,7 @@ const CreateMotion: React.SFC<CreateMotionProps> = (props) => {
   console.log('props in motions')
   console.log(props)
 
-  const submit = (event: FormEvent<HTMLFormElement>) => alert('motion created!');
+  const submit = (event: FormEvent) => alert('motion created!');
 
   return (
     <Task title='Create a Motion' onSubmit={submit} type='create'>

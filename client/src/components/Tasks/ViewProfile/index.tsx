@@ -9,7 +9,7 @@ const ViewProfile: React.SFC<ViewProfileProps> = (props) => {
   console.log('props in members')
   console.log(props)
 
-  const submit = (event: FormEvent<HTMLFormElement>) => alert('poop!');
+  const submit = (event: FormEvent) => alert('poop!');
 
   return (
     <Task title='View Profile' onSubmit={submit} type='view'>

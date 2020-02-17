@@ -1,58 +1,15 @@
 import React, { useState } from 'react';
 import { Card, PageHeader, Icon, Modal } from 'antd';
 import HorizontallyScrollabe from '../HorizontallyScrollable';
-
+import { Event } from '../../config/types';
 import "antd/dist/antd.css";
 
-export interface Event {
-  name: string, 
-  description: string, 
-  startTime: string, 
-  endTime: string
-};
 
 interface EventsProps {
   events: Event[]
 };
 
-export const eventData: Event[] = [{
-  name: 'party time', 
-  description: 'get crunk', 
-  startTime: new Date().toString(), 
-  endTime: new Date().toString()
-}, {
-  name: 'chill time', 
-  description: 'get chill', 
-  startTime: new Date().toString(), 
-  endTime: new Date().toString()
-}, {
-  name: 'bday time', 
-  description: 'bday party time', 
-  startTime: new Date().toString(), 
-  endTime: new Date().toString()
-}, {
-  name: 'movie', 
-  description: 'watch it', 
-  startTime: new Date().toString(), 
-  endTime: new Date().toString()
-}, {
-  name: 'vegas', 
-  description: 'win big', 
-  startTime: new Date().toString(), 
-  endTime: new Date().toString()
-}, {
-  name: 'behamas', 
-  description: 'git tan', 
-  startTime: new Date().toString(), 
-  endTime: new Date().toString()
-}, {
-  name: 'antarctica', 
-  description: 'git cold', 
-  startTime: new Date().toString(), 
-  endTime: new Date().toString()
-}];
-
-const Event: React.SFC<Event> = ({ name, description, startTime, endTime }) => {
+const EventPresentation: React.SFC<Event> = ({ name, description, startTime, endTime }) => {
   return ( 
     <div
       style={{
@@ -103,7 +60,7 @@ const Events: React.SFC<EventsProps> = ({ events }) => {
         subTitle={<Icon type="plus-circle" onClick={() => toggleModal()}/>}
       />
       <HorizontallyScrollabe>
-        {events?.map(event => <Event key={event.name} {...event} />)}
+        {events?.map(event => <EventPresentation key={event.name} {...event} />)}
       </HorizontallyScrollabe>
     </React.Fragment>
   );

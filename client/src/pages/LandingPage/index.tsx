@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, FormEvent } from "react";
 import "antd/dist/antd.css";
 import { Form, Icon, Input, Button, Layout, Card, Typography } from "antd";
-import { NavLink, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
+import axios from "../../config/axios";
 
 export interface LandingPageProps {
   form: any,
@@ -12,14 +13,17 @@ export interface LandingPageProps {
 const LandingPage: React.SFC<LandingPageProps> = (props) => {
   const [loggedIn, setLoggedIn] = useState(false);
 
-  const handleSubmit = (e : any) => {
+  const handleSubmit = (e : FormEvent) => {
     e.preventDefault();
-    // props.form.validateFields((err : any, values : any) => {
-    //   if (!err) {
-    //     props.login(values.username, values.password);
-    //   }
-    // });
-    setLoggedIn(true)
+    props.form.validateFields(async (err : any, values : any) => {
+      if (!err) {
+        // const { username, password } = values;
+        // const payload = { username, password }
+        // const result = await axios.post('auth/login', payload);
+        // console.dir(result);
+        setLoggedIn(true)
+      }
+    });
   };
 
   const { getFieldDecorator } = props.form;
