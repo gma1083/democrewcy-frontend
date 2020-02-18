@@ -10,6 +10,11 @@ const { Content } = Layout;
 interface ViewGroupProps {
 };
  
+const submitAlert = (data: any) => alert('submit');
+const continueAlert = (data: any) => alert('continue');
+const backAlert = (data: any) => alert('back');
+const cancelAlert = (data: any) => alert('cancel');
+
 const ViewGroup: React.SFC<ViewGroupProps> = (props: any) => {
   console.log('props in viewgroup')
   console.log(props)
@@ -30,7 +35,15 @@ const ViewGroup: React.SFC<ViewGroupProps> = (props: any) => {
   return (
     <AppConsumer>
       {(ctx: any) =>
-        <Task title='View a Group' subTitle={ctx.state.activeGroup.name} onSubmit={submit} type='view'>
+        <Task 
+          title='View a Group' 
+          subTitle={ctx.state.activeGroup.name} 
+          type='view'
+          submitAction={submitAlert}
+          continueAction={continueAlert}
+          goBackAction={backAlert}
+          cancelAction={cancelAlert}
+        >
           <View {...ctx}/>
         </Task>}
     </AppConsumer>

@@ -9,19 +9,26 @@ export interface TaskProps {
   title: string,
   subTitle?: string,
   children: any,
-  onSubmit: Function,
   type: TaskType
-  disallowActions?: boolean
+  disallowActions?: boolean,
+  continueAction: Function,
+  goBackAction: Function,
+  submitAction: Function,
+  cancelAction: Function,
 };
  
-const Task: React.SFC<TaskProps> = ({ title, subTitle = '', children, onSubmit, type, disallowActions }) => {
+const Task: React.SFC<TaskProps> = ({ 
+  title, 
+  subTitle = '', 
+  children, 
+  continueAction, 
+  goBackAction, 
+  submitAction, 
+  cancelAction,
+  type, 
+  disallowActions 
+}) => {
   const Actions = () => 
-    type === 'view' ?
-      <Footer>
-        <Button size='large' type='primary' shape='round' onClick={() => onSubmit()}>
-          Done
-        </Button>
-      </Footer> :
       type === 'edit' || type === 'create' ?
         <Footer>
           <Button 
@@ -29,11 +36,34 @@ const Task: React.SFC<TaskProps> = ({ title, subTitle = '', children, onSubmit, 
             type='primary' 
             shape='round' 
             style={{marginRight: '10px'}}
-            onClick={() => onSubmit()}
+            onClick={() => submitAction()}
           >
             Submit
           </Button>
-          <Button size='large' type='ghost' shape='round'>
+          <Button 
+            size='large' 
+            type='primary' 
+            shape='round' 
+            style={{marginRight: '10px'}}
+            onClick={() => continueAction()}
+          >
+            Continue
+          </Button>
+          <Button 
+            size='large' 
+            type='ghost' 
+            shape='round'
+            style={{marginRight: '10px'}}
+            onClick={() => goBackAction()}
+          >
+            Go Back
+          </Button>
+          <Button 
+            size='large' 
+            type='ghost' 
+            shape='round'
+            onClick={() => cancelAction()}
+          >
             Cancel
           </Button>
         </Footer> :
