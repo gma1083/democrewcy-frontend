@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { TaskBar } from '../index';
 import "antd/dist/antd.css";
 import { AppConsumer } from '../../../context';
-import { setActiveGroup, setActiveTask } from '../../../context/actions';
+import { setActiveGroup, setActiveTask, setRunningTask } from '../../../context/actions';
 import { Context, Group, Task, User } from '../../../config/types';
 
 const { SubMenu } = Menu;
@@ -37,11 +37,15 @@ const SidebarPresentation: React.SFC<SidebarProps> = (props) => {
     }));
     props.dispatch(setActiveGroup(group));
   };
+
+  const dispatchCancelTask = () => {
+    props.dispatch(setRunningTask(false));
+  }
   
   return (
     <Sider width={200} style={{ background: '#fff' }}>
       <div style={{textAlign: 'center', paddingTop: '20px', paddingBottom: '10px'}}>
-        <NavLink key='/home' to='/home'>
+        <NavLink key='/home' to='/home' onClick={() => dispatchCancelTask()}>
           <Typography.Title level={3}>
             Democrewcy
           </Typography.Title>

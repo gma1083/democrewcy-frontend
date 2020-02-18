@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, forwardRef } from 'react';
 import { Steps, message } from 'antd';
 import Task from '../Task';
 
@@ -13,6 +13,7 @@ const submitAlert = () => message.success('Processing complete!');
 const cancelAlert = (data: any) => alert('cancel');
 
 const SequenceTask: React.SFC<SequenceTaskProps> = (props) => {
+  const { tasks } = props;
   const [current, setCurrent] = useState(0);
   const next = () => {
     if (current < props.tasks.length - 1) {
@@ -23,10 +24,11 @@ const SequenceTask: React.SFC<SequenceTaskProps> = (props) => {
     if (current > 0) {
       setCurrent(current - 1);
     }
-  }
+  };
+
+  const CurrentTask = tasks[current].component;
 
   return (  
-    // TODO: leftButtonAction rightButtonAction doneAction cancelAction
     <Task 
       title='Sequence Task' 
       submitAction={submitAlert} 
@@ -46,7 +48,7 @@ const SequenceTask: React.SFC<SequenceTaskProps> = (props) => {
       </div>
 
       <div className="steps-content">
-        {props.tasks[current].component}
+        <CurrentTask />
       </div>
 
     </Task>
