@@ -29,6 +29,11 @@ export const taskData: Task[] = [{
   key: "view-a-profile",
   title: 'View a Profile',
   component: 'ViewProfile'
+},
+{
+  key: "st-example",
+  title: 'Sequence Task Example',
+  component: 'SequenceTaskExample'
 }];
 
 export const userData: User[] = [{

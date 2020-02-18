@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Card, PageHeader, Icon, Modal } from 'antd';
-import HorizontallyScrollabe from '../HorizontallyScrollable';
-import { Event } from '../../config/types';
+import HorizontallyScrollabe from '../../../common/HorizontallyScrollable';
+import { Event } from '../../../../config/types';
+import { EmptyCard } from '../../../common';
 import "antd/dist/antd.css";
 
 
@@ -36,6 +37,8 @@ const EventPresentation: React.SFC<Event> = ({ name, description, startTime, end
   )
 };
 
+
+
 const Events: React.SFC<EventsProps> = ({ events }) => {
   console.log('props in events')
   console.log(events)
@@ -60,7 +63,8 @@ const Events: React.SFC<EventsProps> = ({ events }) => {
         subTitle={<Icon type="plus-circle" onClick={() => toggleModal()}/>}
       />
       <HorizontallyScrollabe>
-        {events?.map(event => <EventPresentation key={event.name} {...event} />)}
+        {/* {events?.map(event => <EventPresentation key={event.name} {...event} />)} */}
+        {Array(5).fill(0).map(item => <EmptyCard  />)}
       </HorizontallyScrollabe>
     </React.Fragment>
   );

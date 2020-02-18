@@ -1,4 +1,4 @@
-import React, { FormEvent } from 'react';
+import React from 'react';
 import Task from '../../common/Task';
 import Form from './form';
 
@@ -10,7 +10,7 @@ const CreateEvent: React.SFC<CreateEventProps> = (props) => {
   console.log('props in create event')
   console.log(props)
 
-  const submit = (data: any) => alert(data);
+  const submit = (data: any) => alert('yo');
 
   return (
     <Task title={'Create an Event'} onSubmit={submit} type='create'>

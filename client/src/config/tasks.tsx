@@ -32,4 +32,9 @@ export default [{
   key: "view-group",
   title: 'View a Group',
   component: 'ViewGroup'
+},
+{
+  key: "st-example",
+  title: 'Sequence Task Example',
+  component: 'SequenceTaskExample'
 }];

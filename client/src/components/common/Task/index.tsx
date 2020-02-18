@@ -11,9 +11,10 @@ export interface TaskProps {
   children: any,
   onSubmit: Function,
   type: TaskType
+  disallowActions?: boolean
 };
  
-const Task: React.SFC<TaskProps> = ({ title, subTitle = '', children, onSubmit, type }) => {
+const Task: React.SFC<TaskProps> = ({ title, subTitle = '', children, onSubmit, type, disallowActions }) => {
   const Actions = () => 
     type === 'view' ?
       <Footer>
@@ -52,7 +53,7 @@ const Task: React.SFC<TaskProps> = ({ title, subTitle = '', children, onSubmit, 
             {children}
           </div>
         </Content>
-        <Actions />
+        {! disallowActions && <Actions />}
       </Layout>
   );
 }
