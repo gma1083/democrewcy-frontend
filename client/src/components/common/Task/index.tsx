@@ -26,7 +26,7 @@ const Task: React.SFC<TaskProps> = ({
   submitAction, 
   cancelAction,
   type, 
-  disallowActions 
+  disallowActions
 }) => {
   const Actions = () => 
       type === 'edit' || type === 'create' ?
@@ -70,7 +70,7 @@ const Task: React.SFC<TaskProps> = ({
         <Footer />
 
   return ( 
-    <Layout style={{ minHeight: '100%' }}>
+      <Layout>
         <Content  
           style={{
             background: '#fff',

@@ -1,9 +1,8 @@
-import React, { useState, useEffect, forwardRef } from 'react';
-import { Steps, message } from 'antd';
-import Task from '../Task';
+import React, { useState } from 'react';
+import { Steps, message, PageHeader, Layout} from 'antd';
 
 const { Step } = Steps;
-
+const { Content } = Layout
 export interface SequenceTaskProps {
   tasks: any
 }
@@ -27,31 +26,23 @@ const SequenceTask: React.SFC<SequenceTaskProps> = (props) => {
   };
 
   const CurrentTask = tasks[current].component;
+  const Progress = (
+    <div style={{paddingLeft: '10px', paddingRight: '10px'}}>
+      <Steps direction='horizontal' current={current}>
+        {props.tasks.map((task: any) => (
+          <Step key={task.name} title={task.name} />
+        ))}
+      </Steps>
+    </div>
+  );
 
   return (  
-    <Task 
-      title='Sequence Task' 
-      submitAction={submitAlert} 
-      continueAction={() => next()}
-      goBackAction={() => prev()}
-      cancelAction={cancelAlert}
-      type='create' 
-      disallowActions={false}
-    >
-
-      <div style={{paddingLeft: '10px', paddingRight: '10px'}}>
-        <Steps direction='horizontal' current={current}>
-          {props.tasks.map((task: any) => (
-            <Step key={task.name} title={task.name} />
-          ))}
-        </Steps>
-      </div>
-
-      <div className="steps-content">
-        <CurrentTask />
-      </div>
-
-    </Task>
+    <CurrentTask 
+      next={next}
+      prev={prev}
+      cancel={cancelAlert}
+      submit={submitAlert}
+    />
   );
 }
 

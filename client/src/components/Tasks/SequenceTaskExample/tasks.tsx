@@ -2,86 +2,79 @@ import React from 'react';
 import Task from '../../common/Task';
 import Form from '../CreateEvent/form';
 
-const submitAlert = (data: any) => alert('submit');
-const continueAlert = (data: any) => alert('back');
-const backAlert = (data: any) => alert('back');
-const cancelAlert = (data: any) => alert('cancel');
-
 export interface Props {
-  
+  next: Function,
+  prev: Function,
+  cancel: Function,
+  submit: Function
 }
  
-const TaskA: React.SFC<Props> = () => {
+const TaskA: React.SFC<Props> = ({ next, prev, cancel, submit }) => {
   return ( 
     <Task 
       title='Step 1' 
-      submitAction={submitAlert} 
-      continueAction={continueAlert}
-      goBackAction={backAlert}
-      cancelAction={cancelAlert}
+      submitAction={() => submit()} 
+      continueAction={() => next()}
+      goBackAction={() => prev()}
+      cancelAction={() => cancel()}
       type='create' 
-      disallowActions={true}
     >
       <Form />
     </Task> 
   );
 }
  
-const TaskB: React.SFC<Props> = () => {
+const TaskB: React.SFC<Props> = ({ next, prev, cancel, submit }) => {
   return ( 
     <Task 
       title='Step 2' 
-      submitAction={submitAlert} 
-      continueAction={continueAlert}
-      goBackAction={backAlert}
-      cancelAction={cancelAlert}
+      submitAction={() => submit()} 
+      continueAction={() => next()}
+      goBackAction={() => prev()}
+      cancelAction={() => cancel()}
       type='create' 
-      disallowActions={true}
     >
     </Task> 
   );
 }
 
-const TaskC: React.SFC<Props> = () => {
+const TaskC: React.SFC<Props> = ({ next, prev, cancel, submit }) => {
   return ( 
     <Task 
       title='Step 3' 
-      submitAction={submitAlert} 
-      continueAction={continueAlert}
-      goBackAction={backAlert}
-      cancelAction={cancelAlert}
+      submitAction={() => submit()} 
+      continueAction={() => next()}
+      goBackAction={() => prev()}
+      cancelAction={() => cancel()}
       type='create' 
-      disallowActions={true}
     >
     </Task> 
   );
 }
 
-const TaskD: React.SFC<Props> = () => {
+const TaskD: React.SFC<Props> = ({ next, prev, cancel, submit }) => {
   return ( 
     <Task 
       title='Step 4' 
-      submitAction={submitAlert} 
-      continueAction={continueAlert}
-      goBackAction={backAlert}
-      cancelAction={cancelAlert}
+      submitAction={() => submit()} 
+      continueAction={() => next()}
+      goBackAction={() => prev()}
+      cancelAction={() => cancel()}
       type='create' 
-      disallowActions={true}
     >
     </Task> 
   );
 }
 
-const TaskE: React.SFC<Props> = () => {
+const TaskE: React.SFC<Props> = ({ next, prev, cancel, submit }) => {
   return ( 
     <Task 
       title='Step 5' 
-      submitAction={submitAlert} 
-      continueAction={continueAlert}
-      goBackAction={backAlert}
-      cancelAction={cancelAlert}
+      submitAction={() => submit()} 
+      continueAction={() => next()}
+      goBackAction={() => prev()}
+      cancelAction={() => cancel()}
       type='create' 
-      disallowActions={true}
     >
     </Task> 
   );
