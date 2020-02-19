@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout, PageHeader } from 'antd';
-import { Sidebar } from '../../components/common';
+import { Sidebar, RelatedAction, Task } from '../../components/common';
 import "antd/dist/antd.css";
 import { AppConsumer } from '../../context';
 import * as Tasks from '../../components/Tasks';
@@ -23,7 +23,19 @@ const HomePresentation: React.SFC<HomePresentationProps> = (props) => {
   const { state } = props;
 
   const HomeView = () => {
-    return <PageHeader title='Welcome to Democrewcy' />
+    return (
+      <Task 
+        title={'Welcome to Democrewcy'} 
+        type='view'
+        submitAction={(f: any)=>f}
+        continueAction={(f: any)=>f}
+        goBackAction={(f: any)=>f}
+        cancelAction={(f: any)=>f}
+        disallowActions={true}
+      >
+        <RelatedAction />
+      </Task>
+    )
   };
   
   const Presentation = () => {
