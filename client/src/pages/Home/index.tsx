@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, PageHeader } from 'antd';
+import { Layout } from 'antd';
 import { Sidebar, RelatedAction, Task } from '../../components/common';
 import "antd/dist/antd.css";
 import { AppConsumer } from '../../context';
@@ -33,7 +33,9 @@ const HomePresentation: React.SFC<HomePresentationProps> = (props) => {
         cancelAction={(f: any)=>f}
         disallowActions={true}
       >
-        <RelatedAction />
+        <Content>
+          <RelatedAction />
+        </Content>
       </Task>
     )
   };

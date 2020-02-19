@@ -19,8 +19,6 @@ const ViewGroup: React.SFC<ViewGroupProps> = (props: any) => {
   console.log('props in viewgroup')
   console.log(props)
 
-  const submit = (event: FormEvent) => alert('poop!');
-
   const View = (ctx: any) => {
     const group: Group = ctx?.state.groups.find((g: Group) => g.name === ctx.state.activeGroup.name);
     return (
