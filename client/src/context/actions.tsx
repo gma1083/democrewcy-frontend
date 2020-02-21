@@ -1,4 +1,4 @@
-import { SET_ACTIVE_TASK, SET_ACTIVE_GROUP, SET_RUNNING_TASK } from './constants';
+import { SET_ACTIVE_TASK, SET_ACTIVE_GROUP } from './constants';
 import { Group, Task } from '../config/types';
 
 export const setActiveTask = (task: Task) => ({
@@ -14,10 +14,3 @@ export const setActiveGroup = (group: Group) => ({
     activeGroup: group
   }
 });
-
-export const setRunningTask = (taskRunning: boolean) => ({
-  type: SET_RUNNING_TASK,
-  data: {
-    taskRunning
-  }
-})

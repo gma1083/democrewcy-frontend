@@ -5,4 +5,3 @@ export const SET_MEMBERS = 'SET_MEMBERS';
 export const SET_MOTIONS = 'SET_MOTIONS';
 export const SET_ACTIVE_GROUP = 'SET_ACTIVE_GROUP';
 export const SET_ACTIVE_TASK = 'SET_ACTIVE_TASK'; 
-export const SET_RUNNING_TASK = 'SET_RUNNING_TASK'; 

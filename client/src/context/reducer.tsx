@@ -1,7 +1,6 @@
 import { getDefaultContext } from '.';
 import { 
   CLEAR,
-  SET_RUNNING_TASK,
   SET_EVENTS,
   SET_MEMBERS,
   SET_MOTIONS,
@@ -22,9 +21,7 @@ const reducer = (state: any, action: any) => {
     case SET_ACTIVE_GROUP:
       return { ...state, activeGroup: action.data.activeGroup };
     case SET_ACTIVE_TASK:
-      return { ...state, activeTask: action.data.activeTask, runningTask: true };
-    case SET_RUNNING_TASK:
-      return { ...state, runningTask: action.data.runningTask };
+      return { ...state, activeTask: action.data.activeTask };
   }
 };
 

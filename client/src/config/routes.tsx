@@ -14,5 +14,12 @@ export const Private = [
     route: "/home",
     exact: true,
     allowedRoles: ['user']
+  },
+  {
+    text: "Tasks",
+    name: "Tasks",
+    route: "/tasks",
+    exact: false,
+    allowedRoles: ['user']
   }
 ];

@@ -7,7 +7,6 @@ const getDefaultContext = (): Context => ({
   groups: groupData,
   users: userData,
   tasks: taskData,
-  runningTask: false,
   activeTask: null,
   activeGroup: null
 });

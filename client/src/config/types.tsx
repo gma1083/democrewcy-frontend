@@ -45,6 +45,5 @@ export interface Context {
   users: User[],
   activeGroup: Group | null,
   tasks: Task[],
-  activeTask?: Task | null,
-  runningTask: boolean
+  activeTask?: Task | null
 };

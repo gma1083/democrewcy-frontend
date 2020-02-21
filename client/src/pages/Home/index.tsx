@@ -1,12 +1,11 @@
 import React from 'react';
 import { Layout } from 'antd';
-import { Sidebar, RelatedAction, Task } from '../../components/common';
+import { Sidebar } from '../../components/common';
+import * as Tasks from '../../components/Tasks';
 import "antd/dist/antd.css";
 import { AppConsumer } from '../../context';
-import * as Tasks from '../../components/Tasks';
 import { Context } from '../../config/types';
-
-const { Content } = Layout;
+import { Redirect } from 'react-router-dom';
 
 export interface HomeProps {
 
@@ -16,55 +15,13 @@ export interface HomePresentationProps {
   state: Context
 }
  
-const HomePresentation: React.SFC<HomePresentationProps> = (props) => {
-  console.log('props in HomePresentation')
-  console.log(props)
-  
-  const { state } = props;
-
-  const HomeView = () => {
-    return (
-      <Task 
-        title={'Welcome to Democrewcy'} 
-        type='view'
-        submitAction={(f: any)=>f}
-        continueAction={(f: any)=>f}
-        goBackAction={(f: any)=>f}
-        cancelAction={(f: any)=>f}
-        disallowActions={true}
-      >
-        <Content>
-          <RelatedAction />
-        </Content>
-      </Task>
-    )
-  };
-  
-  const Presentation = () => {
-    let View: React.SFC<any> = state.runningTask && state.activeTask ? (Tasks as any)[state.activeTask.component] : HomeView;
-    
-    return (
-      <Layout style={{ paddingTop: '12px', paddingLeft: '12px', overflow: 'hidden' }}>
-        <Content  
-          style={{
-            background: '#fff',
-            overflow: 'scroll',
-            height: '100vh',
-          }}
-        >
-          <View />
-        </Content>
-      </Layout>
-    )
-  };
-
-  return (
+const HomePresentation = (props: any) => (
     <Layout>
+      {props.state.activeTask && <Redirect to={`/tasks`} />}
       <Sidebar />
-      <Presentation />
+      <Tasks.ViewDashboard {...props}/>
     </Layout>
-  );
-}
+  )
  
 const Home: React.SFC<HomeProps> = (props: any) => {  
   console.log('props in Home')

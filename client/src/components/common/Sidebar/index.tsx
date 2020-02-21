@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { TaskBar } from '../index';
 import "antd/dist/antd.css";
 import { AppConsumer } from '../../../context';
-import { setActiveGroup, setActiveTask, setRunningTask } from '../../../context/actions';
+import { setActiveGroup, setActiveTask } from '../../../context/actions';
 import { Context, Group, Task, User } from '../../../config/types';
 
 const { SubMenu } = Menu;
@@ -39,7 +39,7 @@ const SidebarPresentation: React.SFC<SidebarProps> = (props) => {
   };
 
   const dispatchCancelTask = () => {
-    props.dispatch(setRunningTask(false));
+    props.dispatch(setActiveTask({} as Task));
   }
   
   return (

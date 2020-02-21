@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 import tasks from '../../../config/tasks';
 import { SelectValue } from 'antd/lib/select';
 import { Task } from '../../../config/types';
+import { Redirect} from 'react-router-dom';
 
 const { Option, OptGroup } = AutoComplete;
 
@@ -36,12 +37,13 @@ const options = dataSource
 
 interface TaskBarProps {
   tasks: Task[],
-  dispatchTask: Function
+  dispatchTask: Function, 
 };
 
-const TaskBar: React.SFC<TaskBarProps> = ({ tasks, dispatchTask }) => {
+const TaskBar: React.SFC<TaskBarProps> = ({ tasks, dispatchTask,  }) => {
+
   console.log('tasks in taskbar');
-  console.log(tasks);
+  console.log(tasks);    
 
   return (
     <div className="certain-category-search-wrapper" style={{ padding: '0 10px' }}>
