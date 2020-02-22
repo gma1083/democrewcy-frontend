@@ -8,7 +8,8 @@ const getDefaultContext = (): Context => ({
   users: userData,
   tasks: taskData,
   activeTask: null,
-  activeGroup: null
+  activeGroup: null,
+  user: null
 });
 
 const ctx = React.createContext({});

@@ -1,27 +1,37 @@
 import React, { useState, FormEvent } from "react";
 import "antd/dist/antd.css";
-import { Form, Icon, Input, Button, Layout, Card, Typography } from "antd";
+import { Form, Icon, Input, Button, Layout, Card, Typography, notification, message } from "antd";
 import { Redirect } from "react-router-dom";
 import axios from "../../config/axios";
+import { AppConsumer } from '../../context';
+import { Context } from '../../config/types';
+import { setUser } from '../../context/actions';
+
 
 export interface LandingPageProps {
   form: any,
-  login: any,
-  user: any
+  state: Context,
+  dispatch: Function
 };
  
-const LandingPage: React.SFC<LandingPageProps> = (props) => {
-  const [loggedIn, setLoggedIn] = useState(false);
+const LandingPageLoginView: React.SFC<LandingPageProps> = (props) => {
 
-  const handleSubmit = (e : FormEvent) => {
+  const handleSubmit = async (e : FormEvent) => {
     e.preventDefault();
+
     props.form.validateFields(async (err : any, values : any) => {
       if (!err) {
-        // const { username, password } = values;
-        // const payload = { username, password }
-        // const result = await axios.post('auth/login', payload);
-        // console.dir(result);
-        setLoggedIn(true)
+        try {
+          const { email, password } = values;
+          const payload = { email, password }
+          const result = await axios.post('auth/login', payload);
+          props.dispatch(setUser(result.data.accountId))
+          console.dir(result);
+          notification.success({message: 'Welcome!'})
+        }
+        catch (err) {
+          message.error('Unable to log in. Please check yourself.')
+        }
       }
     });
   };
@@ -30,23 +40,23 @@ const LandingPage: React.SFC<LandingPageProps> = (props) => {
 
   return (
     <React.Fragment>
-      {loggedIn && <Redirect to="/home" />}
+      {props.state.user && <Redirect to="/home" />}
       <Layout style={{ backgroundColor: "#001529", height: '100vh', width: '100vw' }}>
         <div style={{ margin: "auto", textAlign: "center" }}>
           <Card size="default">
             <Typography.Title level={3}>Log In</Typography.Title>
             <Form onSubmit={handleSubmit} style={{ maxWidth: 300 }}>
               <Form.Item>
-                {getFieldDecorator("username", {
+                {getFieldDecorator("email", {
                   rules: [
-                    { required: true, message: "Please input your username." }
+                    { required: true, message: "Please input your email." }
                   ]
                 })(
                   <Input
                     prefix={
                       <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
                     }
-                    placeholder="Username"
+                    placeholder="Email"
                   />
                 )}
               </Form.Item>
@@ -90,4 +100,18 @@ const LandingPage: React.SFC<LandingPageProps> = (props) => {
   );
 }
  
-export default Form.create()(LandingPage);
+const LandingPageForm = Form.create()(LandingPageLoginView);
+
+export interface LandingPageContainerProps {
+  
+}
+ 
+const LandingPageContainer: React.SFC<LandingPageContainerProps> = () => {
+  return ( 
+    <AppConsumer>
+      {(ctx: any) => <LandingPageForm {...ctx} />}
+    </AppConsumer>
+   );
+}
+ 
+export default LandingPageContainer;
