@@ -1,5 +1,6 @@
 import React, { FormEvent } from 'react';
 import Task from '../../common/Task';
+import Form from './form';
 
 interface CreateGroupProps {
 };
@@ -24,6 +25,7 @@ const CreateGroup: React.SFC<CreateGroupProps> = (props) => {
       goBackAction={backAlert}
       cancelAction={cancelAlert}
     >
+      <Form {...props} />
     </Task>
   );
 }

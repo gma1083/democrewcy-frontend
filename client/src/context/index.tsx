@@ -7,9 +7,13 @@ const getDefaultContext = (): Context => ({
   groups: groupData,
   users: userData,
   tasks: taskData,
-  activeTask: null,
+  activeTask: {
+    key: "create-group",
+    title: 'Create a Group',
+    component: 'CreateGroup'
+  },
   activeGroup: null,
-  user: null
+  user: 'dito'
 });
 
 const ctx = React.createContext({});

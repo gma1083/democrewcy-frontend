@@ -7,7 +7,9 @@ export interface ViewDashboardProps {
   
 }
  
-const ViewDashboard: React.SFC<ViewDashboardProps> = () => {
+const ViewDashboard: React.SFC<ViewDashboardProps> = (props:any) => {
+  console.log('props in ViewDashboard')
+  console.dir(props)
   return ( 
     <Task 
         title={'Welcome to Democrewcy'} 
