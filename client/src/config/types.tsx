@@ -37,7 +37,8 @@ export interface Group {
 export interface Task {
   key: string,
   title: string,
-  component: string
+  component: string,
+  type: string
 };
 
 export interface Context {

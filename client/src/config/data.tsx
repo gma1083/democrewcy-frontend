@@ -3,37 +3,50 @@ import { Task, Group, Member, Motion, Event, User } from './types';
 export const taskData: Task[] = [{
   key: "create-group",
   title: 'Create a Group',
-  component: 'CreateGroup'
+  component: 'CreateGroup',
+  type: 'create'
 },
 {
   key: "create-user",
   title: 'Create a User',
-  component: 'CreateUser'
+  component: 'CreateUser',
+  type: 'create'
 },
 {
   key: "create-event",
   title: 'Create an Event',
-  component: 'CreateEvent'
+  component: 'CreateEvent',
+  type: 'create'
 },
 {
   key: "create-motion",
   title: 'Create a Motion',
-  component: 'CreateMotion'
+  component: 'CreateMotion',
+  type: 'create'
 },
 {
   key: "view-my-profile",
   title: 'View my Profile',
-  component: 'ViewProfile'
+  component: 'ViewProfile',
+  type: 'view'
 },
 {
   key: "view-a-profile",
   title: 'View a Profile',
-  component: 'ViewProfile'
+  component: 'ViewProfile',
+  type: 'view'
+},
+{
+  key: "view-group",
+  title: 'View a Group',
+  component: 'ViewGroup',
+  type: 'view'
 },
 {
   key: "st-example",
   title: 'Sequence Task Example',
-  component: 'SequenceTaskExample'
+  component: 'SequenceTaskExample',
+  type: 'create'
 }];
 
 export const userData: User[] = [{

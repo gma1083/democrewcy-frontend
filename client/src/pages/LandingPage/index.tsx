@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from "react";
+import React, { FormEvent } from "react";
 import "antd/dist/antd.css";
 import { Form, Icon, Input, Button, Layout, Card, Typography, notification, message } from "antd";
 import { Redirect } from "react-router-dom";
@@ -41,7 +41,7 @@ const LandingPageLoginView: React.SFC<LandingPageProps> = (props) => {
   return (
     <React.Fragment>
       {props.state.user && <Redirect to="/home" />}
-      <Layout style={{ backgroundColor: "#001529", height: '100vh', width: '100vw' }}>
+      <Layout style={{ backgroundColor: "#001529", height: '100%', width: '100%' }}>
         <div style={{ margin: "auto", textAlign: "center" }}>
           <Card size="default">
             <Typography.Title level={3}>Log In</Typography.Title>

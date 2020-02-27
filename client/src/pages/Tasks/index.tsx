@@ -1,37 +1,51 @@
 import React from 'react';
 import { Layout } from 'antd';
-import { Sidebar } from '../../components/common';
+import { SideBar, TaskLayout } from '../../components/common';
 import { AppConsumer } from '../../context';
 import { Context } from '../../config/types';
-import * as Tasks from '../../components/Tasks';
+import * as Tasks from '../../components/tasks';
 import { Route, Redirect } from 'react-router-dom';
-
 export interface TasksProps {
 
 };
 
 export interface TasksPresentationProps {
-  state: Context
-  match: any
+  state: Context,
+  dispatch: Function
 }
  
-const TasksPresentation: React.SFC<TasksPresentationProps> = (props) => {
+const TasksPresentation: React.SFC<TasksPresentationProps> = (props: any) => {
   console.log('props in TasksPresentation')
   console.log(props)
   
-  const { state } = props;
+  const { state, dispatch } = props;
   
-  let Failure = <div>Error</div>
-  let View: React.SFC<any> = state.activeTask ? (Tasks as any)[state.activeTask.component] : Failure;
+  let ActiveTaskForm: React.SFC<any> = state.activeTask && (Tasks as any)[state.activeTask.component];
     
   return (
     <Layout>
-      <Sidebar />
-        {state.activeTask && <Redirect to={`/tasks/${state.activeTask.key}`} />}
-        <Route 
-          path={`/tasks/:taskId`} 
-          component={View}
-        />
+      <SideBar />
+
+        {state.activeTask ? 
+          <Redirect to={`/tasks/${state.activeTask.key}`} /> :
+          <Redirect to={`/home`} />}
+      
+        {state.activeTask && 
+            <Route 
+              path={`/tasks/:taskId`} 
+              component={(props: any) => 
+                <TaskLayout
+                  title={state.activeTask?.title || 'Loading...'}
+                  form={
+                    <ActiveTaskForm 
+                      {...props}
+                      state={state}
+                      dispatch={dispatch}
+                      type={state.activeTask?.type}
+                    />}
+                />}
+            />}
+      
     </Layout>
   );
 }

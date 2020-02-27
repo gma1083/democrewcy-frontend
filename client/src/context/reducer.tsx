@@ -6,7 +6,8 @@ import {
   SET_MOTIONS,
   SET_ACTIVE_GROUP,
   SET_ACTIVE_TASK,
-  SET_USER
+  SET_USER,
+  CANCEL_TASK
 } from './constants';
 
 const reducer = (state: any, action: any) => {
@@ -25,6 +26,8 @@ const reducer = (state: any, action: any) => {
       return { ...state, activeTask: action.data.activeTask };
     case SET_USER: 
       return { ...state, user: action.data.user }
+    case CANCEL_TASK:
+      return { ...state, activeTask: null }
   }
 };
 

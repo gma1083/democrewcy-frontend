@@ -7,11 +7,7 @@ const getDefaultContext = (): Context => ({
   groups: groupData,
   users: userData,
   tasks: taskData,
-  activeTask: {
-    key: "create-group",
-    title: 'Create a Group',
-    component: 'CreateGroup'
-  },
+  activeTask: null,
   activeGroup: null,
   user: 'dito'
 });

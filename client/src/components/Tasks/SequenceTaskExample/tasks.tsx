@@ -1,6 +1,6 @@
 import React from 'react';
-import Task from '../../common/Task';
-import Form from '../CreateEvent/form';
+import { TaskLayout } from '../../common';
+
 
 export interface Props {
   next: Function,
@@ -9,90 +9,64 @@ export interface Props {
   submit: Function
 }
  
-const TaskA: React.SFC<Props> = ({ next, prev, cancel, submit }) => {
+const TaskLayoutA: React.SFC<Props> = ({ next, prev, cancel, submit }) => {
   return ( 
-    <Task 
+    <TaskLayout 
       title='Step 1' 
-      submitAction={() => submit()} 
-      continueAction={() => next()}
-      goBackAction={() => prev()}
-      cancelAction={() => cancel()}
-      type='create' 
-    >
-      <Form />
-    </Task> 
+      form={<div>form</div>}
+    />
   );
 }
  
-const TaskB: React.SFC<Props> = ({ next, prev, cancel, submit }) => {
+const TaskLayoutB: React.SFC<Props> = ({ next, prev, cancel, submit }) => {
   return ( 
-    <Task 
+    <TaskLayout 
       title='Step 2' 
-      submitAction={() => submit()} 
-      continueAction={() => next()}
-      goBackAction={() => prev()}
-      cancelAction={() => cancel()}
-      type='create' 
-    >
-    </Task> 
+      form={<div>form</div>}
+    /> 
   );
 }
 
-const TaskC: React.SFC<Props> = ({ next, prev, cancel, submit }) => {
+const TaskLayoutC: React.SFC<Props> = ({ next, prev, cancel, submit }) => {
   return ( 
-    <Task 
+    <TaskLayout 
       title='Step 3' 
-      submitAction={() => submit()} 
-      continueAction={() => next()}
-      goBackAction={() => prev()}
-      cancelAction={() => cancel()}
-      type='create' 
-    >
-    </Task> 
+      form={<div>form</div>}
+    />
   );
 }
 
-const TaskD: React.SFC<Props> = ({ next, prev, cancel, submit }) => {
+const TaskLayoutD: React.SFC<Props> = ({ next, prev, cancel, submit }) => {
   return ( 
-    <Task 
+    <TaskLayout 
       title='Step 4' 
-      submitAction={() => submit()} 
-      continueAction={() => next()}
-      goBackAction={() => prev()}
-      cancelAction={() => cancel()}
-      type='create' 
-    >
-    </Task> 
+      form={<div>form</div>}
+    />
   );
 }
 
-const TaskE: React.SFC<Props> = ({ next, prev, cancel, submit }) => {
+const TaskLayoutE: React.SFC<Props> = ({ next, prev, cancel, submit }) => {
   return ( 
-    <Task 
+    <TaskLayout 
       title='Step 5' 
-      submitAction={() => submit()} 
-      continueAction={() => next()}
-      goBackAction={() => prev()}
-      cancelAction={() => cancel()}
-      type='create' 
-    >
-    </Task> 
+      form={<div>form</div>}
+    />
   );
 }
 
 export default [{
   name: 'Step 1',
-  component: TaskA
+  component: TaskLayoutA
 }, {
   name: 'Step 2',
-  component: TaskB,
+  component: TaskLayoutB,
 }, {
   name: 'Step 3',
-  component: TaskC,
+  component: TaskLayoutC,
 }, {
   name: 'Step 4',
-  component: TaskD,
+  component: TaskLayoutD,
 }, {
   name: 'Step 5',
-  component: TaskE,
+  component: TaskLayoutE,
 }];

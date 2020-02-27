@@ -10,7 +10,7 @@ import { Context, Group, Task, User } from '../../../config/types';
 const { SubMenu } = Menu;
 const { Sider } = Layout;
 
-export interface SidebarProps {
+export interface SideBarProps {
   state: Context,
   dispatch: Function
 }
@@ -25,15 +25,16 @@ export interface UserProps {
   lastName: string
 };
 
-const SidebarPresentation: React.SFC<SidebarProps> = (props) => {
-  console.log('props in sidebar')
+const SideBarPresentation: React.SFC<SideBarProps> = (props) => {
+  console.log('props in SideBar')
   console.log(props);
 
   const dispatchViewGroupTask = (group: Group) => {
     props.dispatch(setActiveTask({
       key: "view-group",
       title: 'View a Group',
-      component: 'ViewGroup'
+      component: 'ViewGroup',
+      type: 'view'
     }));
     props.dispatch(setActiveGroup(group));
   };
@@ -99,12 +100,12 @@ const SidebarPresentation: React.SFC<SidebarProps> = (props) => {
   );
 }
 
-const Sidebar: React.SFC<{}> = (props: any) => {
+const SideBar: React.SFC<{}> = (props: any) => {
   return (
     <AppConsumer>
-      {(ctx: any) => <SidebarPresentation {...ctx} {...props}/>}
+      {(ctx: any) => <SideBarPresentation {...ctx} {...props}/>}
     </AppConsumer>
   )
 } 
  
-export default Sidebar;
+export default SideBar;

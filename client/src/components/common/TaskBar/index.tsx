@@ -2,17 +2,16 @@ import * as React from 'react';
 import './index.css';
 import { Icon, Input, AutoComplete } from 'antd';
 import { NavLink } from 'react-router-dom';
-import tasks from '../../../config/tasks';
+import { taskData } from '../../../config/data';
 import { SelectValue } from 'antd/lib/select';
 import { Task } from '../../../config/types';
-import { Redirect} from 'react-router-dom';
 
 const { Option, OptGroup } = AutoComplete;
 
 const dataSource = [
   {
     title: 'Tasks',
-    children: tasks
+    children: taskData
   }
 ];
 
@@ -20,7 +19,7 @@ const renderTitle = (title: string) => <span>{title}</span>;
 const options = dataSource
   .map(group => (
     <OptGroup key={group.title} label={renderTitle(group.title)}>
-      {group.children.map(opt => (
+      {group.children.map((opt) => (
         <Option key={opt.key} value={opt.title}>
           {opt.title}
         </Option>
@@ -35,10 +34,20 @@ const options = dataSource
     </Option>,
   ]);
 
+
 interface TaskBarProps {
   tasks: Task[],
   dispatchTask: Function, 
 };
+
+/*
+
+  TODO
+
+  use context, update interface props to state and dispatch
+  use tasks from context as data source
+
+*/
 
 const TaskBar: React.SFC<TaskBarProps> = ({ tasks, dispatchTask,  }) => {
 

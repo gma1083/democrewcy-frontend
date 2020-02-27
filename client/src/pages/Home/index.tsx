@@ -1,7 +1,7 @@
 import React from 'react';
 import { Layout } from 'antd';
-import { Sidebar } from '../../components/common';
-import * as Tasks from '../../components/Tasks';
+import { SideBar } from '../../components/common';
+import * as Tasks from '../../components/tasks';
 import "antd/dist/antd.css";
 import { AppConsumer } from '../../context';
 import { Context } from '../../config/types';
@@ -18,8 +18,10 @@ export interface HomePresentationProps {
 const HomePresentation = (props: any) => (
     <Layout>
       {props.state.activeTask && <Redirect to={`/tasks`} />}
-      <Sidebar />
-      <Tasks.ViewDashboard {...props}/>
+      <SideBar />
+      <div style={{height: '100vh', width: '100vw' }}>
+        <Tasks.ViewDashboard {...props}/>
+      </div>
     </Layout>
   )
  

@@ -3,7 +3,7 @@ import { Card, PageHeader, Icon, Modal } from 'antd';
 import "antd/dist/antd.css";
 import HorizontallyScrollabe from '../../../common/HorizontallyScrollable';
 import { Motion } from '../../../../config/types';
-import { EmptyCard } from '../../../common';
+// import { EmptyCard } from '../../../common';
 
 export interface MotionsProps {
   motions: Motion[]
@@ -61,8 +61,8 @@ const Motions: React.SFC<MotionsProps> = ({ motions }) => {
         subTitle={<Icon type="plus-circle" onClick={() => toggleModal()}/>} 
         />
       <HorizontallyScrollabe>
-        {/* {motions?.map(motion => <MotionPresentation key={motion.title} {...motion}/>)} */}
-        {Array(5).fill(0).map(item => <EmptyCard  />)}
+        {motions?.map(motion => <MotionPresentation key={motion.title} {...motion}/>)}
+        {/* {Array(5).fill(0).map(item => <EmptyCard  />)} */}
       </HorizontallyScrollabe>
     </React.Fragment>
   );

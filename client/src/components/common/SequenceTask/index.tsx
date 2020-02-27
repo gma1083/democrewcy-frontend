@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Steps, message, PageHeader, Layout} from 'antd';
-
-const { Step } = Steps;
-const { Content } = Layout
+import { message} from 'antd';
+// import { Steps } from 'antd'
+// const { Step } = Steps;
 export interface SequenceTaskProps {
   tasks: any
 }
@@ -26,15 +25,15 @@ const SequenceTask: React.SFC<SequenceTaskProps> = (props) => {
   };
 
   const CurrentTask = tasks[current].component;
-  const Progress = (
-    <div style={{paddingLeft: '10px', paddingRight: '10px'}}>
-      <Steps direction='horizontal' current={current}>
-        {props.tasks.map((task: any) => (
-          <Step key={task.name} title={task.name} />
-        ))}
-      </Steps>
-    </div>
-  );
+  // const Progress = (
+  //   <div style={{paddingLeft: '10px', paddingRight: '10px'}}>
+  //     <Steps direction='horizontal' current={current}>
+  //       {props.tasks.map((task: any) => (
+  //         <Step key={task.name} title={task.name} />
+  //       ))}
+  //     </Steps>
+  //   </div>
+  // );
 
   return (  
     <CurrentTask 

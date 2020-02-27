@@ -1,4 +1,5 @@
-import { SET_ACTIVE_TASK, SET_ACTIVE_GROUP, SET_USER } from './constants';
+import { SET_ACTIVE_TASK, SET_ACTIVE_GROUP, 
+  SET_USER, CANCEL_TASK } from './constants';
 import { Group, Task } from '../config/types';
 
 export const setActiveTask = (task: Task) => ({
@@ -20,4 +21,8 @@ export const setUser = (user: any) => ({
   data: {
     user
   }
+});
+
+export const cancelTask = () => ({
+  type: CANCEL_TASK
 });
