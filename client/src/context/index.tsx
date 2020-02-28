@@ -9,7 +9,7 @@ const getDefaultContext = (): Context => ({
   tasks: taskData,
   activeTask: null,
   activeGroup: null,
-  user: 'dito'
+  user: null
 });
 
 const ctx = React.createContext({});

@@ -5,6 +5,8 @@ import { AppConsumer } from '../../context';
 import { Context } from '../../config/types';
 import * as Tasks from '../../components/tasks';
 import { Route, Redirect } from 'react-router-dom';
+
+
 export interface TasksProps {
 
 };
@@ -35,7 +37,7 @@ const TasksPresentation: React.SFC<TasksPresentationProps> = (props: any) => {
               path={`/tasks/:taskId`} 
               component={(props: any) => 
                 <TaskLayout
-                  title={state.activeTask?.title || 'Loading...'}
+                  title={state.activeTask?.title || ''}
                   form={
                     <ActiveTaskForm 
                       {...props}

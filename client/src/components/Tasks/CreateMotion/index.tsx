@@ -9,8 +9,11 @@ import {
   DatePicker,
   AutoComplete,
   Icon,
-  Checkbox, Col, Row, Radio
+  Checkbox, Col, Row, Radio, message, notification
 } from 'antd';
+import { asyncRequest, cancelTask } from '../../../context/actions';
+import { Actions, Selector } from '../../common/';
+import { TaskType } from '../../../config/types';
 
 const { TextArea } = Input;
 
@@ -56,12 +59,15 @@ const residences = [
   },
 ];
 
-interface RegistrationFormProps {
+interface CreateMotionFormProps {
   form: any,
   submitTask: Function
+  state: any,
+  dispatch: Function,
+  type: TaskType
 }
 
-class RegistrationForm extends React.Component<RegistrationFormProps> {
+class CreateMotionForm extends React.Component<CreateMotionFormProps> {
   state = {
     confirmDirty: false,
     autoCompleteResult: [],
@@ -69,11 +75,41 @@ class RegistrationForm extends React.Component<RegistrationFormProps> {
 
   handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err: Error, values: any) => {
+    this.props.form.validateFieldsAndScroll(async (err: Error, values: any) => {
       if (!err) {
-        alert(`${values}`);
+        // TODO: get proposedBy from user.positionInGroup?
+        // TODO: get group and vote from local state
+        // TODO: store group and vote in local state
+        // const { title, description } = values;
+        const options = {
+          method: 'post',
+          url: '/createMotion',
+          data: {
+            className: 'Motion'
+            // title: String,
+            // description: String,
+            // proposedBy: id, // id of Position
+            // group: id,  
+            // vote: {
+            //     className: String, // 'Vote'
+            //     allowedVoteOptions: [id],
+            // }
+          }
+        };
+        const doc = await asyncRequest(options, this.props.dispatch);
+        if (doc) {
+          message.success(`response: ${JSON.stringify(doc, null, 2)}`);
+        } else {
+          message.error(`response: ${JSON.stringify(doc, null, 2)}`);
+        }
+      } else {
+        message.error(`group: ${JSON.stringify(values, null, 2)}`);
       }
     });
+  };
+
+  cancel = () => {
+    this.props.dispatch(cancelTask())
   };
 
   handleConfirmBlur = (e: any) => {
@@ -141,169 +177,57 @@ class RegistrationForm extends React.Component<RegistrationFormProps> {
       rules: [{ type: 'object', required: true, message: 'Please select time!' }],
     };
 
+    const actions = {
+      taskType: this.props.type as TaskType,
+      submitAction: this.handleSubmit,
+      cancelAction: this.cancel
+    };
+
     return (
       <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-        <Form.Item label="E-mail">
-          {getFieldDecorator('email', {
-            rules: [
-              {
-                type: 'email',
-                message: 'The input is not valid E-mail!',
-              },
-              {
-                required: true,
-                message: 'Please input your E-mail!',
-              },
-            ],
-          })(<Input />)}
-        </Form.Item>
-        <Form.Item label="Password" hasFeedback>
-          {getFieldDecorator('password', {
-            rules: [
-              {
-                required: true,
-                message: 'Please input your password!',
-              },
-              {
-                validator: this.validateToNextPassword,
-              },
-            ],
-          })(<Input.Password />)}
-        </Form.Item>
-        <Form.Item label="Confirm Password" hasFeedback>
-          {getFieldDecorator('confirm', {
-            rules: [
-              {
-                required: true,
-                message: 'Please confirm your password!',
-              },
-              {
-                validator: this.compareToFirstPassword,
-              },
-            ],
-          })(<Input.Password onBlur={this.handleConfirmBlur} />)}
-        </Form.Item>
-        <Form.Item
-          label='Simple Text'
-        >
-          {getFieldDecorator('Text', {
-            rules: [{ required: true, message: 'Please input your text!', whitespace: true }],
-          })(<Input />)}
-        </Form.Item>
-        <Form.Item
-          label='Not Required Simple Text'
-        >
-          {getFieldDecorator('Text', {
-            rules: [{ required: false, whitespace: true }],
-          })(<Input />)}
-        </Form.Item>
-        <Form.Item label="TimePicker">
-          {getFieldDecorator('time-picker', config)(<TimePicker />)}
-        </Form.Item>
-        <Form.Item
-          label={
-            <span>
-              Nickname&nbsp;
-              <Tooltip title="What do you want others to call you?">
-                <Icon type="question-circle-o" />
-              </Tooltip>
-            </span>
-          }
-        >
-          {getFieldDecorator('nickname', {
-            rules: [{ required: true, message: 'Please input your nickname!', whitespace: true }],
-          })(<Input />)}
-        </Form.Item>
-        <Form.Item label="Habitual Residence">
-          {getFieldDecorator('residence', {
-            initialValue: ['zhejiang', 'hangzhou', 'xihu'],
-            rules: [
-              { type: 'array', required: true, message: 'Please select your habitual residence!' },
-            ],
-          })(<Cascader options={residences} />)}
-        </Form.Item>
-        <Form.Item label="Phone Number">
-          {getFieldDecorator('phone', {
-            rules: [{ required: true, message: 'Please input your phone number!' }],
-          })(<Input addonBefore={prefixSelector} style={{ width: '100%' }} />)}
-        </Form.Item>
-        <Form.Item label="DatePicker">
-          {getFieldDecorator('date-picker', config)(<DatePicker />)}
-        </Form.Item>
-        <Form.Item label="Radio.Group">
-          {getFieldDecorator('radio-group')(
-            <Radio.Group>
-              <Radio value="a">item 1</Radio>
-              <Radio value="b">item 2</Radio>
-              <Radio value="c">item 3</Radio>
-            </Radio.Group>,
-          )}
-        </Form.Item>
-        <Form.Item label="Checkbox.Group">
-          {getFieldDecorator('checkbox-group', {
-            initialValue: ['A', 'B'],
+
+        <Form.Item label="Title">
+          {getFieldDecorator('title', {
+            rules: [{ required: true, message: 'It\'s required bro.' }],
           })(
-            <Checkbox.Group style={{ width: '100%' }}>
-              <Row>
-                <Col span={8}>
-                  <Checkbox value="A">A</Checkbox>
-                </Col>
-                <Col span={8}>
-                  <Checkbox disabled value="B">
-                    B
-                  </Checkbox>
-                </Col>
-                <Col span={8}>
-                  <Checkbox value="C">C</Checkbox>
-                </Col>
-                <Col span={8}>
-                  <Checkbox value="D">D</Checkbox>
-                </Col>
-                <Col span={8}>
-                  <Checkbox value="E">E</Checkbox>
-                </Col>
-              </Row>
-            </Checkbox.Group>,
-          )}
-        </Form.Item>
-        <Form.Item label="Website">
-          {getFieldDecorator('website', {
-            rules: [{ required: true, message: 'Please input website!' }],
-          })(
-            <AutoComplete
-              dataSource={websiteOptions}
-              onChange={this.handleWebsiteChange}
-              placeholder="website"
-            >
-              <Input />
-            </AutoComplete>,
+            <Input placeholder="" allowClear onChange={onChange} />
           )}
         </Form.Item>
 
-        <Form.Item label="clear-input">
-          {getFieldDecorator('clear-input', {
-            rules: [{ required: true, message: 'try it out' }],
-          })(
-            <Input placeholder="this one has clear" allowClear onChange={onChange} />
-          )}
-        </Form.Item>
-
-        <Form.Item label="clear-text">
-          {getFieldDecorator('clear-text', {
-            rules: [{ required: true, message: 'try it out also' }],
+        <Form.Item label="Description">
+          {getFieldDecorator('description', {
+            rules: [{ required: true, message: 'It\'s required bro.' }],
           })(
             <TextArea 
-              placeholder="textarea with clear icon" 
+              placeholder="" 
               allowClear 
               onChange={onChange} 
-              autoSize={{ minRows: 2, maxRows: 8 }}
+              autoSize={{ minRows: 10, maxRows: 20 }}
             />
             )}
         </Form.Item>
+
+        <Form.Item label="Group">
+          {getFieldDecorator('group', {
+            rules: [{ required: true, message: 'Please enter a name'  }],
+          })(
+            <Selector />
+          )}
+        </Form.Item>
+
+        <Form.Item label="Poop Test">
+          <Checkbox onClick={() => this.props.form.setFieldsValue({group: 'poop'})}/>
+        </Form.Item>
+        
+        <Form.Item label='Allowed Vote Options'>
+          <Selector />
+        </Form.Item>
+        
+        <Actions {...actions} />
 
       </Form>
     );
   }
 }
 
-export default Form.create({ name: 'register' })(RegistrationForm);
+export default Form.create()(CreateMotionForm);

@@ -2,6 +2,8 @@ import React from 'react';
 import { Events, Members, Motions } from '../..';
 import { Layout, Typography } from 'antd';
 import { Group } from '../../../config/types';
+import { Selector } from '../../../components/common';
+
 const { Content } = Layout;
 
 interface ViewGroupProps {
@@ -24,7 +26,9 @@ const ViewGroup: React.SFC<ViewGroupProps> = ({state}) => {
           <Events events={group.events} />
           <Motions motions={group.motions} />
         </> : 
-        <Typography.Title>Error: No group selected</Typography.Title>}
+        <>
+          <Selector />
+        </>}
     </Content>
   )
 }

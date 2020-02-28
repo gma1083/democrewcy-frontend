@@ -2,16 +2,15 @@ import React, { FormEvent } from 'react';
 import {
   Form,
   Input,
-  Radio, 
   DatePicker,
   message
 } from 'antd';
 import Actions from '../../common/Actions';
 import { cancelTask } from '../../../context/actions';
+import { asyncRequest } from '../../../context/actions';
+import { TaskType } from '../../../config/types';
 
-type TaskType = 'view' | 'edit' | 'create';
-
-interface CreateUserFormProps {
+interface CreateAccountFormProps {
   form: any,
   state: any,
   dispatch: Function
@@ -21,7 +20,7 @@ interface CreateUserFormProps {
 // Most of this class is boilerplate from ant design. What we care about are 
 // handleSubmit() and cancel(). We'll do our async requests/dispatch in submit
 // or we cancel the task by rerouting the user back to the home page.
-class CreateUserForm extends React.Component<CreateUserFormProps> {
+class CreateAccountForm extends React.Component<CreateAccountFormProps> {
 
   state = {
     confirmDirty: false,
@@ -33,10 +32,27 @@ class CreateUserForm extends React.Component<CreateUserFormProps> {
   */
   handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err: Error, values: any) => {
-      // const { firstName, lastName, email, password, birthday, isAdmin } = values;
+    this.props.form.validateFieldsAndScroll(async (err: Error, values: any) => {
+      const { firstName, lastName, email, password, birthDate } = values;
+      const options = {
+        method: 'post',
+        url: '/admin/createAccount',
+        data: { 
+          className: 'User',
+          firstName, 
+          lastName, 
+          email, 
+          password, 
+          birthDate
+        } 
+    };
       if (!err) {
-        message.success(JSON.stringify(values))
+        const doc = await asyncRequest(options, this.props.dispatch);
+        if (doc) {
+          message.success(`response: ${JSON.stringify(doc, null, 2)}`);
+        } else {
+          message.error(`response: ${JSON.stringify(doc, null, 2)}`);
+        }
       }
     });
   };
@@ -166,16 +182,7 @@ class CreateUserForm extends React.Component<CreateUserFormProps> {
         </Form.Item>
 
         <Form.Item label="Birthday">
-          {getFieldDecorator('birthday', config)(<DatePicker />)}
-        </Form.Item>
-
-        <Form.Item label="Admin">
-          {getFieldDecorator('isAdmin')(
-            <Radio.Group>
-              <Radio value="yes">Yes</Radio>
-              <Radio value="no">No</Radio>
-            </Radio.Group>,
-          )}
+          {getFieldDecorator('birthDate', config)(<DatePicker />)}
         </Form.Item>
 
         <Actions {...actions} />
@@ -185,4 +192,4 @@ class CreateUserForm extends React.Component<CreateUserFormProps> {
   }
 }
 
-export default Form.create()(CreateUserForm);
+export default Form.create()(CreateAccountForm);

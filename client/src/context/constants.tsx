@@ -1,10 +1,10 @@
-export const CLEAR = 'CLEAR';
-export const END_TASK = 'END_TASK';
-export const SET_EVENTS = 'SET_EVENTS';
-export const SET_MEMBERS = 'SET_MEMBERS';
-export const SET_MOTIONS = 'SET_MOTIONS';
-export const SET_ACTIVE_GROUP = 'SET_ACTIVE_GROUP';
+export const CLEAR_STATE = 'CLEAR_STATE';
 export const SET_ACTIVE_TASK = 'SET_ACTIVE_TASK'; 
 export const SET_USER = 'SET_USER'; 
 export const CANCEL_TASK = 'CANCEL_TASK'; 
+export const SET_ACTIVE_GROUP = 'SET_ACTIVE_GROUP'; 
+
+export const BEGIN_ASYNC_REQUEST = 'BEGIN_ASYNC_REQUEST';
+export const ASYNC_REQUEST_COMPLETED = 'ASYNC_REQUEST_COMPLETED';
+export const ASYNC_REQUEST_ERROR = 'ASYNC_REQUEST_ERROR';
 

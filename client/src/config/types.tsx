@@ -41,6 +41,8 @@ export interface Task {
   type: string
 };
 
+export type TaskType = 'view' | 'edit' | 'create';
+
 export interface Context {
   groups: Group[],
   users: User[],

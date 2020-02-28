@@ -2,9 +2,12 @@ import React, { FormEvent } from 'react';
 import {
   Form,
   Input,
-  Checkbox, Col, Row,
+  message
 } from 'antd';
-import Selector from './selector';
+import Selector from '../../common/Selector';
+import { asyncRequest, cancelTask } from '../../../context/actions';
+import Actions from '../../common/Actions';
+import { TaskType } from '../../../config/types';
 const { TextArea } = Input;
 
 const onChange = (e: any) => {
@@ -14,17 +17,42 @@ const onChange = (e: any) => {
 
 interface CreateGroupFormProps {
   form: any,
-  submitTask: Function
+  submitTask: Function,
+  state: any,
+  dispatch: Function,
+  type: TaskType
 }
 
 class CreateGroupForm extends React.Component<CreateGroupFormProps> {
   handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err: Error, values: any) => {
+    this.props.form.validateFieldsAndScroll(async (err: Error, values: any) => {
+      // const { name, description, startTime, endTime, group } = values;
+      const options = {
+        method: 'post',
+        url: '/createEvent',
+        data: {
+          className: 'Event'
+          // name,
+          // description,
+          // startTime,
+          // endTime,
+          // group,
+        }
+      };
       if (!err) {
-        alert(`${values}`);
+        const doc = await asyncRequest(options, this.props.dispatch);
+        if (doc) {
+          message.success(`response: ${JSON.stringify(doc, null, 2)}`);
+        } else {
+          message.error(`response: ${JSON.stringify(doc, null, 2)}`);
+        }
       }
     });
+  };
+
+  cancel = () => {
+    this.props.dispatch(cancelTask())
   };
 
   render() {
@@ -41,13 +69,18 @@ class CreateGroupForm extends React.Component<CreateGroupFormProps> {
         lg: { span: 8 },
       },
     };
-
+  
+    const actions = {
+      taskType: this.props.type as TaskType,
+      submitAction: this.handleSubmit,
+      cancelAction: this.cancel
+    };
 
     return (
       <Form {...formItemLayout} onSubmit={this.handleSubmit}>
 
         <Form.Item label="Name">
-          {getFieldDecorator('clear-input', {
+          {getFieldDecorator('name', {
             rules: [{ required: true, message: 'try it out' }],
           })(
             <Input placeholder="What is this group called?" allowClear onChange={onChange} />
@@ -55,7 +88,7 @@ class CreateGroupForm extends React.Component<CreateGroupFormProps> {
         </Form.Item>
 
         <Form.Item label="Description">
-          {getFieldDecorator('clear-text', {
+          {getFieldDecorator('description', {
             rules: [{ required: true, message: 'try it out also' }],
           })(
             <TextArea 
@@ -66,56 +99,24 @@ class CreateGroupForm extends React.Component<CreateGroupFormProps> {
             />
             )}
         </Form.Item> 
-
+        
         <Form.Item label="Positions">
-          {getFieldDecorator('checkbox-group', {
-            initialValue: ['Ass', 'Butt', 'Cunt', 'Dick', 'Ejaculator', 'Fucker'],
-          })(
-            <Checkbox.Group style={{ width: '100%' }}>
-              <Row>
-                <Col span={8}>
-                  <Checkbox value="Ass">
-                    Ass
-                  </Checkbox>
-                </Col>
-                <Col span={8}>
-                  <Checkbox value="Butt">
-                    Butt
-                  </Checkbox>
-                </Col>
-                <Col span={8}>
-                  <Checkbox value="Cunt">
-                    Cunt
-                  </Checkbox>
-                </Col>
-                <Col span={8}>
-                  <Checkbox value="Dick">
-                    Dick
-                  </Checkbox>
-                </Col>
-                <Col span={8}>
-                  <Checkbox value="Ejaculator">
-                    Ejaculator
-                  </Checkbox>
-                </Col>
-                <Col span={8}>
-                  <Checkbox value="Fucker">
-                    Fucker
-                  </Checkbox>
-                </Col>
-              </Row>
-            </Checkbox.Group>
-          )}
+          <Selector/>
         </Form.Item>
+
         <Form.Item label="Users">
           <Selector/>
         </Form.Item>
+
         <Form.Item label="Sub Groups">
           <Selector/>
         </Form.Item>
+
+        <Actions {...actions} />
+
       </Form>
     );
   }
 }
 
-export default Form.create({ name: 'create-group' })(CreateGroupForm);
+export default Form.create()(CreateGroupForm);

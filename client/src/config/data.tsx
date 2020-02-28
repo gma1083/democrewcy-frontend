@@ -7,9 +7,9 @@ export const taskData: Task[] = [{
   type: 'create'
 },
 {
-  key: "create-user",
-  title: 'Create a User',
-  component: 'CreateUser',
+  key: "create-account",
+  title: 'Create an Account',
+  component: 'CreateAccount',
   type: 'create'
 },
 {

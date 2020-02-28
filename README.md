@@ -39,6 +39,7 @@ The home page the user is brought to - currently just renders the View Dashboard
     <AppConsumer>
         {(ctx: any) =>  <HomePresentation {...ctx} {...props} />}
     </App`enter code here`Consumer>
+		
 This is how we use the consumer to get context, then we render a component and pass down ctx and all props to it. We'll use this pattern whenever a component needs to use the context.
   
 
@@ -110,25 +111,31 @@ Create the axios instance we will use to make http request in the app
   # Components
 
 ## Common
-**EmptyCard**
+- **Actions** The footer for the form displaying in the active task. Has configurations to conditionally render the buttons if they are not needed for edit/create tasks, does not show buttons for view task.
+- **EmptyCard**
 - **HorizontallyScrollable**: A small wrapper that allows us to continuously scroll left and right when data overflows the elements size.
 - **PrivateRoute**: A component that uses security to render a component if the user has the allowed role to see it.
 - **PublicRoute**: Renders a component for anyone to see.
-- **RelatedAction**: A button with multi-level menus.
-- **SequenceTask**: A way to string together a multi-page single task, or group together many tasks into one. 
+- **:wrench: RelatedAction**: A button with multi-level menus.
+- **:wrench: SequenceTask**: A way to string together a multi-page single task, or group together many tasks into one . 
 - **Sidebar**: Provides the user with their friend messages and group links. Above that is the TaskBar.
-- **Task**: A presentational wrapper component that all tasks should be wrapped in.  
-- **TaskBar**: A dank AutoComplete search box from ant design. I loaded up the task json as the data source, so when you click on the task it updates the context activeTask to that, causing the app to re-route and render the task.
+- **TaskLayout**: A presentational wrapper component that all tasks are wrapped in. Look in the tasks page. We render this component with a form, all dynamically based on the active task from context.  
+- **TaskBar**: A dank AutoComplete search box from ant design. uses the tasks in context so that when you click on the task it updates the context activeTask, causing the app to re-route and render the task.
 
-## Tasks
-These components use the task framework. We will get the view/edit pages as a two for one deal since we can disable the form items for the view. This allows us to repurpose one component to get create, read, update, delete (if we want it). To start creating a task look at CreateEvent as an example to see how to use the ant design Form. All you need to do is define whatever form items you want, and I found all the possible types and put them in CreateEvent so we can just take from that example. Inside of the form you have a validate function. Remember the form validation from the landing page? More of that.
+## tasks
+These are just forms. The main examples are CreateEvent and CreateUser. Just copy and paste to get started. Here are the steps to remember:
+1. Copy an example form
+2. Do a barrel roll (export the form from /tasks/index)
+3. Define your form items, and their variables and rules
+4. Implement handleSubmit validations, async request, dispatch, setState, etc.
+5. Implement cancel
 
 **Current Tasks**:
 - CreateEvent
 - CreateGroup
 - CreateMotion
 - CreateUser
-- SequenceTaskExample
+- :wrench: SequenceTaskExample
 - ViewDashboard
 - ViewGroup
 - ViewProfile
@@ -144,11 +151,5 @@ These components use the task framework. We will get the view/edit pages as a tw
 5. Action flows to context
 6. Context receives action
 7. Context fires reducer to update state
-8. React components with props from context re-render
-
-
-# To Do
-1. Full details for all tasks we want. When the create and edit tasks run we are going to display the view task afterwords.
-2. This means we'll want the data mapped to state, and for that we need data types because typescript, define them in `config/types.tsx`
-3. Forms completely filled out, validated, making async backend calls, and any dispatching 
+8. React components re-render with props from context 
 

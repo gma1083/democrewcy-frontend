@@ -2,16 +2,15 @@ import React, { FormEvent } from 'react';
 import {
   Form,
   Input,
-  Tooltip,
-  Cascader,
   Select,
   TimePicker,
   DatePicker,
   AutoComplete,
-  Icon,
-  Checkbox, Col, Row, Radio
+   message
 } from 'antd';
-
+import { asyncRequest, cancelTask } from '../../../context/actions';
+import { TaskType } from '../../../config/types';
+import { Actions } from '../../../components/common';
 const { TextArea } = Input;
 
 const onChange = (e: any) => {
@@ -58,7 +57,9 @@ const residences = [
 
 interface CreateEventProps {
   form: any,
-  submitTask: Function
+  submitTask: Function,
+  dispatch: Function,
+  type: TaskType
 }
 
 class CreateEvent extends React.Component<CreateEventProps> {
@@ -69,11 +70,33 @@ class CreateEvent extends React.Component<CreateEventProps> {
 
   handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err: Error, values: any) => {
+    this.props.form.validateFieldsAndScroll(async (err: Error, values: any) => {
+      // const { name, description, startTime, endTime, group } = values;
+      const options = {
+        method: 'post',
+        url: '/createEvent',
+        data: {
+          className: 'Event',
+          // name,
+          // description,
+          // startTime,
+          // endTime,
+          // group,
+        }
+      };
       if (!err) {
-        alert(`${values}`);
+        const doc = await asyncRequest(options, this.props.dispatch);
+        if (doc) {
+          message.success(`response: ${JSON.stringify(doc, null, 2)}`);
+        } else {
+          message.error(`response: ${JSON.stringify(doc, null, 2)}`);
+        }
       }
     });
+  };
+
+  cancel = () => {
+    this.props.dispatch(cancelTask())
   };
 
   handleConfirmBlur = (e: any) => {
@@ -141,178 +164,54 @@ class CreateEvent extends React.Component<CreateEventProps> {
       rules: [{ type: 'object', required: true, message: 'Please select time!' }],
     };
 
+    const actions = {
+      taskType: this.props.type as TaskType,
+      submitAction: this.handleSubmit,
+      cancelAction: this.cancel
+    };
+
     return (
       <Form {...formItemLayout} onSubmit={this.handleSubmit}>
 
-        <Form.Item label="E-mail">
-          {getFieldDecorator('email', {
-            rules: [
-              {
-                type: 'email',
-                message: 'The input is not valid E-mail!',
-              },
-              {
-                required: true,
-                message: 'Please input your E-mail!',
-              },
-            ],
-          })(<Input />)}
-        </Form.Item>
-
-        <Form.Item label="Password" hasFeedback>
-          {getFieldDecorator('password', {
-            rules: [
-              {
-                required: true,
-                message: 'Please input your password!',
-              },
-              {
-                validator: this.validateToNextPassword,
-              },
-            ],
-          })(<Input.Password />)}
-
-        </Form.Item>
-        <Form.Item label="Confirm Password" hasFeedback>
-          {getFieldDecorator('confirm', {
-            rules: [
-              {
-                required: true,
-                message: 'Please confirm your password!',
-              },
-              {
-                validator: this.compareToFirstPassword,
-              },
-            ],
-          })(<Input.Password onBlur={this.handleConfirmBlur} />)}
-
-        </Form.Item>
-        <Form.Item
-          label='Simple Text'
-        >
-          {getFieldDecorator('Text', {
-            rules: [{ required: true, message: 'Please input your text!', whitespace: true }],
-          })(<Input />)}
-        </Form.Item>
-
-        <Form.Item
-          label='Not Required Simple Text'
-        >
-          {getFieldDecorator('Text', {
-            rules: [{ required: false, whitespace: true }],
-          })(<Input />)}
-        </Form.Item>
-
-        <Form.Item label="TimePicker">
-          {getFieldDecorator('time-picker', config)(<TimePicker />)}
-        </Form.Item>
-
-        <Form.Item
-          label={
-            <span>
-              Nickname&nbsp;
-              <Tooltip title="What do you want others to call you?">
-                <Icon type="question-circle-o" />
-              </Tooltip>
-            </span>
-          }
-        >
-          {getFieldDecorator('nickname', {
-            rules: [{ required: true, message: 'Please input your nickname!', whitespace: true }],
-          })(<Input />)}
-        </Form.Item>
-
-        <Form.Item label="Habitual Residence">
-          {getFieldDecorator('residence', {
-            initialValue: ['zhejiang', 'hangzhou', 'xihu'],
-            rules: [
-              { type: 'array', required: true, message: 'Please select your habitual residence!' },
-            ],
-          })(<Cascader options={residences} />)}
-        </Form.Item>
-
-        <Form.Item label="Phone Number">
-          {getFieldDecorator('phone', {
-            rules: [{ required: true, message: 'Please input your phone number!' }],
-          })(<Input addonBefore={prefixSelector} style={{ width: '100%' }} />)}
-        </Form.Item>
-
-        <Form.Item label="DatePicker">
-          {getFieldDecorator('date-picker', config)(<DatePicker />)}
-        </Form.Item>
-
-        <Form.Item label="Radio.Group">
-          {getFieldDecorator('radio-group')(
-            <Radio.Group>
-              <Radio value="a">item 1</Radio>
-              <Radio value="b">item 2</Radio>
-              <Radio value="c">item 3</Radio>
-            </Radio.Group>,
-          )}
-        </Form.Item>
-
-        <Form.Item label="Checkbox.Group">
-          {getFieldDecorator('checkbox-group', {
-            initialValue: ['A', 'B'],
+        <Form.Item label="Name">
+          {getFieldDecorator('name', {
+            rules: [{ required: true, message: 'It\'s required bro.' }],
           })(
-            <Checkbox.Group style={{ width: '100%' }}>
-              <Row>
-                <Col span={8}>
-                  <Checkbox value="A">A</Checkbox>
-                </Col>
-                <Col span={8}>
-                  <Checkbox disabled value="B">
-                    B
-                  </Checkbox>
-                </Col>
-                <Col span={8}>
-                  <Checkbox value="C">C</Checkbox>
-                </Col>
-                <Col span={8}>
-                  <Checkbox value="D">D</Checkbox>
-                </Col>
-                <Col span={8}>
-                  <Checkbox value="E">E</Checkbox>
-                </Col>
-              </Row>
-            </Checkbox.Group>,
-          )}
-        </Form.Item>
-        
-        <Form.Item label="Website">
-          {getFieldDecorator('website', {
-            rules: [{ required: true, message: 'Please input website!' }],
-          })(
-            <AutoComplete
-              dataSource={websiteOptions}
-              onChange={this.handleWebsiteChange}
-              placeholder="website"
-            >
-              <Input />
-            </AutoComplete>,
+            <Input placeholder="" allowClear onChange={onChange} />
           )}
         </Form.Item>
 
-        <Form.Item label="clear-input">
-          {getFieldDecorator('clear-input', {
-            rules: [{ required: true, message: 'try it out' }],
-          })(
-            <Input placeholder="this one has clear" allowClear onChange={onChange} />
-          )}
-        </Form.Item>
-
-        <Form.Item label="clear-text">
-          {getFieldDecorator('clear-text', {
-            rules: [{ required: true, message: 'try it out also' }],
+        <Form.Item label="Description">
+          {getFieldDecorator('description', {
+            rules: [{ required: true, message: 'It\'s required bro.' }],
           })(
             <TextArea 
-              placeholder="textarea with clear icon" 
+              placeholder="" 
               allowClear 
               onChange={onChange} 
-              autoSize={{ minRows: 2, maxRows: 8 }}
+              autoSize={{ minRows: 10, maxRows: 20 }}
             />
-            )}
+          )}
         </Form.Item>
+
+        <Form.Item label="Start Date">
+          {getFieldDecorator('startDate', config)(<DatePicker />)}
+        </Form.Item>
+
+        <Form.Item label="Start Time">
+          {getFieldDecorator('startTime', config)(<TimePicker />)}
+        </Form.Item>
+
+        <Form.Item label="End Date">
+          {getFieldDecorator('endDate', config)(<DatePicker />)}
+        </Form.Item>
+
+        <Form.Item label="End Time">
+          {getFieldDecorator('endTime', config)(<TimePicker />)}
+        </Form.Item>
+
+
+        <Actions {...actions} />
 
       </Form>
     );

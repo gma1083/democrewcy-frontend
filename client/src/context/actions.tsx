@@ -1,28 +1,66 @@
-import { SET_ACTIVE_TASK, SET_ACTIVE_GROUP, 
-  SET_USER, CANCEL_TASK } from './constants';
-import { Group, Task } from '../config/types';
+import * as c from './constants';
+import { Task, Group, User } from '../config/types';
+import axios from '../config/axios';
+import { AxiosRequestConfig } from 'axios';
 
 export const setActiveTask = (task: Task) => ({
-  type: SET_ACTIVE_TASK,
+  type: c.SET_ACTIVE_TASK,
   data: { 
     activeTask: task
   } 
 });
 
-export const setActiveGroup = (group: Group) => ({
-  type: SET_ACTIVE_GROUP,
-  data: {
-    activeGroup: group
-  }
-});
-
-export const setUser = (user: any) => ({
-  type: SET_USER,
+export const setUser = (user: User) => ({
+  type: c.SET_USER,
   data: {
     user
   }
 });
 
-export const cancelTask = () => ({
-  type: CANCEL_TASK
+export const setActiveGroup = (group: Group) => ({
+  type: c.SET_ACTIVE_GROUP,
+  data: {
+    group
+  }
 });
+
+export const cancelTask = () => ({
+  type: c.CANCEL_TASK
+});
+
+export const beginAsyncRequest = () => ({
+  type: c.BEGIN_ASYNC_REQUEST
+});
+
+export const asyncRequestCompleted = () => ({
+  type: c.ASYNC_REQUEST_COMPLETED
+});
+
+export const asyncRequestError = (err: any) => ({
+  type: c.ASYNC_REQUEST_ERROR,
+  payload: err
+});
+
+interface Options {
+  method: string,
+  url: string,
+  data: any
+};
+
+export const asyncRequest = async (options: Options, dispatch: Function) => {
+  const { method, url, data } = options;
+  dispatch(beginAsyncRequest());
+  try {
+    const response = axios({
+      method: method as AxiosRequestConfig["method"],
+      url: url as AxiosRequestConfig["url"],
+      data: data as AxiosRequestConfig["data"],
+    });
+    dispatch(asyncRequestCompleted());
+    return response;
+  }
+  catch (err) {
+    dispatch(asyncRequestError(err));
+  }
+};
+

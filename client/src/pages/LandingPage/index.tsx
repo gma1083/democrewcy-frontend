@@ -27,7 +27,7 @@ const LandingPageLoginView: React.SFC<LandingPageProps> = (props) => {
           const result = await axios.post('auth/login', payload);
           props.dispatch(setUser(result.data.accountId))
           console.dir(result);
-          notification.success({message: 'Welcome!'})
+          notification.success({message: 'Welcome!', duration: 3})
         }
         catch (err) {
           message.error('Unable to log in. Please check yourself.')
@@ -41,7 +41,7 @@ const LandingPageLoginView: React.SFC<LandingPageProps> = (props) => {
   return (
     <React.Fragment>
       {props.state.user && <Redirect to="/home" />}
-      <Layout style={{ backgroundColor: "#001529", height: '100%', width: '100%' }}>
+      <Layout style={{ backgroundColor: "#001529", height: '100vh', width: '100vw' }}>
         <div style={{ margin: "auto", textAlign: "center" }}>
           <Card size="default">
             <Typography.Title level={3}>Log In</Typography.Title>
