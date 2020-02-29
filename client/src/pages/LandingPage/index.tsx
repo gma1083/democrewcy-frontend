@@ -24,13 +24,14 @@ const LandingPageLoginView: React.SFC<LandingPageProps> = (props) => {
         try {
           const { email, password } = values;
           const payload = { email, password }
+          console.log(payload)
           const result = await axios.post('auth/login', payload);
-          props.dispatch(setUser(result.data.accountId))
+          props.dispatch(setUser(result.data.id))
           console.dir(result);
           notification.success({message: 'Welcome!', duration: 3})
         }
         catch (err) {
-          message.error('Unable to log in. Please check yourself.')
+          message.error(`Unable to log in. ${err}. Please check yourself.`)
         }
       }
     });

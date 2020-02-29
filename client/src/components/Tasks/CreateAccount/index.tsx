@@ -36,7 +36,7 @@ class CreateAccountForm extends React.Component<CreateAccountFormProps> {
       const { firstName, lastName, email, password, birthDate } = values;
       const options = {
         method: 'post',
-        url: '/admin/createAccount',
+        url: '/createAccount',
         data: { 
           className: 'User',
           firstName, 
@@ -46,6 +46,8 @@ class CreateAccountForm extends React.Component<CreateAccountFormProps> {
           birthDate
         } 
     };
+    console.log('axios in CreateAccount')
+    console.log(options)
       if (!err) {
         const doc = await asyncRequest(options, this.props.dispatch);
         if (doc) {

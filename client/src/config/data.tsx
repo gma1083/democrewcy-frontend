@@ -25,15 +25,9 @@ export const taskData: Task[] = [{
   type: 'create'
 },
 {
-  key: "view-my-profile",
-  title: 'View my Profile',
-  component: 'ViewProfile',
-  type: 'view'
-},
-{
-  key: "view-a-profile",
-  title: 'View a Profile',
-  component: 'ViewProfile',
+  key: "view-account",
+  title: 'View an Account',
+  component: 'ViewAccount',
   type: 'view'
 },
 {

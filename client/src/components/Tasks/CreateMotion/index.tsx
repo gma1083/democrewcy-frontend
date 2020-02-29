@@ -9,7 +9,7 @@ import {
   DatePicker,
   AutoComplete,
   Icon,
-  Checkbox, Col, Row, Radio, message, notification
+  Checkbox, Col, Row, Radio, message, notification, Popover
 } from 'antd';
 import { asyncRequest, cancelTask } from '../../../context/actions';
 import { Actions, Selector } from '../../common/';
@@ -183,6 +183,11 @@ class CreateMotionForm extends React.Component<CreateMotionFormProps> {
       cancelAction: this.cancel
     };
 
+    const poop = () => {
+      const data = this.props.form.getFieldsValue('group');
+      console.log(data);
+    };
+
     return (
       <Form {...formItemLayout} onSubmit={this.handleSubmit}>
 
@@ -207,21 +212,31 @@ class CreateMotionForm extends React.Component<CreateMotionFormProps> {
             )}
         </Form.Item>
 
-        <Form.Item label="Group">
+        {/* <Form.Item label="Group">
           {getFieldDecorator('group', {
             rules: [{ required: true, message: 'Please enter a name'  }],
           })(
-            <Selector />
+            <Selector 
+              formId="group"
+              className="Group"
+              updateFormItem={this.props.form.setFieldsValue}
+              getFormItem={this.props.form.getFieldsValue}
+            />
           )}
         </Form.Item>
 
         <Form.Item label="Poop Test">
-          <Checkbox onClick={() => this.props.form.setFieldsValue({group: 'poop'})}/>
+          <Checkbox onClick={() => poop()} />
         </Form.Item>
         
         <Form.Item label='Allowed Vote Options'>
-          <Selector />
-        </Form.Item>
+          <Selector 
+            className="User"
+            formId="users"
+            updateFormItem={this.props.form.setFieldsValue}
+            getFormItem={this.props.form.getFieldsValue}
+          />
+        </Form.Item> */}
         
         <Actions {...actions} />
 

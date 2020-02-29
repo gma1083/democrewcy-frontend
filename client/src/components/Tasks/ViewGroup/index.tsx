@@ -27,7 +27,7 @@ const ViewGroup: React.SFC<ViewGroupProps> = ({state}) => {
           <Motions motions={group.motions} />
         </> : 
         <>
-          <Selector />
+          poop
         </>}
     </Content>
   )

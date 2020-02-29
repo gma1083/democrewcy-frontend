@@ -10,11 +10,6 @@ import Actions from '../../common/Actions';
 import { TaskType } from '../../../config/types';
 const { TextArea } = Input;
 
-const onChange = (e: any) => {
-  console.log(e);
-};
-
-
 interface CreateGroupFormProps {
   form: any,
   submitTask: Function,
@@ -24,22 +19,25 @@ interface CreateGroupFormProps {
 }
 
 class CreateGroupForm extends React.Component<CreateGroupFormProps> {
+  
   handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll(async (err: Error, values: any) => {
-      // const { name, description, startTime, endTime, group } = values;
+      const { name, description, positions, users, subGroups } = values;
       const options = {
         method: 'post',
-        url: '/createEvent',
+        url: '/mira/put',
         data: {
-          className: 'Event'
-          // name,
-          // description,
-          // startTime,
-          // endTime,
-          // group,
+          className: 'Group',
+          name,
+          description,
+          positions,
+          users,
+          subGroups
         }
       };
+      console.log('create group request')
+      console.dir(options)
       if (!err) {
         const doc = await asyncRequest(options, this.props.dispatch);
         if (doc) {
@@ -83,7 +81,7 @@ class CreateGroupForm extends React.Component<CreateGroupFormProps> {
           {getFieldDecorator('name', {
             rules: [{ required: true, message: 'try it out' }],
           })(
-            <Input placeholder="What is this group called?" allowClear onChange={onChange} />
+            <Input placeholder="What is this group called?" allowClear />
           )}
         </Form.Item>
 
@@ -94,22 +92,54 @@ class CreateGroupForm extends React.Component<CreateGroupFormProps> {
             <TextArea 
               placeholder="What is this groups purpose?" 
               allowClear 
-              onChange={onChange} 
               autoSize={{ minRows: 2, maxRows: 8 }}
             />
             )}
         </Form.Item> 
         
         <Form.Item label="Positions">
-          <Selector/>
+          {getFieldDecorator('positions', {
+              rules: [{ required: true, message: 'try it out also' }],
+            })(
+              <>
+                <Selector 
+                  className="Position"
+                  formId='positions'
+                  updateFormItem={this.props.form.setFieldsValue}
+                  getFormItem={this.props.form.getFieldValue}
+                />
+              </>
+            )}
         </Form.Item>
 
         <Form.Item label="Users">
-          <Selector/>
+          {getFieldDecorator('users', {
+              rules: [{ required: true, message: 'try it out also' }],
+            })(
+            <>
+              <Selector
+                className="User"
+                formId="users"
+                updateFormItem={this.props.form.setFieldsValue}
+                getFormItem={this.props.form.getFieldValue}
+              />
+            </>
+          )}
         </Form.Item>
 
         <Form.Item label="Sub Groups">
-          <Selector/>
+          {getFieldDecorator('subGroups', {
+              rules: [{ required: true, message: 'try it out also' }],
+            })(
+            <>
+              <Selector
+                className="Group"
+                formId="subGroups"
+                updateFormItem={this.props.form.setFieldsValue}
+                getFormItem={this.props.form.getFieldValue}
+              />
+            </>
+          )}
         </Form.Item>
 
         <Actions {...actions} />
