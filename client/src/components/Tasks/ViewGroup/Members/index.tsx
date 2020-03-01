@@ -2,10 +2,10 @@ import React from 'react';
 import { Card, PageHeader } from 'antd';
 import HorizontallyScrollable from '../../../common/HorizontallyScrollable';
 import { Member } from '../../../../config/types';
-// import { EmptyCard } from '../../../common';
+import { EmptyCard } from '../../../common';
 
 interface MembersProps {
-  members: Member[]
+  members?: Member[]
 };
  
 export const MemberPresentation: React.SFC<Member> = ({ name, position }) => {
@@ -33,8 +33,9 @@ const Members: React.SFC<MembersProps> = ({ members }) => {
     <React.Fragment>
       <PageHeader title='Members' />
       <HorizontallyScrollable>
-        {members?.map(member => <MemberPresentation key={member.name} {...member}/>)}
-        {/* {Array(5).fill(0).map(item => <EmptyCard  />)} */}
+        {members ?
+          members.map(member => <MemberPresentation key={member.name} {...member}/>) :
+          Array(5).fill(0).map(item => <EmptyCard  />)}
       </HorizontallyScrollable>
     </React.Fragment>
   );

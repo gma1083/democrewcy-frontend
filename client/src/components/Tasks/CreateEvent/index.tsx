@@ -6,8 +6,10 @@ import {
   TimePicker,
   DatePicker,
   AutoComplete,
-   message
+  message,
+  notification
 } from 'antd';
+import { Selector } from '../../common';
 import { asyncRequest, cancelTask } from '../../../context/actions';
 import { TaskType } from '../../../config/types';
 import { Actions } from '../../../components/common';
@@ -71,20 +73,23 @@ class CreateEvent extends React.Component<CreateEventProps> {
   handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll(async (err: Error, values: any) => {
-      // const { name, description, startTime, endTime, group } = values;
+      const { name, description, startTime, endTime, startDate, endDate, group } = values;
       const options = {
         method: 'post',
         url: '/createEvent',
         data: {
           className: 'Event',
-          // name,
-          // description,
-          // startTime,
-          // endTime,
-          // group,
+          name,
+          description,
+          startTime,
+          endTime,
+          group,
         }
       };
+      message.info(`Create Event payload -- ${JSON.stringify(options)}`);
       if (!err) {
+        console.log('request to create event')
+        console.dir(options);
         const doc = await asyncRequest(options, this.props.dispatch);
         if (doc) {
           message.success(`response: ${JSON.stringify(doc, null, 2)}`);
@@ -208,6 +213,19 @@ class CreateEvent extends React.Component<CreateEventProps> {
 
         <Form.Item label="End Time">
           {getFieldDecorator('endTime', config)(<TimePicker />)}
+        </Form.Item>
+
+        <Form.Item label="Group">
+        {getFieldDecorator('group', {
+            rules: [{ required: true, message: 'It\'s required bro.' }],
+          })(
+            <Selector
+              className="Group"
+              formId='group'
+              updateFormItem={this.props.form.setFieldsValue}
+              getFormItem={this.props.form.getFieldValue}
+            />
+          )}
         </Form.Item>
 
 

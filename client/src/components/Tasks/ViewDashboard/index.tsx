@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { RelatedAction } from '../../common';
-import { Card } from 'antd';
+import { Layout, Card, Drawer } from 'antd';
 
 
 const tabList: any[] = [
@@ -9,14 +9,14 @@ const tabList: any[] = [
     tab: 'Related Action',
   },
   {
-    key: 'Up Next',
-    tab: 'Up Next',
+    key: 'Related Action2',
+    tab: 'Related Action2',
   },
 ];
 
 const contentList: any = {
   tab1: [<RelatedAction />, <RelatedAction />],
-  tab2: <p>Not Sure</p>,
+  tab2: [<RelatedAction />, <RelatedAction />]
 };
 
 interface ViewDashboardProps {
@@ -27,6 +27,7 @@ class ViewDashboard extends React.Component<ViewDashboardProps> {
   state = {
     key: 'tab1',
     noTitleKey: 'app',
+    visible: true
   };
 
   onTabChange = (key: any, type: any) => {
@@ -34,21 +35,30 @@ class ViewDashboard extends React.Component<ViewDashboardProps> {
     this.setState({ [type]: key });
   };
 
+  showDrawer = () => {
+    this.setState({
+      visible: true,
+    });
+  };
+
+  onClose = () => {
+    this.setState({
+      visible: false,
+    });
+  };
   render() {
     return (
-      <div style={{ height: '100%', width: '100%' }}>
-        <Card
-          style={{ width: '50%', textAlign: 'center' }}
-          title="Components In Progress"
-          tabList={tabList}
-          activeTabKey={this.state.key}
-          onTabChange={key => {
-            this.onTabChange(key, 'key');
-          }}
-        >
+      <Layout style={{ height: '100vh', width: '100vw' }}>
+        <Drawer
+          title="Components in Progress"
+          placement="right"
+          closable={false}
+          onClose={this.onClose}
+          visible={this.state.visible}
+        > 
           {contentList[this.state.key]}
-        </Card>
-      </div>
+        </Drawer>
+      </Layout>
     );
   }
 }

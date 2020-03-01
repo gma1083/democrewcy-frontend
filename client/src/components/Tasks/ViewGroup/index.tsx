@@ -1,36 +1,29 @@
 import React from 'react';
 import { Events, Members, Motions } from '../..';
-import { Layout, Typography } from 'antd';
-import { Group } from '../../../config/types';
-import { Selector } from '../../../components/common';
+import { PageHeader, Layout } from 'antd';
+import { setTaskContext } from '../../../context/actions';
 
 const { Content } = Layout;
 
 interface ViewGroupProps {
-  state: any
+  state: any,
+  dispatch: Function
 };
 
-const ViewGroup: React.SFC<ViewGroupProps> = ({state}) => {
-  console.log('state in viewgroup')
-  console.log(state)
+const ViewGroup: React.FunctionComponent<ViewGroupProps> = (props) => {
+  console.log('props in viewgroup')
+  console.log(props)
 
-  const { groups, activeGroup } = state;
-
-  const group: Group = activeGroup ? groups.find((group: Group) => group.name === activeGroup.name) : null;
+  const { state, dispatch } = props;
+  const { ctx } = state.taskCtx; 
 
   return (
     <Content>
-      {group ?
-        <>
-          <Members members={group.members} />
-          <Events events={group.events} />
-          <Motions motions={group.motions} />
-        </> : 
-        <>
-          poop
-        </>}
+      <PageHeader title={ctx.name} onBack={() => dispatch(setTaskContext(null))}/>
+      <Members members={undefined} />
+      <Events events={ctx.events} />
+      <Motions motions={ctx.motions} />
     </Content>
-  )
-}
- 
+  )}
+
 export default ViewGroup;

@@ -77,7 +77,7 @@ class CreateMotionForm extends React.Component<CreateMotionFormProps> {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll(async (err: Error, values: any) => {
       if (!err) {
-        // TODO: get proposedBy from user.positionInGroup?
+        // TODO: get proposedBy from context user.positionInGroup?
         // TODO: get group and vote from local state
         // TODO: store group and vote in local state
         // const { title, description } = values;
@@ -183,11 +183,6 @@ class CreateMotionForm extends React.Component<CreateMotionFormProps> {
       cancelAction: this.cancel
     };
 
-    const poop = () => {
-      const data = this.props.form.getFieldsValue('group');
-      console.log(data);
-    };
-
     return (
       <Form {...formItemLayout} onSubmit={this.handleSubmit}>
 
@@ -212,7 +207,7 @@ class CreateMotionForm extends React.Component<CreateMotionFormProps> {
             )}
         </Form.Item>
 
-        {/* <Form.Item label="Group">
+        <Form.Item label="Group">
           {getFieldDecorator('group', {
             rules: [{ required: true, message: 'Please enter a name'  }],
           })(
@@ -220,13 +215,9 @@ class CreateMotionForm extends React.Component<CreateMotionFormProps> {
               formId="group"
               className="Group"
               updateFormItem={this.props.form.setFieldsValue}
-              getFormItem={this.props.form.getFieldsValue}
+              getFormItem={this.props.form.getFieldValue}
             />
           )}
-        </Form.Item>
-
-        <Form.Item label="Poop Test">
-          <Checkbox onClick={() => poop()} />
         </Form.Item>
         
         <Form.Item label='Allowed Vote Options'>
@@ -234,9 +225,9 @@ class CreateMotionForm extends React.Component<CreateMotionFormProps> {
             className="User"
             formId="users"
             updateFormItem={this.props.form.setFieldsValue}
-            getFormItem={this.props.form.getFieldsValue}
+            getFormItem={this.props.form.getFieldValue}
           />
-        </Form.Item> */}
+        </Form.Item>
         
         <Actions {...actions} />
 

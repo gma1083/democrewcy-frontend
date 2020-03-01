@@ -4,43 +4,50 @@ export const taskData: Task[] = [{
   key: "create-group",
   title: 'Create a Group',
   component: 'CreateGroup',
-  type: 'create'
+  type: 'create',
+  ctx: 'Group'
 },
 {
   key: "create-account",
   title: 'Create an Account',
   component: 'CreateAccount',
-  type: 'create'
+  type: 'create',
+  ctx: 'Account'
 },
 {
   key: "create-event",
   title: 'Create an Event',
   component: 'CreateEvent',
-  type: 'create'
+  type: 'create',
+  ctx: 'Event'
 },
 {
   key: "create-motion",
   title: 'Create a Motion',
   component: 'CreateMotion',
-  type: 'create'
+  type: 'create',
+  ctx: 'Motion'
 },
 {
   key: "view-account",
   title: 'View an Account',
   component: 'ViewAccount',
-  type: 'view'
+  type: 'view',
+  ctx: 'Account'
 },
 {
   key: "view-group",
   title: 'View a Group',
   component: 'ViewGroup',
-  type: 'view'
+  type: 'view',
+  ctx: 'Group'
 },
 {
   key: "st-example",
-  title: 'Sequence Task Example',
+  title: 'Don\'t Click Me',
   component: 'SequenceTaskExample',
-  type: 'create'
+  type: 'create',
+  ctx: 'Group'
 }];
 
 export const userData: User[] = [{

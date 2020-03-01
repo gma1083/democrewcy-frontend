@@ -5,7 +5,7 @@ import { AppConsumer } from '../../context';
 import { Context } from '../../config/types';
 import * as Tasks from '../../components/tasks';
 import { Route, Redirect } from 'react-router-dom';
-
+import { ContextSelector } from '../../components/common';
 
 export interface TasksProps {
 
@@ -22,7 +22,7 @@ const TasksPresentation: React.SFC<TasksPresentationProps> = (props: any) => {
   
   const { state, dispatch } = props;
   
-  let ActiveTaskForm: React.SFC<any> = state.activeTask && (Tasks as any)[state.activeTask.component];
+  let ActiveTask: React.SFC<any> = state.activeTask && (Tasks as any)[state.activeTask.component];
     
   return (
     <Layout>
@@ -38,15 +38,22 @@ const TasksPresentation: React.SFC<TasksPresentationProps> = (props: any) => {
               component={(props: any) => 
                 <TaskLayout
                   title={state.activeTask?.title || ''}
-                  form={
-                    <ActiveTaskForm 
+                  form={state.activeTask.type === 'create' || state.taskCtx.ctx ?
+                    <ActiveTask
                       {...props}
                       state={state}
                       dispatch={dispatch}
                       type={state.activeTask?.type}
+                    /> :
+                    <ContextSelector 
+                      {...props}
+                      state={state}
+                      dispatch={dispatch}
+                      type={'edit'}
+                      ctxType={state.taskCtx.type}
                     />}
+                  />}
                 />}
-            />}
       
     </Layout>
   );

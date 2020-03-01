@@ -1,5 +1,5 @@
 import * as c from './constants';
-import { Task, Group, User } from '../config/types';
+import { Task, Group, User, TaskCtx, SideBarContext } from '../config/types';
 import axios from '../config/axios';
 import { AxiosRequestConfig } from 'axios';
 
@@ -39,6 +39,20 @@ export const asyncRequestCompleted = () => ({
 export const asyncRequestError = (err: any) => ({
   type: c.ASYNC_REQUEST_ERROR,
   payload: err
+});
+
+export const setTaskContext = (ctx: string | null) => ({
+  type: c.SET_TASK_CONTEXT,
+  data: {
+    ctx
+  }
+});
+
+export const setSideBarContext = (ctx: SideBarContext | null) => ({
+  type: c.SET_SIDEBAR_CONTEXT,
+  data: {
+    ctx
+  }
 });
 
 interface Options {

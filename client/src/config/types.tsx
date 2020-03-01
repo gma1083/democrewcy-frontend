@@ -38,16 +38,26 @@ export interface Task {
   key: string,
   title: string,
   component: string,
-  type: string
+  type: string,
+  ctx: TaskCtxType
+};
+export type TaskCtxType = 'Event'| 'Position' | 'Motion' | 'User' | 'Group' | 'Account';
+export type TaskType = 'view' | 'edit' | 'create';
+export type TaskCtx = Event | Position | Motion | User | Group;
+
+export interface TaskContext {
+  type: string,
+  ctx: string | null
 };
 
-export type TaskType = 'view' | 'edit' | 'create';
-
-export interface Context {
+export interface SideBarContext {
   groups: Group[],
-  users: User[],
-  activeGroup: Group | null,
+  users: User[]
+};
+export interface Context {
   tasks: Task[],
-  activeTask?: Task | null
-  user: any | null
+  activeTask?: Task | null,
+  taskCtx: TaskContext | null,
+  user: any | null,
+  sidebar: SideBarContext | null
 };

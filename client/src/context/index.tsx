@@ -1,15 +1,14 @@
 import React, { useReducer } from 'react'
 import { Context } from '../config/types';
-import { groupData, userData, taskData } from '../config/data';
+import { taskData } from '../config/data';
 import reducer from './reducer';
 
 const getDefaultContext = (): Context => ({
-  groups: groupData,
-  users: userData,
   tasks: taskData,
   activeTask: null,
-  activeGroup: null,
-  user: null
+  taskCtx: null,
+  user: null,
+  sidebar: null
 });
 
 const ctx = React.createContext({});
