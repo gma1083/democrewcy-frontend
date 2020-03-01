@@ -3,7 +3,7 @@ import { Layout, Menu, Icon, Typography, Spin } from 'antd';
 import { NavLink } from 'react-router-dom';
 import { TaskBar } from '../index';
 import "antd/dist/antd.css";
-import { AppConsumer } from '../../../context';
+import { withAppContext } from '../../../context';
 import { setActiveTask, cancelTask, setSideBarContext } from '../../../context/actions';
 import { Context, Group, Task, User, SideBarContext } from '../../../config/types';
 import axios from '../../../config/axios';
@@ -16,7 +16,7 @@ export interface SideBarProps {
   dispatch: Function
 }
 
-const SideBarPresentation: React.SFC<SideBarProps> = (props) => {
+const SideBar: React.FunctionComponent<SideBarProps> = (props) => {
   console.log('props in SideBar')
   console.log(props);
 
@@ -122,13 +122,5 @@ const SideBarPresentation: React.SFC<SideBarProps> = (props) => {
     </Spin>
   );
 }
-
-const SideBar: React.SFC<{}> = (props: any) => {
-  return (
-    <AppConsumer>
-      {(ctx: any) => <SideBarPresentation {...ctx} {...props}/>}
-    </AppConsumer>
-  )
-} 
  
-export default SideBar;
+export default withAppContext(SideBar);

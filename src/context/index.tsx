@@ -1,10 +1,10 @@
 import React, { useReducer } from 'react'
 import { Context } from '../config/types';
-import { taskData } from '../config/data';
+import { tasks } from '../config/tasks';
 import reducer from './reducer';
 
 const getDefaultContext = (): Context => ({
-  tasks: taskData,
+  tasks,
   activeTask: null,
   taskCtx: null,
   user: null,
@@ -13,9 +13,7 @@ const getDefaultContext = (): Context => ({
 
 const ctx = React.createContext({});
 
-const AppConsumer = ctx.Consumer;
-
-const { Provider } = ctx;
+const { Provider, Consumer } = ctx;
 
 interface AppProviderProps {
   children: any
@@ -31,9 +29,19 @@ const AppProvider: React.SFC<AppProviderProps> = ({ children }) => {
   );
 }
 
+function withAppContext(Component: any) {
+  return function WrapperComponent(props: any) {
+      return (
+          <Consumer>
+            {ctx => <Component {...props} {...ctx} />}
+          </Consumer>
+      );
+  };
+}
+ 
 export {
   getDefaultContext,
   AppProvider,
-  AppConsumer,
+  withAppContext
 }
 export default ctx;

@@ -3,7 +3,7 @@ import "antd/dist/antd.css";
 import { Form, Icon, Input, Button, Layout, Card, Typography, notification, message } from "antd";
 import { Redirect } from "react-router-dom";
 import axios from "../../config/axios";
-import { AppConsumer } from '../../context';
+import { withAppContext } from '../../context';
 import { Context } from '../../config/types';
 import { setUser } from '../../context/actions';
 
@@ -103,16 +103,4 @@ const LandingPageLoginView: React.SFC<LandingPageProps> = (props) => {
  
 const LandingPageForm = Form.create()(LandingPageLoginView);
 
-export interface LandingPageContainerProps {
-  
-}
- 
-const LandingPageContainer: React.SFC<LandingPageContainerProps> = () => {
-  return ( 
-    <AppConsumer>
-      {(ctx: any) => <LandingPageForm {...ctx} />}
-    </AppConsumer>
-   );
-}
- 
-export default LandingPageContainer;
+export default withAppContext(LandingPageForm);

@@ -2,7 +2,7 @@ import * as React from 'react';
 import './index.css';
 import { Icon, Input, AutoComplete } from 'antd';
 import { NavLink } from 'react-router-dom';
-import { taskData } from '../../../config/data';
+import { tasks } from '../../../config/tasks';
 import { SelectValue } from 'antd/lib/select';
 import { Task } from '../../../config/types';
 
@@ -11,7 +11,7 @@ const { Option, OptGroup } = AutoComplete;
 const dataSource = [
   {
     title: 'Tasks',
-    children: taskData
+    children: tasks
   }
 ];
 

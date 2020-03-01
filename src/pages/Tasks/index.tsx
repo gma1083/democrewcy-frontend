@@ -1,28 +1,21 @@
 import React from 'react';
 import { Layout } from 'antd';
 import { SideBar, TaskLayout } from '../../components/common';
-import { AppConsumer } from '../../context';
+import { withAppContext } from '../../context';
 import { Context } from '../../config/types';
 import * as Tasks from '../../components/tasks';
 import { Route, Redirect } from 'react-router-dom';
 import { ContextSelector } from '../../components/common';
 
 export interface TasksProps {
-
-};
-
-export interface TasksPresentationProps {
   state: Context,
   dispatch: Function
 }
  
-const TasksPresentation: React.SFC<TasksPresentationProps> = (props: any) => {
-  console.log('props in TasksPresentation')
-  console.log(props)
-  
+const TasksContainer: React.FunctionComponent<TasksProps> = (props: any) => {
+
   const { state, dispatch } = props;
-  
-  let ActiveTask: React.SFC<any> = state.activeTask && (Tasks as any)[state.activeTask.component];
+  let ActiveTask = state.activeTask && (Tasks as any)[state.activeTask.component];
     
   return (
     <Layout>
@@ -31,7 +24,7 @@ const TasksPresentation: React.SFC<TasksPresentationProps> = (props: any) => {
         {state.activeTask ? 
           <Redirect to={`/tasks/${state.activeTask.key}`} /> :
           <Redirect to={`/home`} />}
-      
+          
         {state.activeTask && 
             <Route 
               path={`/tasks/:taskId`} 
@@ -54,20 +47,8 @@ const TasksPresentation: React.SFC<TasksPresentationProps> = (props: any) => {
                     />}
                   />}
                 />}
-      
     </Layout>
   );
 }
  
-const TasksContainer: React.SFC<TasksProps> = (props: any) => {  
-  console.log('props in Tasks')
-  console.log(props)
-
-  return (
-    <AppConsumer>
-      {(ctx: any) => <TasksPresentation {...ctx} {...props} />}
-    </AppConsumer>
-  );
-}
- 
-export default TasksContainer;
+export default withAppContext(TasksContainer);
