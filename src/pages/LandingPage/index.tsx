@@ -14,7 +14,7 @@ export interface LandingPageProps {
   dispatch: Function
 };
  
-const LandingPageLoginView: React.SFC<LandingPageProps> = (props) => {
+const LandingPageLoginView: React.FunctionComponent<LandingPageProps> = (props) => {
 
   const handleSubmit = async (e : FormEvent) => {
     e.preventDefault();

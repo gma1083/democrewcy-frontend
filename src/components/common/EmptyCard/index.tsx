@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Skeleton } from 'antd';
 
-const EmptyCard: React.SFC = () => 
+const EmptyCard: React.FunctionComponent = () => 
   <div
     style={{
       display: "flex", 
@@ -10,9 +10,7 @@ const EmptyCard: React.SFC = () =>
       minWidth: '300px'
     }}
   >
-    <Card
-      bordered
-    >
+    <Card bordered>
       <Skeleton active/>
     </Card>
   </div>

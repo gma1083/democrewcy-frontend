@@ -8,7 +8,7 @@ function handleClick(e: ClickParam) {
   console.log('click', e);
 }
 
-const ActionMenu: React.SFC = () => {
+const ActionMenu: React.FunctionComponent = () => {
   return (
     <Menu onClick={handleClick} style={{ width: 256 }} mode="vertical">
       <SubMenu
@@ -63,7 +63,7 @@ const ActionMenu: React.SFC = () => {
   );
 };
 
-const RelatedAction: React.SFC = () => {
+const RelatedAction: React.FunctionComponent = () => {
   const [showMenu, setShowMenu] = useState(false);
   const toggleMenu = () => setShowMenu(!showMenu);
   return (

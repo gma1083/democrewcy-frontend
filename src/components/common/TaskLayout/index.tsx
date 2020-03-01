@@ -9,7 +9,7 @@ export interface TaskLayoutProps {
   form: React.ReactNode,
 };
  
-const TaskLayout: React.SFC<TaskLayoutProps> = ({ 
+const TaskLayout: React.FunctionComponent<TaskLayoutProps> = ({ 
   title, 
   subTitle = '', 
   form, 

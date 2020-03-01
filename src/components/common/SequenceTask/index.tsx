@@ -10,7 +10,7 @@ export interface SequenceTaskProps {
 const submitAlert = () => message.success('Processing complete!');
 const cancelAlert = (data: any) => alert('cancel');
 
-const SequenceTask: React.SFC<SequenceTaskProps> = (props) => {
+const SequenceTask: React.FunctionComponent<SequenceTaskProps> = (props) => {
   const { tasks } = props;
   const [current, setCurrent] = useState(0);
   const next = () => {

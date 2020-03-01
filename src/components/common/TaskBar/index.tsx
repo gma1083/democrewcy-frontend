@@ -49,7 +49,7 @@ interface TaskBarProps {
 
 */
 
-const TaskBar: React.SFC<TaskBarProps> = ({ tasks, dispatchTask,  }) => {
+const TaskBar: React.FunctionComponent<TaskBarProps> = ({ tasks, dispatchTask,  }) => {
 
   console.log('tasks in taskbar');
   console.log(tasks);    

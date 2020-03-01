@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const HoirzontallyScrollable: React.SFC<{}> = ({ children }) =>
+const HoirzontallyScrollable: React.FunctionComponent = ({ children }) =>
   <div
     style={{
       height: 'fit-content',
