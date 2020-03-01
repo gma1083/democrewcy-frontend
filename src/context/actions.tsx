@@ -1,5 +1,5 @@
 import * as c from './constants';
-import { Task, Group, User, TaskCtx, SideBarContext } from '../config/types';
+import { Task, Group, User, SideBarContext } from '../config/types';
 import axios from '../config/axios';
 import { AxiosRequestConfig } from 'axios';
 

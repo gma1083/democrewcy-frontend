@@ -2,12 +2,9 @@ import React, { FormEvent } from 'react';
 import {
   Form,
   Input,
-  Select,
   TimePicker,
   DatePicker,
-  AutoComplete,
-  message,
-  notification
+  message
 } from 'antd';
 import { Selector } from '../../common';
 import { asyncRequest, cancelTask } from '../../../context/actions';
@@ -18,44 +15,6 @@ const { TextArea } = Input;
 const onChange = (e: any) => {
   console.log(e);
 };
-
-const { Option } = Select;
-const AutoCompleteOption = AutoComplete.Option;
-
-const residences = [
-  {
-    value: 'zhejiang',
-    label: 'Zhejiang',
-    children: [
-      {
-        value: 'hangzhou',
-        label: 'Hangzhou',
-        children: [
-          {
-            value: 'xihu',
-            label: 'West Lake',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    value: 'jiangsu',
-    label: 'Jiangsu',
-    children: [
-      {
-        value: 'nanjing',
-        label: 'Nanjing',
-        children: [
-          {
-            value: 'zhonghuamen',
-            label: 'Zhong Hua Men',
-          },
-        ],
-      },
-    ],
-  },
-];
 
 interface CreateEventProps {
   form: any,
@@ -139,7 +98,6 @@ class CreateEvent extends React.Component<CreateEventProps> {
   render() {
     console.dir(this.props)
     const { getFieldDecorator } = this.props.form;
-    const { autoCompleteResult } = this.state;
 
     const formItemLayout = {
       labelCol: {
@@ -152,21 +110,8 @@ class CreateEvent extends React.Component<CreateEventProps> {
       },
     };
 
-    const prefixSelector = getFieldDecorator('prefix', {
-      initialValue: '86',
-    })(
-      <Select style={{ width: 70 }}>
-        <Option value="86">+86</Option>
-        <Option value="87">+87</Option>
-      </Select>,
-    );
-
-    const websiteOptions = autoCompleteResult.map(website => (
-      <AutoCompleteOption key={website}>{website}</AutoCompleteOption>
-    ));
-
     const config = {
-      rules: [{ type: 'object', required: true, message: 'Please select time!' }],
+      rules: [{ type: 'object', required: true, message: 'Please select a time.' }],
     };
 
     const actions = {
@@ -227,7 +172,6 @@ class CreateEvent extends React.Component<CreateEventProps> {
             />
           )}
         </Form.Item>
-
 
         <Actions {...actions} />
 

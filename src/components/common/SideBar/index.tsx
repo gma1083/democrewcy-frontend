@@ -16,25 +16,18 @@ export interface SideBarProps {
   dispatch: Function
 }
 
-export interface GroupProps {
-  name: string,
-  description: string
-};
-
-export interface UserProps {
-  firstName: string,
-  lastName: string
-};
-
 const SideBarPresentation: React.SFC<SideBarProps> = (props) => {
   console.log('props in SideBar')
   console.log(props);
 
   const [isLoading, setLoading] = useState(false);
+  const { dispatch } = props;
 
   useEffect(() => {
     async function onMount() {
       // fetch groups on load
+      console.log('SideBar init -- onMount()')
+      setLoading(true);
       const groupOptions = {
         className: 'Group',
         page: 0,
@@ -53,21 +46,18 @@ const SideBarPresentation: React.SFC<SideBarProps> = (props) => {
       let users: any[] = usersResponse.data.instances;
 
       const ctx: SideBarContext = { users, groups };
-      props.dispatch(setSideBarContext(ctx));
+      dispatch(setSideBarContext(ctx));
+      setLoading(false)
     }
     onMount();
     // set as sidebar context
-  }, [])
+    return function cleanup() {
+      console.log('sidebar cleanin up')
+    }
+  }, [dispatch])
 
   const dispatchViewGroupTask = (group: Group) => {
-    // props.dispatch(setActiveTask({
-    //   key: "view-group",
-    //   title: 'View a Group',
-    //   component: 'ViewGroup',
-    //   type: 'view',
-    //   ctx:
-    // }));
-    // props.dispatch(setActiveGroup(group));
+    // TODO
   };
 
   const dispatchCancelTask = () => {
@@ -76,7 +66,7 @@ const SideBarPresentation: React.SFC<SideBarProps> = (props) => {
   
   return (
     <Spin spinning={isLoading}>
-      <Sider width={200} style={{ background: '#fff' }}>
+      <Sider width={200} style={{ height: '100vh', background: '#fff' }}>
         <div style={{textAlign: 'center', paddingTop: '20px', paddingBottom: '10px'}}>
           <NavLink key='/home' to='/home' onClick={() => dispatchCancelTask()}>
             <Typography.Title level={3}>

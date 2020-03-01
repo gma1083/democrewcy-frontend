@@ -1,22 +1,9 @@
 import * as React from 'react';
 import { RelatedAction } from '../../common';
-import { Layout, Card, Drawer } from 'antd';
+import { Layout, Drawer } from 'antd';
 
-
-const tabList: any[] = [
-  {
-    key: 'Related Action',
-    tab: 'Related Action',
-  },
-  {
-    key: 'Related Action2',
-    tab: 'Related Action2',
-  },
-];
-
-const contentList: any = {
-  tab1: [<RelatedAction />, <RelatedAction />],
-  tab2: [<RelatedAction />, <RelatedAction />]
+const content: any = {
+  actions: [<RelatedAction />, <RelatedAction />],
 };
 
 interface ViewDashboardProps {
@@ -25,8 +12,7 @@ interface ViewDashboardProps {
 
 class ViewDashboard extends React.Component<ViewDashboardProps> {
   state = {
-    key: 'tab1',
-    noTitleKey: 'app',
+    key: 'actions',
     visible: true
   };
 
@@ -46,6 +32,7 @@ class ViewDashboard extends React.Component<ViewDashboardProps> {
       visible: false,
     });
   };
+
   render() {
     return (
       <Layout style={{ height: '100vh', width: '100vw' }}>
@@ -56,7 +43,7 @@ class ViewDashboard extends React.Component<ViewDashboardProps> {
           onClose={this.onClose}
           visible={this.state.visible}
         > 
-          {contentList[this.state.key]}
+          {content[this.state.key]}
         </Drawer>
       </Layout>
     );

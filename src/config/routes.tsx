@@ -3,7 +3,7 @@ export const Public = [
     text: "Landing Page",
     name: "LandingPage",
     route: "/",
-    exact: true,
+    exact: true
   }
 ];
 
@@ -13,13 +13,13 @@ export const Private = [
     name: "Home",
     route: "/home",
     exact: true,
-    allowedRoles: ['user']
+    allowedRoles: ["user"]
   },
   {
     text: "Tasks",
     name: "Tasks",
     route: "/tasks",
     exact: false,
-    allowedRoles: ['user']
+    allowedRoles: ["user"]
   }
 ];

@@ -2,14 +2,7 @@ import React, { FormEvent } from 'react';
 import {
   Form,
   Input,
-  Tooltip,
-  Cascader,
-  Select,
-  TimePicker,
-  DatePicker,
-  AutoComplete,
-  Icon,
-  Checkbox, Col, Row, Radio, message, notification, Popover
+  message,
 } from 'antd';
 import { asyncRequest, cancelTask } from '../../../context/actions';
 import { Actions, Selector } from '../../common/';
@@ -21,44 +14,6 @@ const onChange = (e: any) => {
   console.log(e);
 };
 
-const { Option } = Select;
-const AutoCompleteOption = AutoComplete.Option;
-
-const residences = [
-  {
-    value: 'zhejiang',
-    label: 'Zhejiang',
-    children: [
-      {
-        value: 'hangzhou',
-        label: 'Hangzhou',
-        children: [
-          {
-            value: 'xihu',
-            label: 'West Lake',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    value: 'jiangsu',
-    label: 'Jiangsu',
-    children: [
-      {
-        value: 'nanjing',
-        label: 'Nanjing',
-        children: [
-          {
-            value: 'zhonghuamen',
-            label: 'Zhong Hua Men',
-          },
-        ],
-      },
-    ],
-  },
-];
-
 interface CreateMotionFormProps {
   form: any,
   submitTask: Function
@@ -68,10 +23,6 @@ interface CreateMotionFormProps {
 }
 
 class CreateMotionForm extends React.Component<CreateMotionFormProps> {
-  state = {
-    confirmDirty: false,
-    autoCompleteResult: [],
-  };
 
   handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -112,42 +63,9 @@ class CreateMotionForm extends React.Component<CreateMotionFormProps> {
     this.props.dispatch(cancelTask())
   };
 
-  handleConfirmBlur = (e: any) => {
-    const { value } = e.target;
-    this.setState({ confirmDirty: this.state.confirmDirty || !!value });
-  };
-
-  compareToFirstPassword = (rule: any, value: any, callback: any) => {
-    const { form } = this.props;
-    if (value && value !== form.getFieldValue('password')) {
-      callback('Two passwords that you enter is inconsistent!');
-    } else {
-      callback();
-    }
-  };
-
-  validateToNextPassword = (rule: any, value: any, callback: any) => {
-    const { form } = this.props;
-    if (value && this.state.confirmDirty) {
-      form.validateFields(['confirm'], { force: true });
-    }
-    callback();
-  };
-
-  handleWebsiteChange = (value: any) => {
-    let autoCompleteResult: any[];
-    if (!value) {
-      autoCompleteResult = [];
-    } else {
-      autoCompleteResult = ['.com', '.org', '.net'].map(domain => `${value}${domain}`);
-    }
-    this.setState({ autoCompleteResult });
-  };
-
   render() {
     console.dir(this.props)
     const { getFieldDecorator } = this.props.form;
-    const { autoCompleteResult } = this.state;
 
     const formItemLayout = {
       labelCol: {
@@ -158,23 +76,6 @@ class CreateMotionForm extends React.Component<CreateMotionFormProps> {
         md: { span: 8 },
         lg: { span: 8 },
       },
-    };
-
-    const prefixSelector = getFieldDecorator('prefix', {
-      initialValue: '86',
-    })(
-      <Select style={{ width: 70 }}>
-        <Option value="86">+86</Option>
-        <Option value="87">+87</Option>
-      </Select>,
-    );
-
-    const websiteOptions = autoCompleteResult.map(website => (
-      <AutoCompleteOption key={website}>{website}</AutoCompleteOption>
-    ));
-
-    const config = {
-      rules: [{ type: 'object', required: true, message: 'Please select time!' }],
     };
 
     const actions = {
