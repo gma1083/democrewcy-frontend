@@ -2,7 +2,8 @@ import React from 'react';
 import { Switch } from "react-router-dom";
 import * as Pages from './pages';
 import { Private, Public } from "./config/routes";
-import { PublicRoute } from './components/common';
+import { PublicRoute, SideBar } from './components/common';
+import { Layout } from 'antd';
 
 const App = () => {
   const PublicPages = Public.map((route: any) => {
@@ -38,7 +39,10 @@ const App = () => {
   const App = (
     <Switch>
       {PublicPages}
-      {PrivatePages}
+      <Layout>
+        <SideBar />
+        {PrivatePages}
+      </Layout>
     </Switch>
   );
 

@@ -14,7 +14,6 @@ export interface HomeProps {
 const Home: React.FunctionComponent = (props: any) =>
   <Layout>
     {props.state.activeTask && <Redirect to={`/tasks`} />}
-    <SideBar />
     <div style={{height: '100vh', width: '100vw' }}>
       <Tasks.ViewDashboard {...props}/>
     </div>

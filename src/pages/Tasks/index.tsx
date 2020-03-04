@@ -19,7 +19,6 @@ const TasksContainer: React.FunctionComponent<TasksProps> = (props: any) => {
     
   return (
     <Layout>
-      <SideBar />
 
         {state.activeTask ? 
           <Redirect to={`/tasks/${state.activeTask.key}`} /> :
