@@ -24,7 +24,6 @@ const LandingPageLoginView: React.FunctionComponent<LandingPageProps> = (props) 
         try {
           const { email, password } = values;
           const payload = { email, password }
-          console.log(payload)
           const result = await axios.post('auth/login', payload);
           props.dispatch(setUser(result.data.id))
           console.dir(result);

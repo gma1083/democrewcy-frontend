@@ -127,6 +127,7 @@ class CreateMotionForm extends React.Component<CreateMotionFormProps> {
             formId="users"
             updateFormItem={this.props.form.setFieldsValue}
             getFormItem={this.props.form.getFieldValue}
+            multiSelect={true}
           />
         </Form.Item>
         

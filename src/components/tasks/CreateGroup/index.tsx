@@ -107,6 +107,7 @@ class CreateGroupForm extends React.Component<CreateGroupFormProps> {
                   formId='positions'
                   updateFormItem={this.props.form.setFieldsValue}
                   getFormItem={this.props.form.getFieldValue}
+                  multiSelect={true}
                 />
               </>
             )}
@@ -122,6 +123,7 @@ class CreateGroupForm extends React.Component<CreateGroupFormProps> {
                 formId="users"
                 updateFormItem={this.props.form.setFieldsValue}
                 getFormItem={this.props.form.getFieldValue}
+                multiSelect={true}
               />
             </>
           )}
@@ -137,6 +139,7 @@ class CreateGroupForm extends React.Component<CreateGroupFormProps> {
                 formId="subGroups"
                 updateFormItem={this.props.form.setFieldsValue}
                 getFormItem={this.props.form.getFieldValue}
+                multiSelect={true}
               />
             </>
           )}

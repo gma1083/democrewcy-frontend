@@ -13,7 +13,7 @@ interface ViewDashboardProps {
 class ViewDashboard extends React.Component<ViewDashboardProps> {
   state = {
     key: 'actions',
-    visible: true
+    visible: false
   };
 
   onTabChange = (key: any, type: any) => {

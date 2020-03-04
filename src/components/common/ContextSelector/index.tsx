@@ -1,8 +1,8 @@
 import React, { FormEvent } from 'react';
-import {  Typography, Form, message } from 'antd';
-import {  TaskType } from '../../../config/types';
+import { PageHeader, Form, message } from 'antd';
+import { TaskType } from '../../../config/types';
 import { Selector, Actions } from '..';
-import { cancelTask, setTaskContext } from '../../../context/actions';
+import { cancelTask, setTaskContext, asyncRequest } from '../../../context/actions';
 
 export interface ContextSelectorProps {
   form: any,
@@ -19,12 +19,47 @@ class ContextSelector extends React.Component<ContextSelectorProps> {
 
       const { context } = values;
       console.log('we have selected the context for task')
+      console.log('context')
+      console.dir(context);
       console.dir(context[0])
       let ctx = context[0];
 
       if (!err) {
-        this.props.dispatch(setTaskContext(ctx));
-        message.success(`thanks for selecting ${JSON.stringify(context)}`);
+        try {
+          let options = {
+            method: 'get',
+            url: `/mira/${this.props.ctxType}`,
+            data: {}
+          };
+          const classProps: any = await asyncRequest(options, this.props.dispatch);
+          console.log('classProps');
+          console.dir(classProps)
+          const relationshipsSetToTrue = classProps.data.relationships?.reduce((total: any, rel: any) => {
+            return { ...total, [rel.name]: true }
+          }, {});
+          console.dir('relationships')
+          console.dir(relationshipsSetToTrue)
+          options = {
+            method: 'post',
+            url: '/mira/get',
+            data: { 
+              className: this.props.ctxType,
+              id: ctx.id,
+              ...relationshipsSetToTrue
+            } 
+          }
+          console.log('options for populated req');
+          console.dir(options);
+          const instance = await asyncRequest(options, this.props.dispatch)
+          console.log('new instance! populated?')
+          console.dir(instance);
+          // todo set instance
+        }
+        catch (err) {
+          // currently doesn't work but still sets the active ctx here. will fix when above is fixed
+          this.props.dispatch(setTaskContext(ctx));
+          message.success(`thanks for selecting ${JSON.stringify(context)}`);
+        }
       } else {
         message.error(`you didn't select your ctx`);
       }
@@ -60,14 +95,7 @@ class ContextSelector extends React.Component<ContextSelectorProps> {
     return ( 
         <Form {...formItemLayout} onSubmit={this.handleSubmit}>
 
-          <Form.Item>
-            <Typography.Title>
-              Select a {props.ctxType}
-            </Typography.Title>
-          </Form.Item>
-          
-
-          <Form.Item>
+          <Form.Item label={`${props.ctxType}s`}>
             {getFieldDecorator('context', {
               rules: [{ required: true, message: 'try it out also' }],
             })(

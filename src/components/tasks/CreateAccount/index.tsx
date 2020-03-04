@@ -45,19 +45,19 @@ class CreateAccountForm extends React.Component<CreateAccountFormProps> {
           password, 
           birthDate
         } 
-    };
-    console.log('axios in CreateAccount')
-    console.log(options)
-      if (!err) {
-        const doc = await asyncRequest(options, this.props.dispatch);
-        if (doc) {
-          message.success(`response: ${JSON.stringify(doc, null, 2)}`);
-        } else {
-          message.error(`response: ${JSON.stringify(doc, null, 2)}`);
+      };
+      console.log('axios in CreateAccount')
+      console.log(options)
+        if (!err) {
+          const doc = await asyncRequest(options, this.props.dispatch);
+          if (doc) {
+            message.success(`response: ${JSON.stringify(doc, null, 2)}`);
+          } else {
+            message.error(`response: ${JSON.stringify(doc, null, 2)}`);
+          }
         }
-      }
-    });
-  };
+      });
+    };
 
   /* 
     And this!
