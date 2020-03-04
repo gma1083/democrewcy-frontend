@@ -66,7 +66,7 @@ const SideBar: React.FunctionComponent<SideBarProps> = (props) => {
   
   return (
     <Spin spinning={isLoading}>
-      <Sider width={200} style={{ height: '100vh', background: '#fff' }}>
+      <Sider width={200} style={{ height: '100vh', background: '#fff', overflow: 'scroll' }}>
         <div style={{textAlign: 'center', paddingTop: '20px', paddingBottom: '10px'}}>
           <NavLink key='/home' to='/home' onClick={() => dispatchCancelTask()}>
             <Typography.Title level={3}>

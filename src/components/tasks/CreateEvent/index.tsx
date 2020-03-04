@@ -32,7 +32,10 @@ class CreateEvent extends React.Component<CreateEventProps> {
   handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll(async (err: Error, values: any) => {
-      const { name, description, startTime, endTime, startDate, endDate, group } = values;
+
+      let { name, description, startTime, endTime, startDate, endDate, group } = values;
+      group = group[0].id;
+
       const options = {
         method: 'post',
         url: '/createEvent',
@@ -40,16 +43,19 @@ class CreateEvent extends React.Component<CreateEventProps> {
           className: 'Event',
           name,
           description,
-          startTime,
-          endTime,
+          startTime: new Date(startDate).toString(),
+          endTime: new Date(endTime).toString(),
           group,
         }
       };
-      message.info(`Create Event payload -- ${JSON.stringify(options)}`);
+
+      console.log('>> req to create -- Event');
+      console.dir(options);
+
       if (!err) {
-        console.log('request to create event')
-        console.dir(options);
+
         const doc = await asyncRequest(options, this.props.dispatch);
+
         if (doc) {
           message.success(`response: ${JSON.stringify(doc, null, 2)}`);
         } else {
@@ -96,7 +102,9 @@ class CreateEvent extends React.Component<CreateEventProps> {
   };
 
   render() {
-    console.dir(this.props)
+    console.log('[CreateEvent] props')
+    console.log(this.props);
+
     const { getFieldDecorator } = this.props.form;
 
     const formItemLayout = {

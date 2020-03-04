@@ -31,22 +31,22 @@ class CreateMotionForm extends React.Component<CreateMotionFormProps> {
         // TODO: get proposedBy from context user.positionInGroup?
         // TODO: get group and vote from local state
         // TODO: store group and vote in local state
-        // const { title, description } = values;
+        const { title, description, group, allowedVoteOptions } = values;
         const options = {
           method: 'post',
           url: '/createMotion',
           data: {
-            className: 'Motion'
-            // title: String,
-            // description: String,
-            // proposedBy: id, // id of Position
-            // group: id,  
-            // vote: {
-            //     className: String, // 'Vote'
-            //     allowedVoteOptions: [id],
-            // }
+            className: 'Motion',
+            title,
+            description, 
+            group, 
+            allowedVoteOptions
           }
         };
+        
+        console.log('>> req to create -- Motion');
+        console.dir(options);
+
         const doc = await asyncRequest(options, this.props.dispatch);
         if (doc) {
           message.success(`response: ${JSON.stringify(doc, null, 2)}`);
@@ -64,7 +64,9 @@ class CreateMotionForm extends React.Component<CreateMotionFormProps> {
   };
 
   render() {
+    console.log('[CreatMotion] props')
     console.dir(this.props)
+
     const { getFieldDecorator } = this.props.form;
 
     const formItemLayout = {
@@ -110,7 +112,7 @@ class CreateMotionForm extends React.Component<CreateMotionFormProps> {
 
         <Form.Item label="Group">
           {getFieldDecorator('group', {
-            rules: [{ required: true, message: 'Please enter a name'  }],
+            rules: [{ required: true, message: 'It\'s required bro.' }],
           })(
             <Selector 
               formId="group"
@@ -122,13 +124,17 @@ class CreateMotionForm extends React.Component<CreateMotionFormProps> {
         </Form.Item>
         
         <Form.Item label='Allowed Vote Options'>
-          <Selector 
-            className="User"
-            formId="users"
-            updateFormItem={this.props.form.setFieldsValue}
-            getFormItem={this.props.form.getFieldValue}
-            multiSelect={true}
-          />
+          {getFieldDecorator('allowedVoteOptions', {
+            rules: [{ required: true, message: 'It\'s required bro.' }],
+          })(
+            <Selector 
+              className="User"
+              formId="users"
+              updateFormItem={this.props.form.setFieldsValue}
+              getFormItem={this.props.form.getFieldValue}
+              multiSelect={true}
+            />
+          )}
         </Form.Item>
         
         <Actions {...actions} />

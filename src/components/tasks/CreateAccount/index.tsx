@@ -46,8 +46,10 @@ class CreateAccountForm extends React.Component<CreateAccountFormProps> {
           birthDate
         } 
       };
-      console.log('axios in CreateAccount')
-      console.log(options)
+
+      console.log('>> req to create -- User');
+      console.log(options);
+
         if (!err) {
           const doc = await asyncRequest(options, this.props.dispatch);
           if (doc) {

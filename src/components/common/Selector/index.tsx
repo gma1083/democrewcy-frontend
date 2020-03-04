@@ -19,11 +19,9 @@ const Selector: React.FunctionComponent<SelectorProps> = ({
   className,
   multiSelect
 }) => {
+  
   const [data, setData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-
-  console.log('Selector data');
-  console.dir(data)
 
   useEffect(() => {
     async function getInstances() {
@@ -47,20 +45,16 @@ const Selector: React.FunctionComponent<SelectorProps> = ({
     };
     getInstances();
 
-    return () => {}
+    return () => {
+    }
   }, [className]);
 
   const selectAndUpdateForm = (selectedInstanceId: any) => {
-    console.log('selectedInstanceId');
-    console.dir(selectedInstanceId);
-    
+
     const instance = data.find(item => item.id === selectedInstanceId);
-    console.log('setting context instance to');
-    console.dir(instance);
 
     const currentSelections = getFormItem(formId);
-    console.log('current selections');
-    console.dir(currentSelections);
+
     if (! currentSelections) {
       updateFormItem({ [formId]: [instance]})
     }

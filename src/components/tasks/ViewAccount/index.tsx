@@ -6,9 +6,9 @@ interface ViewProfileProps {
   state: any
 };
 
-const ViewProfile: React.SFC<ViewProfileProps> = ({state}) => {
-  console.log('state in ViewProfile')
-  console.log(state)
+const ViewProfile: React.SFC<ViewProfileProps> = (props) => {
+  console.log('[ViewProfile] props')
+  console.dir(props)
 
   return (
     <Content>

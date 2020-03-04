@@ -11,8 +11,8 @@ interface ViewGroupProps {
 };
 
 const ViewGroup: React.FunctionComponent<ViewGroupProps> = (props) => {
-  console.log('props in viewgroup')
-  console.log(props)
+  console.log('[ViewGroup] props')
+  console.dir(props)
 
   const { state, dispatch } = props;
   const { ctx } = state.taskCtx; 

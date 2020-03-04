@@ -2,6 +2,7 @@ import * as c from './constants';
 import { Task, Group, User, SideBarContext } from '../config/types';
 import axios from '../config/axios';
 import { AxiosRequestConfig } from 'axios';
+import { message } from 'antd';
 
 export const setActiveTask = (task: Task) => ({
   type: c.SET_ACTIVE_TASK,
@@ -65,7 +66,7 @@ export const asyncRequest = async (options: Options, dispatch: Function) => {
   const { method, url, data } = options;
   dispatch(beginAsyncRequest());
   try {
-    const response = axios({
+    const response = await axios({
       method: method as AxiosRequestConfig["method"],
       url: url as AxiosRequestConfig["url"],
       data: data as AxiosRequestConfig["data"],
@@ -74,7 +75,7 @@ export const asyncRequest = async (options: Options, dispatch: Function) => {
     return response;
   }
   catch (err) {
-    dispatch(asyncRequestError(err));
+    console.log(JSON.stringify(err))
   }
 };
 

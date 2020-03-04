@@ -34,6 +34,9 @@ class ViewDashboard extends React.Component<ViewDashboardProps> {
   };
 
   render() {
+    console.log('[ViewDashboard] props');
+    console.dir(this.props);
+
     return (
       <Layout style={{ height: '100vh', width: '100vw' }}>
         <Drawer

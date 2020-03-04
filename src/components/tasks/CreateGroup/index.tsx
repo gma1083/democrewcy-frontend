@@ -23,7 +23,14 @@ class CreateGroupForm extends React.Component<CreateGroupFormProps> {
   handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll(async (err: Error, values: any) => {
-      const { name, description, positions, users, subGroups } = values;
+
+      let { name, description, positions, users, subGroups } = values;
+
+      positions = positions.reduce((acc: any[], cur: any) => [...acc, cur.id], []);
+      users = users.reduce((acc: any[], cur: any) => [...acc, cur.id], []);
+      subGroups = subGroups.reduce((acc: any[], cur: any) => [...acc, cur.id], []);
+
+      // TODO: Switch to Greg's route
       const options = {
         method: 'post',
         url: '/mira/put',
@@ -36,8 +43,10 @@ class CreateGroupForm extends React.Component<CreateGroupFormProps> {
           subGroups
         }
       };
-      console.log('create group request')
-      console.dir(options)
+      
+      console.log('>> req to create -- Group');
+      console.dir(options);
+
       if (!err) {
         const doc = await asyncRequest(options, this.props.dispatch);
         if (doc) {
@@ -54,7 +63,9 @@ class CreateGroupForm extends React.Component<CreateGroupFormProps> {
   };
 
   render() {
-    console.dir(this.props)
+    console.log('[CreateGroup] props')
+    console.log(this.props)
+
     const { getFieldDecorator } = this.props.form;
 
     const formItemLayout = {
@@ -79,7 +90,7 @@ class CreateGroupForm extends React.Component<CreateGroupFormProps> {
 
         <Form.Item label="Name">
           {getFieldDecorator('name', {
-            rules: [{ required: true, message: 'try it out' }],
+            rules: [{ required: true, message: 'It\'s required, bro.' }],
           })(
             <Input placeholder="What is this group called?" allowClear />
           )}
@@ -87,7 +98,7 @@ class CreateGroupForm extends React.Component<CreateGroupFormProps> {
 
         <Form.Item label="Description">
           {getFieldDecorator('description', {
-            rules: [{ required: true, message: 'try it out also' }],
+            rules: [{ required: true, message: 'It\'s required, bro.' }],
           })(
             <TextArea 
               placeholder="What is this groups purpose?" 
@@ -99,7 +110,7 @@ class CreateGroupForm extends React.Component<CreateGroupFormProps> {
         
         <Form.Item label="Positions">
           {getFieldDecorator('positions', {
-              rules: [{ required: true, message: 'try it out also' }],
+              rules: [{ required: true, message: 'It\'s required, bro.' }],
             })(
               <>
                 <Selector 
@@ -115,7 +126,7 @@ class CreateGroupForm extends React.Component<CreateGroupFormProps> {
 
         <Form.Item label="Users">
           {getFieldDecorator('users', {
-              rules: [{ required: true, message: 'try it out also' }],
+              rules: [{ required: true, message: 'It\'s required, bro.' }],
             })(
             <>
               <Selector
@@ -131,7 +142,7 @@ class CreateGroupForm extends React.Component<CreateGroupFormProps> {
 
         <Form.Item label="Sub Groups">
           {getFieldDecorator('subGroups', {
-              rules: [{ required: true, message: 'try it out also' }],
+              rules: [{ required: true, message: 'It\'s required, bro.' }],
             })(
             <>
               <Selector
