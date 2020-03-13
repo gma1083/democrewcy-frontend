@@ -6,15 +6,13 @@ import {
   message
 } from 'antd';
 import Actions from '../../common/Actions';
-import { cancelTask } from '../../../context/actions';
-import { asyncRequest } from '../../../context/actions';
-import { TaskType } from '../../../config/types';
+import { closeTask, asyncRequest } from '../../../context/actions';
+import { TaskTab, TaskType } from '../../../config/types';
 
 interface CreateAccountFormProps {
   form: any,
-  state: any,
   dispatch: Function
-  type: TaskType
+  task: TaskTab
 }
 
 // Most of this class is boilerplate from ant design. What we care about are 
@@ -65,7 +63,7 @@ class CreateAccountForm extends React.Component<CreateAccountFormProps> {
     And this!
   */
   cancel = () => {
-    this.props.dispatch(cancelTask())
+    this.props.dispatch(closeTask(this.props.task.key));
   };
   
   compareToFirstPassword = (rule: any, value: any, callback: any) => {
@@ -92,7 +90,6 @@ class CreateAccountForm extends React.Component<CreateAccountFormProps> {
 
   render() {
 
-    const { type } = this.props;
     const { getFieldDecorator } = this.props.form;
 
     const formItemLayout = {
@@ -118,7 +115,7 @@ class CreateAccountForm extends React.Component<CreateAccountFormProps> {
       render those actions we defined.
     */
     const actions = {
-      taskType: type as TaskType,
+      taskType: this.props.task.taskType as TaskType,
       submitAction: this.handleSubmit,
       cancelAction: this.cancel
     };

@@ -7,8 +7,8 @@ import {
   message
 } from 'antd';
 import { Selector } from '../../common';
-import { asyncRequest, cancelTask } from '../../../context/actions';
-import { TaskType } from '../../../config/types';
+import { asyncRequest, closeTask } from '../../../context/actions';
+import { TaskType, TaskTab } from '../../../config/types';
 import { Actions } from '../../../components/common';
 const { TextArea } = Input;
 
@@ -18,9 +18,8 @@ const onChange = (e: any) => {
 
 interface CreateEventProps {
   form: any,
-  submitTask: Function,
   dispatch: Function,
-  type: TaskType
+  task: TaskTab
 }
 
 class CreateEvent extends React.Component<CreateEventProps> {
@@ -66,7 +65,7 @@ class CreateEvent extends React.Component<CreateEventProps> {
   };
 
   cancel = () => {
-    this.props.dispatch(cancelTask())
+    this.props.dispatch(closeTask(this.props.task.key));
   };
 
   handleConfirmBlur = (e: any) => {
@@ -123,7 +122,7 @@ class CreateEvent extends React.Component<CreateEventProps> {
     };
 
     const actions = {
-      taskType: this.props.type as TaskType,
+      taskType: this.props.task.taskType as TaskType,
       submitAction: this.handleSubmit,
       cancelAction: this.cancel
     };
@@ -174,7 +173,7 @@ class CreateEvent extends React.Component<CreateEventProps> {
           })(
             <Selector
               className="Group"
-              formId='group'
+              formItemId='group'
               updateFormItem={this.props.form.setFieldsValue}
               getFormItem={this.props.form.getFieldValue}
             />

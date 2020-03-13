@@ -43,7 +43,7 @@ const reducer = (state: any, action: any) => {
       const { taskKey } = action.data;
       let stateCopy = { ...state };
       stateCopy.tasksRunning = stateCopy.tasksRunning.filter((task: TaskTab) => task.key !== taskKey);
-      stateCopy.activeTask = stateCopy.tasksRunning[0].key;
+      stateCopy.activeTask = stateCopy.tasksRunning.length > 0 ? stateCopy.tasksRunning[0].key : '';
       return stateCopy;
     }
     case c.BEGIN_ASYNC_REQUEST:

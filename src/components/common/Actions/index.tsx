@@ -18,7 +18,7 @@ const doNothing = () => {};
 // If the task is 'edit' or 'create' the user has the option to show all buttons.
 // If an action is not defined then doNothing is it's action, and if that is the case
 // we do not render the button. Therefore only user defined actions will show.
-// If the task is 'view' we do not show anything.
+// If the task is 'view' we should just show the done button.
 const Actions: React.FunctionComponent<ActionsProps> = ({ 
   taskType, 
   submitAction = doNothing,

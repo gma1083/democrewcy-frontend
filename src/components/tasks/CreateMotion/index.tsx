@@ -4,9 +4,9 @@ import {
   Input,
   message,
 } from 'antd';
-import { asyncRequest, cancelTask } from '../../../context/actions';
+import { asyncRequest, closeTask } from '../../../context/actions';
 import { Actions, Selector } from '../../common/';
-import { TaskType } from '../../../config/types';
+import { TaskType, TaskTab } from '../../../config/types';
 
 const { TextArea } = Input;
 
@@ -16,10 +16,8 @@ const onChange = (e: any) => {
 
 interface CreateMotionFormProps {
   form: any,
-  submitTask: Function
-  state: any,
   dispatch: Function,
-  type: TaskType
+  task: TaskTab
 }
 
 class CreateMotionForm extends React.Component<CreateMotionFormProps> {
@@ -60,7 +58,7 @@ class CreateMotionForm extends React.Component<CreateMotionFormProps> {
   };
 
   cancel = () => {
-    this.props.dispatch(cancelTask())
+    this.props.dispatch(closeTask(this.props.task.key));
   };
 
   render() {
@@ -81,7 +79,7 @@ class CreateMotionForm extends React.Component<CreateMotionFormProps> {
     };
 
     const actions = {
-      taskType: this.props.type as TaskType,
+      taskType: this.props.task.taskType as TaskType,
       submitAction: this.handleSubmit,
       cancelAction: this.cancel
     };
@@ -115,7 +113,7 @@ class CreateMotionForm extends React.Component<CreateMotionFormProps> {
             rules: [{ required: true, message: 'It\'s required bro.' }],
           })(
             <Selector 
-              formId="group"
+              formItemId="group"
               className="Group"
               updateFormItem={this.props.form.setFieldsValue}
               getFormItem={this.props.form.getFieldValue}
@@ -129,7 +127,7 @@ class CreateMotionForm extends React.Component<CreateMotionFormProps> {
           })(
             <Selector 
               className="User"
-              formId="users"
+              formItemId="users"
               updateFormItem={this.props.form.setFieldsValue}
               getFormItem={this.props.form.getFieldValue}
               multiSelect={true}

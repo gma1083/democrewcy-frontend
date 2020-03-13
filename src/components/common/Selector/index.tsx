@@ -9,7 +9,7 @@ const { Option } = Select;
 interface SelectorProps {
   updateFormItem: Function,
   getFormItem: Function,
-  formId: string,
+  formItemId: string,
   className: string,
   multiSelect?: boolean
 };
@@ -17,7 +17,7 @@ interface SelectorProps {
 const Selector: React.FunctionComponent<SelectorProps> = ({ 
   getFormItem, 
   updateFormItem, 
-  formId, 
+  formItemId, 
   className,
   multiSelect
 }) => {
@@ -55,20 +55,17 @@ const Selector: React.FunctionComponent<SelectorProps> = ({
   }, [className]);
 
   const selectAndUpdateForm = (selectedInstanceId: any) => {
-
     const instance = data.find(item => item.id === selectedInstanceId);
-
-    const currentSelections = getFormItem(formId);
-
+    const currentSelections = getFormItem(formItemId);
     if (! currentSelections) {
-      updateFormItem({ [formId]: [instance]})
+      updateFormItem({ [formItemId]: [instance]})
     }
     else {
       if (! multiSelect) {
-        updateFormItem({ [formId]: [instance]})
+        updateFormItem({ [formItemId]: [instance]})
       }
       else {
-        updateFormItem({ [formId]: [...currentSelections, instance]})
+        updateFormItem({ [formItemId]: [...currentSelections, instance]})
       }
     }
   }
@@ -80,7 +77,8 @@ const Selector: React.FunctionComponent<SelectorProps> = ({
       {child.id} {child.className}
     </Option>)
 
-  const mode: ModeOption = multiSelect ? 'multiple' as ModeOption : 'default' as ModeOption;
+  //const mode: ModeOption = multiSelect ? 'multiple' as ModeOption : 'default' as ModeOption;
+  const mode: ModeOption = (multiSelect ? 'multiple' : 'default') as ModeOption;
   
   return (
     <Spin spinning={isLoading}>

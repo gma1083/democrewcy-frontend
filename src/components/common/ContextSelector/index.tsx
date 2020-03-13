@@ -2,7 +2,7 @@ import React, { FormEvent } from 'react';
 import { Form, message } from 'antd';
 import { TaskType, TaskTab } from '../../../config/types';
 import { Selector, Actions } from '..';
-import { cancelTask, setTaskContextId } from '../../../context/actions';
+import { closeTask, setTaskContextId } from '../../../context/actions';
 
 export interface ContextSelectorProps {
   form: any,
@@ -33,7 +33,7 @@ class ContextSelector extends React.Component<ContextSelectorProps> {
   };
 
   cancel = () => {
-    this.props.dispatch(cancelTask())
+    this.props.dispatch(closeTask(this.props.task.key));
   }
 
   render() { 
@@ -68,7 +68,7 @@ class ContextSelector extends React.Component<ContextSelectorProps> {
               <>
                 <Selector 
                   className={props.task.context.type}
-                  formId="context"
+                  formItemId="context"
                   updateFormItem={this.props.form.setFieldsValue}
                   getFormItem={this.props.form.getFieldValue}
                 />

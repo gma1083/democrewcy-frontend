@@ -45,36 +45,5 @@ const Home: React.FunctionComponent<HomeProps> = (props: any) => {
     </Layout>
   );
 }
- 
 
-  
-  
-
-  // add = () => {
-  //   const { panes } = this.state;
-  //   const activeKey = `newTab${this.state.newTabIndex}`;
-  //   panes.push({ title: `Tab ${this.state.newTabIndex}`, content: 'Content of new tab', key: activeKey });
-  //   this.setState({ panes, activeKey, newTabIndex: this.state.newTabIndex + 1 });
-  // };
-
-  // remove = (targetKey: any) => {
-  //   let { activeKey } = this.state;
-  //   let lastIndex;
-  //   this.state.panes.forEach((pane, i) => {
-  //     if (pane.key === targetKey) {
-  //       lastIndex = i - 1;
-  //     }
-  //   });
-  //   const panes = this.state.panes.filter(pane => pane.key !== targetKey);
-  //   if (panes.length && activeKey === targetKey) {
-  //     if (lastIndex && lastIndex >= 0) {
-  //       activeKey = panes[lastIndex].key;
-  //     } else {
-  //       activeKey = panes[0].key;
-  //     }
-  //   }
-  //   this.setState({ panes, activeKey, newTabIndex: this.state.newTabIndex - 1 });
-  // };
-  
- 
 export default withAppContext(Home);

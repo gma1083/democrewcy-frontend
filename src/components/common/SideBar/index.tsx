@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Layout, Menu, Icon, Typography, Spin } from 'antd';
+import "antd/dist/antd.css";
 import { NavLink } from 'react-router-dom';
 import { TaskBar } from '../index';
-import "antd/dist/antd.css";
 import { withAppContext } from '../../../context';
 import { openTask, cancelTask, setSideBarContext } from '../../../context/actions';
 import { Context, Group, Task, User, SideBarContext } from '../../../config/types';
@@ -95,12 +95,7 @@ const SideBar: React.FunctionComponent<SideBarProps> = (props) => {
 
           <SubMenu
             key="Groups"
-            title={
-              <span>
-                <Icon type="user" />
-                Groups
-              </span>
-            }
+            title={<span><Icon type="user" />Groups</span>}
           >
             {props.state.sidebar?.groups?.map((group: Group) => 
               <Menu.Item 
@@ -113,12 +108,7 @@ const SideBar: React.FunctionComponent<SideBarProps> = (props) => {
 
           <SubMenu
             key="Direct Messages"
-            title={
-              <span>
-                <Icon type="laptop" />
-                Direct Messages
-              </span>
-            }
+            title={<span><Icon type="laptop" />Direct Messages</span>}
           >
             {props.state.sidebar?.users?.map((user: User) => {
               const name = `${user.firstName}.${user.lastName}`;

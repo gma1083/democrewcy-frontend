@@ -5,17 +5,15 @@ import {
   message
 } from 'antd';
 import Selector from '../../common/Selector';
-import { asyncRequest, cancelTask } from '../../../context/actions';
+import { asyncRequest, closeTask } from '../../../context/actions';
 import Actions from '../../common/Actions';
-import { TaskType } from '../../../config/types';
+import { TaskType, TaskTab } from '../../../config/types';
 const { TextArea } = Input;
 
 interface CreateGroupFormProps {
   form: any,
-  submitTask: Function,
-  state: any,
   dispatch: Function,
-  type: TaskType
+  task: TaskTab
 }
 
 class CreateGroupForm extends React.Component<CreateGroupFormProps> {
@@ -59,7 +57,7 @@ class CreateGroupForm extends React.Component<CreateGroupFormProps> {
   };
 
   cancel = () => {
-    this.props.dispatch(cancelTask())
+    this.props.dispatch(closeTask(this.props.task.key))
   };
 
   render() {
@@ -80,7 +78,7 @@ class CreateGroupForm extends React.Component<CreateGroupFormProps> {
     };
   
     const actions = {
-      taskType: this.props.type as TaskType,
+      taskType: this.props.task.taskType as TaskType,
       submitAction: this.handleSubmit,
       cancelAction: this.cancel
     };
@@ -115,7 +113,7 @@ class CreateGroupForm extends React.Component<CreateGroupFormProps> {
               <>
                 <Selector 
                   className="Position"
-                  formId='positions'
+                  formItemId='positions'
                   updateFormItem={this.props.form.setFieldsValue}
                   getFormItem={this.props.form.getFieldValue}
                   multiSelect={true}
@@ -131,7 +129,7 @@ class CreateGroupForm extends React.Component<CreateGroupFormProps> {
             <>
               <Selector
                 className="User"
-                formId="users"
+                formItemId="users"
                 updateFormItem={this.props.form.setFieldsValue}
                 getFormItem={this.props.form.getFieldValue}
                 multiSelect={true}
@@ -147,7 +145,7 @@ class CreateGroupForm extends React.Component<CreateGroupFormProps> {
             <>
               <Selector
                 className="Group"
-                formId="subGroups"
+                formItemId="subGroups"
                 updateFormItem={this.props.form.setFieldsValue}
                 getFormItem={this.props.form.getFieldValue}
                 multiSelect={true}

@@ -40,14 +40,6 @@ interface TaskBarProps {
   dispatchTask: Function, 
 };
 
-/*
-
-  TODO
-
-  use context, update interface props to state and dispatch
-  use tasks from context as data source
-
-*/
 
 const TaskBar: React.FunctionComponent<TaskBarProps> = ({ tasks, dispatchTask }) =>
   <div className="certain-category-search-wrapper" style={{ padding: '0 10px' }}>
