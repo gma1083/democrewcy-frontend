@@ -1,6 +1,7 @@
 import React from 'react';
-import { Layout, Tabs } from 'antd';
+import { Layout, Tabs, Icon } from 'antd';
 import "antd/dist/antd.css";
+import { setActiveTaskTab } from '../../context/actions';
 import { withAppContext } from '../../context';
 import { Context, TaskTab } from '../../config/types';
 import { TaskLayout, ContextSelector } from '../../components/common';
@@ -12,49 +13,45 @@ export interface HomeProps {
 }
  
 const Home: React.FunctionComponent<HomeProps> = (props: any) => {
+  const onChange = (activeKey: any) => {
+    console.log('setting active task tab')
+    console.log(activeKey)
+    props.dispatch(setActiveTaskTab(activeKey));
+  };
+
   return ( 
     <Layout style={{ backgroundColor: '#fff', height: '100vh', width: '100vw', padding: '20px' }}>
 
       <Tabs
-        onChange={f=>f}
+        onChange={onChange}
         activeKey={props.state.activeTask}
-        type="editable-card"
-        onEdit={f=>f}
       >
-
         {props.state.tasksRunning.map((task: TaskTab) => {
-
           let CurrentTask = task.content;
-
+          let form: any;
+          if (task.taskType === 'create' || task.context.ctx) {
+            form = <CurrentTask dispatch={props.dispatch} task={task} />;
+          } 
+          else if (['view', 'edit'].includes(task.taskType) && ! task.context.ctx) {
+            form = <ContextSelector {...props} task={task} />;
+          }
           return (
-            <TabPane style={{height: '100vh'}} tab={task.title} key={task.key} closable={true}>
+            <TabPane style={{height: '100vh'}} tab={task.key} key={task.key} closable={true}>
               <TaskLayout
                 title={task.title}
-                form={task.taskType === 'create' || task.context.ctx ?
-                  <CurrentTask dispatch={props.dispatch} task={task} /> :
-                  <ContextSelector {...props} task={task} />
-                }
+                form={form}
               />
             </TabPane>
           )
         })}
-
       </Tabs>
     </Layout>
   );
 }
  
 
-  // onChange = (activeKey: any) => {
-  //   this.setState({ activeKey });
-  // };
-
-  // onEdit = (targetKey: any, action: any) => {
-  //   console.log('edit action!!')
-  //   console.dir(targetKey)
-  //   console.dir(action)
-  //   return (this as any)[(action as any)](targetKey);
-  // };
+  
+  
 
   // add = () => {
   //   const { panes } = this.state;

@@ -9,6 +9,7 @@ export const ASYNC_REQUEST_ERROR = "ASYNC_REQUEST_ERROR";
 export const SET_TASK_CONTEXT_ID = "SET_TASK_CONTEXT_ID";
 export const SET_TASK_CONTEXT_INSTANCE = "SET_TASK_CONTEXT_INSTANCE";
 export const SET_ACTIVE_TASK = "SET_ACTIVE_TASK";
+export const SET_ACTIVE_TASK_TAB = "SET_ACTIVE_TASK_TAB";
 export const CANCEL_TASK = "CANCEL_TASK"; // DO NOT USE - to be deprecated
 export const OPEN_TASK = "OPEN_TASK";
 export const CLOSE_TASK = "CLOSE_TASK";

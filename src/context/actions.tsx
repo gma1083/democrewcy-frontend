@@ -24,6 +24,13 @@ export const setActiveTask = (task: Task) => ({
   } 
 });
 
+export const setActiveTaskTab = (activeKey: string) => ({
+  type: c.SET_ACTIVE_TASK_TAB,
+  data: { 
+    activeKey
+  } 
+});
+
 export const setUser = (user: User) => ({
   type: c.SET_USER,
   data: {

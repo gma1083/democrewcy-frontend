@@ -14,11 +14,13 @@ const reducer = (state: any, action: any) => {
         }
       };
     case c.SET_USER: 
-      return { ...state, user: action.data.user }
+      return { ...state, user: action.data.user };
     case c.SET_ACTIVE_GROUP:
-      return { ...state, activeGroup: action.data.group }
+      return { ...state, activeGroup: action.data.group };
+    case c.SET_ACTIVE_TASK_TAB:
+      return { ...state, activeTask: action.data.activeKey };
     case c.CANCEL_TASK:
-      return { ...state, activeTask: null }
+      return { ...state, activeTask: null };
     case c.OPEN_TASK:
       return { 
         ...state,  
@@ -28,11 +30,11 @@ const reducer = (state: any, action: any) => {
       return { 
         ...state, 
         // to do
-      }
+      };
     case c.BEGIN_ASYNC_REQUEST:
-      return { ...state, isLoading: true }
+      return { ...state, isLoading: true };
     case c.ASYNC_REQUEST_COMPLETED:
-      return { ...state, isLoading: false }
+      return { ...state, isLoading: false };
     case c.ASYNC_REQUEST_ERROR:
       return { ...state, err: { status: true, message: action.payload } }
     case c.SET_TASK_CONTEXT_ID: {

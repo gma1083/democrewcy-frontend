@@ -7,9 +7,25 @@ import * as Tasks from '../components/tasks';
 const getDefaultContext = (): Context => ({
   taskDefinitions: tasks,
   tasksRunning: [{
+    title: 'View Dashboard',
+    content: Tasks.ViewDashboard,
+    key: 'View Dashboard',
+    context: {
+      type: 'User'
+    },
+    taskType: 'view'
+  }, {
     title: 'View Group',
     content: Tasks.ViewGroup,
     key: 'View Group-1',
+    context: {
+      type: 'Group'
+    },
+    taskType: 'view'
+  }, {
+    title: 'View Group',
+    content: Tasks.ViewGroup,
+    key: 'View Group-2',
     context: {
       type: 'Group'
     },
