@@ -17,21 +17,13 @@ const getDefaultContext = (): Context => ({
   }, {
     title: 'View Group',
     content: Tasks.ViewGroup,
-    key: 'View Group-1',
-    context: {
-      type: 'Group'
-    },
-    taskType: 'view'
-  }, {
-    title: 'View Group',
-    content: Tasks.ViewGroup,
-    key: 'View Group-2',
+    key: 'View Group',
     context: {
       type: 'Group'
     },
     taskType: 'view'
   }],
-  activeTask: 'View Group-1',
+  activeTask: 'View Group',
   user: null, // dumbledore
   sidebar: null
 });

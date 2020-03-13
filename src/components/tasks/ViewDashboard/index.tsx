@@ -1,13 +1,15 @@
 import * as React from 'react';
 import { RelatedAction } from '../../common';
 import { Layout, Drawer } from 'antd';
+import { TaskTab } from '../../../config/types';
 
 const content: any = {
   actions: [<RelatedAction />, <RelatedAction />],
 };
 
 interface ViewDashboardProps {
-
+  dispatch: Function,
+  task: TaskTab
 };
 
 class ViewDashboard extends React.Component<ViewDashboardProps> {
@@ -36,7 +38,7 @@ class ViewDashboard extends React.Component<ViewDashboardProps> {
   render() {
     console.log('[ViewDashboard] props');
     console.dir(this.props);
-
+    
     return (
       <Layout style={{ height: '100vh', width: '100vw' }}>
         hello this is the dashboard task yo

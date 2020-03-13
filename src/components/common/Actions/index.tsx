@@ -10,6 +10,7 @@ interface ActionsProps {
   goBackAction?: () => void,
   cancelAction?: () => void,
   continueAction?: () => void,
+  doneAction?: () => void,
 };
 
 const doNothing = () => {};
@@ -23,7 +24,8 @@ const Actions: React.FunctionComponent<ActionsProps> = ({
   submitAction = doNothing,
   cancelAction = doNothing, 
   continueAction = doNothing,
-  goBackAction = doNothing
+  goBackAction = doNothing,
+  doneAction = doNothing
 }) => 
   taskType === 'edit' || taskType === 'create' ?
     <Footer style={{bottom: 0, position: 'absolute', width: '100vw'}}>
@@ -68,6 +70,16 @@ const Actions: React.FunctionComponent<ActionsProps> = ({
           Cancel
         </Button>}
     </Footer> :
-    <Footer />
+    <Footer style={{bottom: 0, position: 'absolute', width: '100vw'}}>
+      {doneAction !== doNothing &&
+        <Button 
+          size='large' 
+          type='primary' 
+          shape='round'
+          onClick={() => doneAction()}
+        >
+          Done
+        </Button>}
+    </Footer>
 
 export default Actions;

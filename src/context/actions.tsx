@@ -10,10 +10,10 @@ export const openTask = (task: Task) => ({
   } 
 });
 
-export const closeTask = (taskId: string) => ({
+export const closeTask = (taskKey: string) => ({
   type: c.CLOSE_TASK,
   data: { 
-    taskId
+    taskKey
   } 
 });
 

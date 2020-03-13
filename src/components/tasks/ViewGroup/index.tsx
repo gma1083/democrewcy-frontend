@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import Events from './Events';
 import Positions from './Positions';
 import Motions from './Motions';
-import { PageHeader, Layout, Spin } from 'antd';
-import { setTaskContextId, asyncRequest, setTaskContextInstance } from '../../../context/actions';
-import { CancelToken, TaskTab, Group } from '../../../config/types';
+import { PageHeader, Layout, Spin, Form } from 'antd';
+import { setTaskContextId, asyncRequest, setTaskContextInstance, closeTask } from '../../../context/actions';
+import { CancelToken, TaskTab, Group, TaskType } from '../../../config/types';
+import { Actions } from '../../common';
 
 const { Content } = Layout;
 
@@ -73,17 +74,23 @@ const ViewGroup: React.FunctionComponent<ViewGroupProps> = (props) => {
   }, [task, dispatch]);
 
 
+  const actions = {
+    taskType: task.taskType as TaskType,
+    doneAction: () => dispatch(closeTask(task.key))
+  };
+
   const group = task.context.instance as Group;
 
   return (
-    <Spin spinning={isLoading}>
-      <Content>
+    <>
+      <Spin spinning={isLoading} style={{height: '100vh'}}>
         <PageHeader title={group?.name} onBack={() => dispatch(setTaskContextId(task.key, null))} />
         <Positions positions={group?.positions} />
         <Events events={group?.events} />
         <Motions motions={group?.motions} />
-      </Content>
-    </Spin>
+      </Spin>
+      <Actions {...actions}/>
+    </>
   )}
 
 export default ViewGroup;

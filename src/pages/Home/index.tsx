@@ -30,17 +30,14 @@ const Home: React.FunctionComponent<HomeProps> = (props: any) => {
           let CurrentTask = task.content;
           let form: any;
           if (task.taskType === 'create' || task.context.ctx) {
-            form = <CurrentTask dispatch={props.dispatch} task={task} />;
+            form = <CurrentTask dispatch={props.dispatch} task={task} type={task.taskType} />;
           } 
           else if (['view', 'edit'].includes(task.taskType) && ! task.context.ctx) {
             form = <ContextSelector {...props} task={task} />;
           }
           return (
             <TabPane style={{height: '100vh'}} tab={task.key} key={task.key} closable={true}>
-              <TaskLayout
-                title={task.title}
-                form={form}
-              />
+              <TaskLayout title={task.title} form={form} />
             </TabPane>
           )
         })}

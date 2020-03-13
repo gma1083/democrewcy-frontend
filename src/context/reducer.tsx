@@ -1,5 +1,7 @@
 import { getDefaultContext } from '.';
 import * as c from './constants';
+import * as Tasks from '../components/tasks';
+import { TaskTab } from '../config/types';
 
 const reducer = (state: any, action: any) => {
   switch (action.type) {
@@ -21,16 +23,29 @@ const reducer = (state: any, action: any) => {
       return { ...state, activeTask: action.data.activeKey };
     case c.CANCEL_TASK:
       return { ...state, activeTask: null };
-    case c.OPEN_TASK:
-      return { 
-        ...state,  
-        // to do
-      }
-    case c.CLOSE_TASK:
-      return { 
-        ...state, 
-        // to do
+    case c.OPEN_TASK: {
+      const task = action.data.task;
+      let stateCopy = { ...state };
+      let newTaskTab = { 
+        title: task.title,
+        content: (Tasks as any)[task.component],
+        key: task.title,
+        context: {
+          type: task.ctx
+        },
+        taskType: task.type
       };
+      stateCopy.tasksRunning = stateCopy.tasksRunning.concat([newTaskTab]);
+      stateCopy.activeTask = action.data.task.title;
+      return stateCopy;
+    }
+    case c.CLOSE_TASK: {
+      const { taskKey } = action.data;
+      let stateCopy = { ...state };
+      stateCopy.tasksRunning = stateCopy.tasksRunning.filter((task: TaskTab) => task.key !== taskKey);
+      stateCopy.activeTask = stateCopy.tasksRunning[0].key;
+      return stateCopy;
+    }
     case c.BEGIN_ASYNC_REQUEST:
       return { ...state, isLoading: true };
     case c.ASYNC_REQUEST_COMPLETED:
