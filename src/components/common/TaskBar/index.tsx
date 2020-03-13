@@ -49,27 +49,20 @@ interface TaskBarProps {
 
 */
 
-const TaskBar: React.FunctionComponent<TaskBarProps> = ({ tasks, dispatchTask,  }) => {
-
-  console.log('tasks in taskbar');
-  console.log(tasks);    
-
-  return (
-    <div className="certain-category-search-wrapper" style={{ padding: '0 10px' }}>
-      <AutoComplete
-        className="certain-category-search"
-        dropdownClassName="certain-category-search-dropdown"
-        dropdownMatchSelectWidth={false}
-        size="large"
-        dataSource={options}
-        placeholder="Take Action"
-        optionLabelProp="value"
-        onSelect={(opt: SelectValue) => dispatchTask(tasks.find((task: Task) => task.title === opt))}
-      >
-        <Input suffix={<Icon type="search" className="certain-category-icon" />} />
-      </AutoComplete>
-    </div>
-  );
-}
+const TaskBar: React.FunctionComponent<TaskBarProps> = ({ tasks, dispatchTask }) =>
+  <div className="certain-category-search-wrapper" style={{ padding: '0 10px' }}>
+    <AutoComplete
+      className="certain-category-search"
+      dropdownClassName="certain-category-search-dropdown"
+      dropdownMatchSelectWidth={false}
+      size="large"
+      dataSource={options}
+      placeholder="Take Action"
+      optionLabelProp="value"
+      onSelect={(opt: SelectValue) => dispatchTask(tasks.find((task: Task) => task.title === opt))}
+    >
+      <Input suffix={<Icon type="search" className="certain-category-icon" />} />
+    </AutoComplete>
+  </div>
 
 export default TaskBar;

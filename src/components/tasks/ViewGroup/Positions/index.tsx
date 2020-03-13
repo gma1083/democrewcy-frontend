@@ -2,14 +2,11 @@ import React, { useState} from 'react';
 import { Card, PageHeader, Icon, Modal } from 'antd';
 import "antd/dist/antd.css";
 import HorizontallyScrollabe from '../../../common/HorizontallyScrollable';
-import { Motion } from '../../../../config/types';
+import { Position } from '../../../../config/types';
 import { EmptyCard } from '../../../common';
 
-export interface MotionsProps {
-  motions?: Motion[]
-};
- 
-const MotionPresentation: React.SFC<Motion> = ({ title, description, proposedBy }) => {
+
+const PositionPresentation: React.FunctionComponent<Position> = ({ title, description, displayAs }) => {
   return (
     <div
       style={{
@@ -22,23 +19,28 @@ const MotionPresentation: React.SFC<Motion> = ({ title, description, proposedBy 
       <Card
         bordered
         size="default"
-        title={title}
+        title={displayAs}
         actions={[
-          <Icon type="dislike" />,
+          <Icon  />,
           <Icon type="info-circle" />,
-          <Icon type="like" />
+          <Icon  />
         ]}
       >
-        <div>Description: {description}</div>
-        <div>Proposed By: {proposedBy.title}</div>
+        <div>{title}</div>
+        <div>{description}</div>
       </Card>
     </div> 
   )
 }
 
-const Motions: React.SFC<MotionsProps> = ({ motions }) => {
-  console.log('props in motions');
-  console.log(motions);
+
+export interface PositionsProps {
+  positions?: Position[]
+};
+ 
+const Positions: React.SFC<PositionsProps> = ({ positions }) => {
+  console.log('props in Positions');
+  console.log(positions);
 
   const [showModal, setShowModal] = useState(false);
 
@@ -49,24 +51,24 @@ const Motions: React.SFC<MotionsProps> = ({ motions }) => {
   return (
     <React.Fragment>
       <Modal 
-        title="Create Motion"
+        title="Create Position"
         visible={showModal}
         onOk={toggleModal}
         onCancel={toggleModal}
       >
-        Create Motion Content
+        Create Position Content
       </Modal>
       <PageHeader 
-        title='Motions' 
+        title='Positions' 
         subTitle={<Icon type="plus-circle" onClick={() => toggleModal()}/>} 
         />
       <HorizontallyScrollabe>
-        {motions ? 
-          motions.map(motion => <MotionPresentation key={motion.title} {...motion}/>) :
+        {positions ? 
+          positions.map((position: Position) => <PositionPresentation key={position.title} {...position} />) :
           Array(5).fill(0).map((item: any, idx: number) => <EmptyCard key={idx} />)}
       </HorizontallyScrollabe>
     </React.Fragment>
   );
 }
  
-export default Motions;
+export default Positions;

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Select, notification, Spin } from 'antd';
 import axios from '../../../config/axios';
 import { ModeOption } from 'antd/lib/select';
+import { CancelToken } from '../../../config/types';
+
 const { Option } = Select;
 
 interface SelectorProps {
@@ -24,6 +26,9 @@ const Selector: React.FunctionComponent<SelectorProps> = ({
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    const cancelToken = CancelToken;
+    const source = cancelToken.source();
+
     async function getInstances() {
       try {
         const payload = {
@@ -34,7 +39,6 @@ const Selector: React.FunctionComponent<SelectorProps> = ({
         setIsLoading(true);
         let { data } = await axios.post(`/mira/getInstances`, payload);
         let instances: any[] = data.instances;
-        console.log(data.instances[0])
         setData([...instances]);
         setIsLoading(false);
       }
@@ -46,6 +50,7 @@ const Selector: React.FunctionComponent<SelectorProps> = ({
     getInstances();
 
     return () => {
+      source.cancel();
     }
   }, [className]);
 

@@ -65,7 +65,7 @@ const Events: React.SFC<EventsProps> = ({ events }) => {
       <HorizontallyScrollabe>
         {events ? 
           events.map(event => <EventPresentation key={event.name} {...event} />) :
-          Array(5).fill(0).map(item => <EmptyCard  />)}
+          Array(5).fill(0).map((item: any, idx: number) => <EmptyCard key={idx} />)}
       </HorizontallyScrollabe>
     </React.Fragment>
   );

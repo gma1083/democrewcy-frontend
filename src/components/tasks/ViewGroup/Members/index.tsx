@@ -35,7 +35,7 @@ const Members: React.SFC<MembersProps> = ({ members }) => {
       <HorizontallyScrollable>
         {members ?
           members.map(member => <MemberPresentation key={member.name} {...member}/>) :
-          Array(5).fill(0).map(item => <EmptyCard  />)}
+          Array(5).fill(0).map((item: any, idx: number) => <EmptyCard key={idx} />)}
       </HorizontallyScrollable>
     </React.Fragment>
   );

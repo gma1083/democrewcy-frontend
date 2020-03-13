@@ -1,8 +1,21 @@
 import * as c from './constants';
-import { Task, Group, User, SideBarContext } from '../config/types';
+import { Task, Group, User, SideBarContext, TaskCtxInstance } from '../config/types';
 import axios from '../config/axios';
 import { AxiosRequestConfig } from 'axios';
-import { message } from 'antd';
+
+export const openTask = (task: Task) => ({
+  type: c.OPEN_TASK,
+  data: { 
+    task
+  } 
+});
+
+export const closeTask = (taskId: string) => ({
+  type: c.CLOSE_TASK,
+  data: { 
+    taskId
+  } 
+});
 
 export const setActiveTask = (task: Task) => ({
   type: c.SET_ACTIVE_TASK,
@@ -42,9 +55,10 @@ export const asyncRequestError = (err: any) => ({
   payload: err
 });
 
-export const setTaskContext = (ctx: string | null) => ({
-  type: c.SET_TASK_CONTEXT,
+export const setTaskContextId = (taskKey: string, ctx: string | null) => ({
+  type: c.SET_TASK_CONTEXT_ID,
   data: {
+    taskKey,
     ctx
   }
 });
@@ -56,26 +70,32 @@ export const setSideBarContext = (ctx: SideBarContext | null) => ({
   }
 });
 
+export const setTaskContextInstance = (taskKey: string, instance: TaskCtxInstance | null) => ({
+  type: c.SET_TASK_CONTEXT_INSTANCE,
+  data: {
+    taskKey,
+    instance
+  }
+});
+
 interface Options {
   method: string,
   url: string,
   data: any
 };
 
-export const asyncRequest = async (options: Options, dispatch: Function) => {
+export const asyncRequest = async (options: Options, dispatch?: Function) => {
   const { method, url, data } = options;
-  dispatch(beginAsyncRequest());
   try {
     const response = await axios({
       method: method as AxiosRequestConfig["method"],
       url: url as AxiosRequestConfig["url"],
       data: data as AxiosRequestConfig["data"],
     });
-    dispatch(asyncRequestCompleted());
     return response;
   }
-  catch (err) {
-    console.log(JSON.stringify(err))
+  catch (error) {
+    console.log(JSON.stringify(error))
   }
 };
 

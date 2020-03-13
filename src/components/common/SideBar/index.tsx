@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { TaskBar } from '../index';
 import "antd/dist/antd.css";
 import { withAppContext } from '../../../context';
-import { setActiveTask, cancelTask, setSideBarContext } from '../../../context/actions';
+import { openTask, cancelTask, setSideBarContext } from '../../../context/actions';
 import { Context, Group, Task, User, SideBarContext } from '../../../config/types';
 import axios from '../../../config/axios';
 
@@ -17,8 +17,6 @@ export interface SideBarProps {
 }
 
 const SideBar: React.FunctionComponent<SideBarProps> = (props) => {
-  console.log('props in SideBar')
-  console.log(props);
 
   const [isLoading, setLoading] = useState(false);
   const { dispatch } = props;
@@ -28,16 +26,25 @@ const SideBar: React.FunctionComponent<SideBarProps> = (props) => {
       // fetch groups on load
       console.log('SideBar init -- onMount()')
       setLoading(true);
-      const groupOptions = {
-        className: 'Group',
-        page: 0,
-        pageSize: 100
-      }
-      let groupsResponse = await axios.post('/mira/getInstances', groupOptions);
-      let groups: any[] = groupsResponse.data.instances;
+      let userGroupOptions = {
+        method: 'post',
+        url: `/mira/get`,
+        data: {},
+        className: 'User',
+        id: props.state.user,
+        positions: { 
+          group: true
+        }
+      };
+      let userResponse = await axios.post('/mira/get', userGroupOptions);
+      let groups: any[] = userResponse.data.positions.map((pos: any) => pos.group);
+      // TODO: replacing with non mira route will remove duplicates, hopefully
+      console.log('sidebar groups user is a member of (with dups)')
+      console.dir(groups)
+      
 
       // fetch users on load
-      const userOptions = {
+      let userOptions = {
         className: 'User',
         page: 0,
         pageSize: 100
@@ -47,14 +54,16 @@ const SideBar: React.FunctionComponent<SideBarProps> = (props) => {
 
       const ctx: SideBarContext = { users, groups };
       dispatch(setSideBarContext(ctx));
-      setLoading(false)
+      setLoading(false);
+      
     }
     onMount();
+
     // set as sidebar context
     return function cleanup() {
       console.log('sidebar cleanin up')
     }
-  }, [dispatch])
+  }, [dispatch, props.state.user])
 
   const dispatchViewGroupTask = (group: Group) => {
     // TODO
@@ -75,8 +84,8 @@ const SideBar: React.FunctionComponent<SideBarProps> = (props) => {
           </NavLink>
         </div>
         <TaskBar 
-          tasks={props.state.tasks} 
-          dispatchTask={(task: Task) => props.dispatch(setActiveTask(task))} 
+          tasks={props.state.taskDefinitions} 
+          dispatchTask={(task: Task) => props.dispatch(openTask(task))} 
         />
         <Menu
           mode="inline"

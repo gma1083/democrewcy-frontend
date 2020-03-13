@@ -39,6 +39,7 @@ class ViewDashboard extends React.Component<ViewDashboardProps> {
 
     return (
       <Layout style={{ height: '100vh', width: '100vw' }}>
+        helllo this is the dashboard yo
         <Drawer
           title="Components in Progress"
           placement="right"

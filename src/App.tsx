@@ -33,9 +33,6 @@ const App = () => {
     );
   });
 
-  console.log('Pages')
-  console.dir(Pages)
-
   const App = (
     <Switch>
       {PublicPages}

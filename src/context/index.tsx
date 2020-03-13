@@ -2,12 +2,21 @@ import React, { useReducer } from 'react'
 import { Context } from '../config/types';
 import { tasks } from '../config/tasks';
 import reducer from './reducer';
+import * as Tasks from '../components/tasks';
 
 const getDefaultContext = (): Context => ({
-  tasks,
-  activeTask: null,
-  taskCtx: null,
-  user: null,
+  taskDefinitions: tasks,
+  tasksRunning: [{
+    title: 'View Group',
+    content: Tasks.ViewGroup,
+    key: 'View Group-1',
+    context: {
+      type: 'Group'
+    },
+    taskType: 'view'
+  }],
+  activeTask: 'View Group-1',
+  user: null, // dumbledore
   sidebar: null
 });
 

@@ -1,3 +1,9 @@
+import axios from 'axios';
+
+// Axios
+export const CancelToken = axios.CancelToken;
+
+// Noomman
 export interface Event {
   name: string, 
   description: string, 
@@ -7,7 +13,8 @@ export interface Event {
 
 export interface Position {
   title: string,
-  description: string
+  description: string,
+  displayAs: string
 };
 
 export interface Motion {
@@ -32,8 +39,10 @@ export interface Group {
   events: Event[],
   members: Member[],
   motions: Motion[],
+  positions: Position[],
 };
 
+// UI
 export interface Task {
   key: string,
   title: string,
@@ -41,23 +50,37 @@ export interface Task {
   type: string,
   ctx: TaskCtxType
 };
+
 export type TaskCtxType = 'Event'| 'Position' | 'Motion' | 'User' | 'Group' | 'Account';
 export type TaskType = 'view' | 'edit' | 'create';
-export type TaskCtx = Event | Position | Motion | User | Group;
+export type TaskCtxInstance = Event | Position | Motion | User | Group;
+export type InstanceId = string | null;
+export type ClassName = string;
 
 export interface TaskContext {
-  type: string,
-  ctx: string | null
+  type: ClassName;
+  ctx?: InstanceId;
+  instance?: TaskCtxInstance;
 };
 
 export interface SideBarContext {
-  groups: Group[],
-  users: User[]
+  groups: Group[];
+  users: User[];
 };
+
+export interface TaskTab {
+  title: string;
+  content: React.ComponentType<any>;
+  key: string;
+  context: TaskContext;
+  taskType: TaskType
+};
+
+
 export interface Context {
-  tasks: Task[],
-  activeTask?: Task | null,
-  taskCtx: TaskContext | null,
-  user: any | null,
+  taskDefinitions: Task[],
+  tasksRunning: TaskTab[],
+  activeTask: string,
+  user: string | null,
   sidebar: SideBarContext | null
 };

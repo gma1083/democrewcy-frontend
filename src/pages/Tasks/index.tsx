@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout } from 'antd';
-import { SideBar, TaskLayout } from '../../components/common';
+import { TaskLayout } from '../../components/common';
 import { withAppContext } from '../../context';
 import { Context } from '../../config/types';
 import * as Tasks from '../../components/tasks';
@@ -8,14 +8,14 @@ import { Route, Redirect } from 'react-router-dom';
 import { ContextSelector } from '../../components/common';
 
 export interface TasksProps {
-  state: Context,
-  dispatch: Function
+  state: Context;
+  dispatch: Function;
 }
  
 const TasksContainer: React.FunctionComponent<TasksProps> = (props: any) => {
 
   const { state, dispatch } = props;
-  let ActiveTask = state.activeTask && (Tasks as any)[state.activeTask.component];
+  const ActiveTask = state.activeTask && (Tasks as any)[state.activeTask.component];
     
   return (
     <Layout>
