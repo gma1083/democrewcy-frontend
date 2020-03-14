@@ -13,7 +13,7 @@ const TaskLayoutA: React.SFC<Props> = ({ next, prev, cancel, submit }) => {
   return ( 
     <TaskLayout 
       title='Step 1' 
-      form={<div>form</div>}
+      task={<div>task</div>}
     />
   );
 }
@@ -22,7 +22,7 @@ const TaskLayoutB: React.SFC<Props> = ({ next, prev, cancel, submit }) => {
   return ( 
     <TaskLayout 
       title='Step 2' 
-      form={<div>form</div>}
+      task={<div>task</div>}
     /> 
   );
 }
@@ -31,7 +31,7 @@ const TaskLayoutC: React.SFC<Props> = ({ next, prev, cancel, submit }) => {
   return ( 
     <TaskLayout 
       title='Step 3' 
-      form={<div>form</div>}
+      task={<div>task</div>}
     />
   );
 }
@@ -40,7 +40,7 @@ const TaskLayoutD: React.SFC<Props> = ({ next, prev, cancel, submit }) => {
   return ( 
     <TaskLayout 
       title='Step 4' 
-      form={<div>form</div>}
+      task={<div>task</div>}
     />
   );
 }
@@ -49,7 +49,7 @@ const TaskLayoutE: React.SFC<Props> = ({ next, prev, cancel, submit }) => {
   return ( 
     <TaskLayout 
       title='Step 5' 
-      form={<div>form</div>}
+      task={<div>task</div>}
     />
   );
 }

@@ -4,9 +4,9 @@ import "antd/dist/antd.css";
 import { NavLink } from 'react-router-dom';
 import { TaskBar } from '../index';
 import { withAppContext } from '../../../context';
-import { openTask, cancelTask, setSideBarContext } from '../../../context/actions';
+import { openTask, setSideBarContext, asyncRequest } from '../../../context/actions';
 import { Context, Group, Task, User, SideBarContext } from '../../../config/types';
-import axios from '../../../config/axios';
+import { getUserWithPositionsPopulated, getUsers } from '../../../context/requests';
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;
@@ -23,44 +23,20 @@ const SideBar: React.FunctionComponent<SideBarProps> = (props) => {
 
   useEffect(() => {
     async function onMount() {
-      // fetch groups on load
-      console.log('SideBar init -- onMount()')
       setLoading(true);
-      let userGroupOptions = {
-        method: 'post',
-        url: `/mira/get`,
-        data: {},
-        className: 'User',
-        id: props.state.user,
-        positions: { 
-          group: true
-        }
-      };
-      let userResponse = await axios.post('/mira/get', userGroupOptions);
-      let groups: any[] = userResponse.data.positions.map((pos: any) => pos.group);
-      // TODO: replacing with non mira route will remove duplicates, hopefully
-      console.log('sidebar groups user is a member of (with dups)')
-      console.dir(groups)
-      
-
-      // fetch users on load
-      let userOptions = {
-        className: 'User',
-        page: 0,
-        pageSize: 100
-      }
-      let usersResponse = await axios.post('/mira/getInstances', userOptions)
-      let users: any[] = usersResponse.data.instances;
-
-      const ctx: SideBarContext = { users, groups };
-      dispatch(setSideBarContext(ctx));
+      if (props.state.user) {
+        let userResponse = await asyncRequest(getUserWithPositionsPopulated(props.state.user));
+        let groups: any[] = userResponse?.data.positions.map((pos: any) => pos.group);
+        let usersResponse = await asyncRequest(getUsers())
+        let users: any[] = usersResponse?.data.instances;
+        const ctx: SideBarContext = { users, groups };
+        dispatch(setSideBarContext(ctx));
+      } 
       setLoading(false);
-      
     }
     onMount();
 
-    // set as sidebar context
-    return function cleanup() {
+    return function onDismount() {
       console.log('sidebar cleanin up')
     }
   }, [dispatch, props.state.user])
@@ -68,24 +44,20 @@ const SideBar: React.FunctionComponent<SideBarProps> = (props) => {
   const dispatchViewGroupTask = (group: Group) => {
     // TODO
   };
-
-  const dispatchCancelTask = () => {
-    props.dispatch(cancelTask());
-  }
   
   return (
     <Spin spinning={isLoading}>
       <Sider width={200} style={{ height: '100vh', background: '#fff', overflow: 'scroll' }}>
         <div style={{textAlign: 'center', paddingTop: '20px', paddingBottom: '10px'}}>
-          <NavLink key='/home' to='/home' onClick={() => dispatchCancelTask()}>
+          <NavLink key='/home' to='/home'>
             <Typography.Title level={3}>
               Democrewcy
             </Typography.Title>
           </NavLink>
         </div>
         <TaskBar 
-          tasks={props.state.taskDefinitions} 
-          dispatchTask={(task: Task) => props.dispatch(openTask(task))} 
+          taskDefinitions={props.state.taskDefinitions} 
+          openNewTask={(task: Task) => props.dispatch(openTask(task))} 
         />
         <Menu
           mode="inline"

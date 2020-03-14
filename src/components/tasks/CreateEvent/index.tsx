@@ -10,6 +10,8 @@ import { Selector } from '../../common';
 import { asyncRequest, closeTask } from '../../../context/actions';
 import { TaskType, TaskTab } from '../../../config/types';
 import { Actions } from '../../../components/common';
+import { createEvent } from '../../../context/requests';
+
 const { TextArea } = Input;
 
 const onChange = (e: any) => {
@@ -23,6 +25,7 @@ interface CreateEventProps {
 }
 
 class CreateEvent extends React.Component<CreateEventProps> {
+
   state = {
     confirmDirty: false,
     autoCompleteResult: [],
@@ -31,30 +34,11 @@ class CreateEvent extends React.Component<CreateEventProps> {
   handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll(async (err: Error, values: any) => {
-
-      let { name, description, startTime, endTime, startDate, endDate, group } = values;
-      group = group[0].id;
-
-      const options = {
-        method: 'post',
-        url: '/createEvent',
-        data: {
-          className: 'Event',
-          name,
-          description,
-          startTime: new Date(startDate).toString(),
-          endTime: new Date(endTime).toString(),
-          group,
-        }
-      };
-
-      console.log('>> req to create -- Event');
-      console.dir(options);
-
       if (!err) {
-
-        const doc = await asyncRequest(options, this.props.dispatch);
-
+        let { name, description, startTime, endTime, startDate, endDate, group } = values;
+        group = group[0].id;
+        let event = { name, description, startTime, endTime, startDate, endDate, group };
+        const doc = await asyncRequest(createEvent(event));
         if (doc) {
           message.success(`response: ${JSON.stringify(doc, null, 2)}`);
         } else {
@@ -71,33 +55,6 @@ class CreateEvent extends React.Component<CreateEventProps> {
   handleConfirmBlur = (e: any) => {
     const { value } = e.target;
     this.setState({ confirmDirty: this.state.confirmDirty || !!value });
-  };
-
-  compareToFirstPassword = (rule: any, value: any, callback: any) => {
-    const { form } = this.props;
-    if (value && value !== form.getFieldValue('password')) {
-      callback('Two passwords that you enter is inconsistent!');
-    } else {
-      callback();
-    }
-  };
-
-  validateToNextPassword = (rule: any, value: any, callback: any) => {
-    const { form } = this.props;
-    if (value && this.state.confirmDirty) {
-      form.validateFields(['confirm'], { force: true });
-    }
-    callback();
-  };
-
-  handleWebsiteChange = (value: any) => {
-    let autoCompleteResult: any[];
-    if (!value) {
-      autoCompleteResult = [];
-    } else {
-      autoCompleteResult = ['.com', '.org', '.net'].map(domain => `${value}${domain}`);
-    }
-    this.setState({ autoCompleteResult });
   };
 
   render() {

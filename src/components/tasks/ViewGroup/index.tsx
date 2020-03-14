@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import Events from './Events';
 import Positions from './Positions';
 import Motions from './Motions';
-import { PageHeader, Layout, Spin, Form } from 'antd';
+import { PageHeader, Spin } from 'antd';
 import { setTaskContextId, asyncRequest, setTaskContextInstance, closeTask } from '../../../context/actions';
 import { CancelToken, TaskTab, Group, TaskType } from '../../../config/types';
 import { Actions } from '../../common';
+import { getClassProperties } from '../../../context/requests';
 
-const { Content } = Layout;
 
 interface ViewGroupProps {
   dispatch: Function,
@@ -19,7 +19,6 @@ const ViewGroup: React.FunctionComponent<ViewGroupProps> = (props) => {
   console.dir(props);
 
   const [isLoading, setIsLoading] = useState(false);
-
   const { dispatch, task } = props;
   
   useEffect(() => {
@@ -27,17 +26,9 @@ const ViewGroup: React.FunctionComponent<ViewGroupProps> = (props) => {
     const source = cancelToken.source();
 
     async function getInstance() {
-      try {
-        let classPropsOpts = {
-          method: 'get',
-          url: `/mira/${task.context.type}`,
-          data: { }
-        };
+      try {  
         setIsLoading(true);
-        const classProps: any = await asyncRequest(classPropsOpts);
-        console.log('classProps');
-        console.dir(classProps);
-
+        const classProps: any = await asyncRequest(getClassProperties(task.context.type));
         const { data } = classProps;
         const relationshipsToPopulate = data.relationships.reduce((acc: any, cur: any) => Object.assign(acc, { [cur.name]: true }), {});
         let groupOpts = {
@@ -49,13 +40,8 @@ const ViewGroup: React.FunctionComponent<ViewGroupProps> = (props) => {
             ...relationshipsToPopulate
           }
         };
-        console.log('groupOpts');
-        console.dir(groupOpts);
-
         const instance: any = await asyncRequest(groupOpts);
         setIsLoading(false);
-        console.log('>> req to get instance for ViewGroup');
-        console.dir(instance);
         dispatch(setTaskContextInstance(task.key, instance.data))
       } 
       catch (err) {

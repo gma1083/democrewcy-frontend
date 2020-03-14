@@ -24,8 +24,10 @@ const getDefaultContext = (): Context => ({
     taskType: 'view'
   }],
   activeTask: 'View Group',
-  user: null, // dumbledore
-  sidebar: null
+  sidebar: {
+    groups: [],
+    users: []
+  }
 });
 
 const ctx = React.createContext({});

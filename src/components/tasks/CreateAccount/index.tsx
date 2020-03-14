@@ -8,6 +8,7 @@ import {
 import Actions from '../../common/Actions';
 import { closeTask, asyncRequest } from '../../../context/actions';
 import { TaskTab, TaskType } from '../../../config/types';
+import { createUser } from '../../../context/requests';
 
 interface CreateAccountFormProps {
   form: any,
@@ -32,32 +33,18 @@ class CreateAccountForm extends React.Component<CreateAccountFormProps> {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll(async (err: Error, values: any) => {
       const { firstName, lastName, email, password, birthDate } = values;
-      const options = {
-        method: 'post',
-        url: '/createAccount',
-        data: { 
-          className: 'User',
-          firstName, 
-          lastName, 
-          email, 
-          password, 
-          birthDate
-        } 
-      };
+      const user = { firstName, lastName, email, password, birthDate };
 
-      console.log('>> req to create -- User');
-      console.log(options);
-
-        if (!err) {
-          const doc = await asyncRequest(options, this.props.dispatch);
-          if (doc) {
-            message.success(`response: ${JSON.stringify(doc, null, 2)}`);
-          } else {
-            message.error(`response: ${JSON.stringify(doc, null, 2)}`);
-          }
+      if (!err) {
+        const doc = await asyncRequest(createUser(user));
+        if (doc) {
+          message.success(`response: ${JSON.stringify(doc, null, 2)}`);
+        } else {
+          message.error(`response: ${JSON.stringify(doc, null, 2)}`);
         }
-      });
-    };
+      }
+    });
+  };
 
   /* 
     And this!
@@ -106,7 +93,6 @@ class CreateAccountForm extends React.Component<CreateAccountFormProps> {
     const config = {
       rules: [{ type: 'object', required: true, message: 'Please select a time.' }],
     };
-
 
     /* 
       We define an object for our actions component. It contains the task type,

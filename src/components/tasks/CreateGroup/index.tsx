@@ -8,6 +8,8 @@ import Selector from '../../common/Selector';
 import { asyncRequest, closeTask } from '../../../context/actions';
 import Actions from '../../common/Actions';
 import { TaskType, TaskTab } from '../../../config/types';
+import { createGroup } from '../../../context/requests';
+
 const { TextArea } = Input;
 
 interface CreateGroupFormProps {
@@ -21,32 +23,13 @@ class CreateGroupForm extends React.Component<CreateGroupFormProps> {
   handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll(async (err: Error, values: any) => {
-
-      let { name, description, positions, users, subGroups } = values;
-
-      positions = positions.reduce((acc: any[], cur: any) => [...acc, cur.id], []);
-      users = users.reduce((acc: any[], cur: any) => [...acc, cur.id], []);
-      subGroups = subGroups.reduce((acc: any[], cur: any) => [...acc, cur.id], []);
-
-      // TODO: Switch to Greg's route
-      const options = {
-        method: 'post',
-        url: '/mira/put',
-        data: {
-          className: 'Group',
-          name,
-          description,
-          positions,
-          users,
-          subGroups
-        }
-      };
-      
-      console.log('>> req to create -- Group');
-      console.dir(options);
-
       if (!err) {
-        const doc = await asyncRequest(options, this.props.dispatch);
+        let { name, description, positions, users, subGroups } = values;
+        positions = positions.reduce((acc: any[], cur: any) => [...acc, cur.id], []);
+        users = users.reduce((acc: any[], cur: any) => [...acc, cur.id], []);
+        subGroups = subGroups.reduce((acc: any[], cur: any) => [...acc, cur.id], []);
+        let group = { name, description, positions, users, subGroups };
+        const doc = await asyncRequest(createGroup(group));
         if (doc) {
           message.success(`response: ${JSON.stringify(doc, null, 2)}`);
         } else {

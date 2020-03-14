@@ -15,15 +15,9 @@ class ContextSelector extends React.Component<ContextSelectorProps> {
   handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll(async (err: Error, values: any) => {
-
-      const { context } = values;
-      console.log('we have selected the context instance id for the task')
-      console.log('context');
-      console.dir(context[0]);
-
-      let ctx = context[0].id;
-
       if (!err) {
+        const { context } = values;
+        const ctx = context[0].id;
         this.props.dispatch(setTaskContextId(this.props.task.key, ctx));
         message.success(`thanks for selecting ${JSON.stringify(ctx)}`);
       } else {

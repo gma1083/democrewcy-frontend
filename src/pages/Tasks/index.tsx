@@ -30,7 +30,7 @@ const TasksContainer: React.FunctionComponent<TasksProps> = (props: any) => {
               component={(props: any) => 
                 <TaskLayout
                   title={state.activeTask?.title || ''}
-                  form={state.activeTask.type === 'create' || state.taskCtx.ctx ?
+                  task={state.activeTask.type === 'create' || state.taskCtx.ctx ?
                     <ActiveTask
                       {...props}
                       state={state}

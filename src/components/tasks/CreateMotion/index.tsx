@@ -1,12 +1,9 @@
 import React, { FormEvent } from 'react';
-import {
-  Form,
-  Input,
-  message,
-} from 'antd';
+import { Form, Input, message } from 'antd';
 import { asyncRequest, closeTask } from '../../../context/actions';
 import { Actions, Selector } from '../../common/';
 import { TaskType, TaskTab } from '../../../config/types';
+import { createMotion } from '../../../context/requests';
 
 const { TextArea } = Input;
 
@@ -26,26 +23,9 @@ class CreateMotionForm extends React.Component<CreateMotionFormProps> {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll(async (err: Error, values: any) => {
       if (!err) {
-        // TODO: get proposedBy from context user.positionInGroup?
-        // TODO: get group and vote from local state
-        // TODO: store group and vote in local state
         const { title, description, group, allowedVoteOptions } = values;
-        const options = {
-          method: 'post',
-          url: '/createMotion',
-          data: {
-            className: 'Motion',
-            title,
-            description, 
-            group, 
-            allowedVoteOptions
-          }
-        };
-        
-        console.log('>> req to create -- Motion');
-        console.dir(options);
-
-        const doc = await asyncRequest(options, this.props.dispatch);
+        const motion = { title, description, group, allowedVoteOptions };
+        const doc = await asyncRequest(createMotion(motion));
         if (doc) {
           message.success(`response: ${JSON.stringify(doc, null, 2)}`);
         } else {

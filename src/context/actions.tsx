@@ -17,13 +17,6 @@ export const closeTask = (taskKey: string) => ({
   } 
 });
 
-export const setActiveTask = (task: Task) => ({
-  type: c.SET_ACTIVE_TASK,
-  data: { 
-    activeTask: task
-  } 
-});
-
 export const setActiveTaskTab = (activeKey: string) => ({
   type: c.SET_ACTIVE_TASK_TAB,
   data: { 
@@ -36,17 +29,6 @@ export const setUser = (user: User) => ({
   data: {
     user
   }
-});
-
-export const setActiveGroup = (group: Group) => ({
-  type: c.SET_ACTIVE_GROUP,
-  data: {
-    group
-  }
-});
-
-export const cancelTask = () => ({
-  type: c.CANCEL_TASK
 });
 
 export const beginAsyncRequest = () => ({
@@ -85,14 +67,23 @@ export const setTaskContextInstance = (taskKey: string, instance: TaskCtxInstanc
   }
 });
 
+export const setClassModels = (classModels: Object) => ({
+  type: c.SET_CLASS_MODELS,
+  data: {
+    classModels
+  }
+});
+
 interface Options {
   method: string,
   url: string,
-  data: any
+  data?: any
 };
 
-export const asyncRequest = async (options: Options, dispatch?: Function) => {
-  const { method, url, data } = options;
+export const asyncRequest = async (options: Options) => {
+  let { method, url, data } = options;
+  data = data || {};
+
   try {
     const response = await axios({
       method: method as AxiosRequestConfig["method"],

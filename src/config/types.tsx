@@ -48,7 +48,7 @@ export interface Task {
   title: string,
   component: string,
   type: string,
-  ctx: TaskCtxType
+  ctxType: TaskCtxType
 };
 
 export type TaskCtxType = 'Event'| 'Position' | 'Motion' | 'User' | 'Group' | 'Account';
@@ -76,11 +76,20 @@ export interface TaskTab {
   taskType: TaskType
 };
 
+export interface ClassModels {
+  [key: string]: Object
+};
+
+export interface TaskDefinitions {
+  [key: string]: Task
+};
+
 
 export interface Context {
-  taskDefinitions: Task[],
+  taskDefinitions: TaskDefinitions,
   tasksRunning: TaskTab[],
   activeTask: string,
-  user: string | null,
-  sidebar: SideBarContext | null
+  sidebar: SideBarContext,
+  classModels?: ClassModels
+  user?: string,
 };

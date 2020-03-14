@@ -4,24 +4,25 @@ import { Icon, Input, AutoComplete } from 'antd';
 import { NavLink } from 'react-router-dom';
 import { tasks } from '../../../config/tasks';
 import { SelectValue } from 'antd/lib/select';
-import { Task } from '../../../config/types';
+import { TaskDefinitions, Task } from '../../../config/types';
 
 const { Option, OptGroup } = AutoComplete;
 
 const dataSource = [
   {
     title: 'Tasks',
-    children: tasks
+    children: Object.keys(tasks).map((task: any) => tasks[task])
   }
 ];
 
 const renderTitle = (title: string) => <span>{title}</span>;
+// <Option value={task.key} /> -- this is passed to onClick
 const options = dataSource
   .map(group => (
     <OptGroup key={group.title} label={renderTitle(group.title)}>
-      {group.children.map((opt) => (
-        <Option key={opt.key} value={opt.title}>
-          {opt.title}
+      {group.children.map((task: Task) => (
+        <Option key={task.title} value={task.title}>
+          {task.title}
         </Option>
       ))}
     </OptGroup>
@@ -36,13 +37,18 @@ const options = dataSource
 
 
 interface TaskBarProps {
-  tasks: Task[],
-  dispatchTask: Function, 
+  taskDefinitions: TaskDefinitions,
+  openNewTask: Function, 
 };
 
 
-const TaskBar: React.FunctionComponent<TaskBarProps> = ({ tasks, dispatchTask }) =>
-  <div className="certain-category-search-wrapper" style={{ padding: '0 10px' }}>
+const TaskBar: React.FunctionComponent<TaskBarProps> = ({ taskDefinitions, openNewTask }) =>{
+
+  const onSelect = (value: SelectValue, option: Object) => {
+    openNewTask(taskDefinitions[value as string])
+  }
+
+  return <div className="certain-category-search-wrapper" style={{ padding: '0 10px' }}>
     <AutoComplete
       className="certain-category-search"
       dropdownClassName="certain-category-search-dropdown"
@@ -51,10 +57,10 @@ const TaskBar: React.FunctionComponent<TaskBarProps> = ({ tasks, dispatchTask })
       dataSource={options}
       placeholder="Take Action"
       optionLabelProp="value"
-      onSelect={(opt: SelectValue) => dispatchTask(tasks.find((task: Task) => task.title === opt))}
+      onSelect={onSelect}
     >
       <Input suffix={<Icon type="search" className="certain-category-icon" />} />
     </AutoComplete>
   </div>
-
+}
 export default TaskBar;

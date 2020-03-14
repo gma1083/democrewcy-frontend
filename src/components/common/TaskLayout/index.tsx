@@ -6,13 +6,13 @@ const { Content } = Layout;
 export interface TaskLayoutProps {
   title: string,
   subTitle?: string,
-  form: React.ReactNode,
+  task: React.ReactNode,
 };
  
 const TaskLayout: React.FunctionComponent<TaskLayoutProps> = ({ 
   title, 
   subTitle = '', 
-  form, 
+  task, 
 }) => {
   return ( 
       <Layout>
@@ -25,7 +25,7 @@ const TaskLayout: React.FunctionComponent<TaskLayoutProps> = ({
         >
           <PageHeader title={title} subTitle={subTitle} />
           <div style={{ height: '100%'}}>
-            {form}
+            {task}
           </div>
         </Content>
       </Layout>
