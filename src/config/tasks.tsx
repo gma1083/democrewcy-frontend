@@ -43,9 +43,9 @@ export const tasks: Task[] = [{
   ctx: 'Group'
 },
 {
-  key: "st-example",
-  title: 'Don\'t Click Me',
-  component: 'SequenceTaskExample',
-  type: 'create',
-  ctx: 'Group'
+  key: "view-dashboard",
+  title: 'View Dashboard',
+  component: 'ViewDashboard',
+  type: 'view',
+  ctx: 'User'
 }];

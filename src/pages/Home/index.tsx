@@ -1,7 +1,7 @@
 import React from 'react';
 import { Layout, Tabs, Icon } from 'antd';
 import "antd/dist/antd.css";
-import { setActiveTaskTab } from '../../context/actions';
+import { setActiveTaskTab, closeTask } from '../../context/actions';
 import { withAppContext } from '../../context';
 import { Context, TaskTab } from '../../config/types';
 import { TaskLayout, ContextSelector } from '../../components/common';
@@ -13,18 +13,32 @@ export interface HomeProps {
 }
  
 const Home: React.FunctionComponent<HomeProps> = (props: any) => {
+  
   const onChange = (activeKey: any) => {
     console.log('setting active task tab')
     console.log(activeKey)
     props.dispatch(setActiveTaskTab(activeKey));
   };
 
+  const onEdit = (targetKey: string | React.MouseEvent<HTMLElement, MouseEvent>, action: "add" | "remove") => {
+    console.log('targetKey')
+    console.log(targetKey)
+    console.log('action')
+    console.log(action)
+    if (action === 'remove') {
+      props.dispatch(closeTask(targetKey as string));
+    }
+  };
+
   return ( 
-    <Layout style={{ backgroundColor: '#fff', height: '100vh', width: '100vw', padding: '20px' }}>
+    <Layout style={{ backgroundColor: '#fff', height: '100vh', width: '100vw', paddingTop: '10px' }}>
 
       <Tabs
         onChange={onChange}
         activeKey={props.state.activeTask}
+        type="editable-card"
+        onEdit={onEdit}
+        hideAdd
       >
         {props.state.tasksRunning.map((task: TaskTab) => {
           let CurrentTask = task.content;
@@ -36,7 +50,7 @@ const Home: React.FunctionComponent<HomeProps> = (props: any) => {
             form = <ContextSelector {...props} task={task} />;
           }
           return (
-            <TabPane style={{height: '100vh'}} tab={task.key} key={task.key} closable={true}>
+            <TabPane tab={task.key} key={task.key} closable={true}>
               <TaskLayout title={task.title} form={form} />
             </TabPane>
           )

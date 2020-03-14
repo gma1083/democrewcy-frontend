@@ -19,12 +19,12 @@ const TaskLayout: React.FunctionComponent<TaskLayoutProps> = ({
         <Content  
           style={{
             background: '#fff',
-            height: '100%',
+            height: '100vh',
             overflow: 'scroll'
           }}
         >
           <PageHeader title={title} subTitle={subTitle} />
-          <div style={{padding: '10px'}}>
+          <div style={{ height: '100%'}}>
             {form}
           </div>
         </Content>
