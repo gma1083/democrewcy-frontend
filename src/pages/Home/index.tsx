@@ -58,10 +58,10 @@ const Home: React.FunctionComponent<HomeProps> = (props: any) => {
         {state.tasksRunning.map((taskTab: TaskTab) => {
           let TaskComponent = taskTab.content;
           let task: React.ReactNode;
-          if (taskTab.taskType === 'create' || taskTab.context.ctx) {
+          if (taskTab.taskType === 'create' || taskTab.context.instanceId) {
             task = <TaskComponent dispatch={dispatch} task={taskTab} type={taskTab.taskType} />;
           } 
-          else if (['view', 'edit'].includes(taskTab.taskType) && ! taskTab.context.ctx) {
+          else if (['view', 'edit'].includes(taskTab.taskType) && ! taskTab.context.instanceId) {
             task = <ContextSelector {...props} task={taskTab} />;
           }
           return (

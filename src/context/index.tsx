@@ -9,25 +9,23 @@ const getDefaultContext = (): Context => ({
   tasksRunning: [{
     title: 'View Dashboard',
     content: Tasks.ViewDashboard,
-    key: 'View Dashboard',
+    key: 'View Dashboard-asdgg4',
     context: {
-      type: 'User'
+      type: 'User',
+      instanceId: ''
     },
     taskType: 'view'
   }, {
     title: 'View Group',
     content: Tasks.ViewGroup,
-    key: 'View Group',
+    key: 'View Group-asdf87',
     context: {
-      type: 'Group'
+      type: 'Group',
+      instanceId: ''
     },
     taskType: 'view'
   }],
-  activeTask: 'View Group',
-  sidebar: {
-    groups: [],
-    users: []
-  }
+  activeTask: 'View Group-asdf87'
 });
 
 const ctx = React.createContext({});

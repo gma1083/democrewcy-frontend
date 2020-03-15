@@ -1,23 +1,29 @@
 import axios from 'axios';
+import React from 'react';
 
 // Axios
 export const CancelToken = axios.CancelToken;
 
 // Noomman
-export interface Event {
+export interface NoommanModel {
+  className: string,
+  id: string,
+  displayAs: string
+};
+
+export interface Event extends NoommanModel {
   name: string, 
   description: string, 
   startTime: string, 
   endTime: string
 };
 
-export interface Position {
+export interface Position extends NoommanModel {
   title: string,
   description: string,
-  displayAs: string
 };
 
-export interface Motion {
+export interface Motion extends NoommanModel {
   title: string,
   description: string,
   proposedBy: Position
@@ -28,12 +34,12 @@ export interface Member {
   position: Position
 };
 
-export interface User {
+export interface User extends NoommanModel {
   firstName: string,
   lastName: string
 };
 
-export interface Group {
+export interface Group extends NoommanModel {
   name: string,
   description: string,
   events: Event[],
@@ -43,29 +49,26 @@ export interface Group {
 };
 
 // UI
+export interface Module {
+  [key: string]: React.ReactNode
+};
+
 export interface Task {
   key: string,
   title: string,
   component: string,
   type: string,
-  ctxType: TaskCtxType
+  ctxType: TaskContextType
 };
 
-export type TaskCtxType = 'Event'| 'Position' | 'Motion' | 'User' | 'Group' | 'Account';
+export type TaskContextType = 'Event'| 'Position' | 'Motion' | 'User' | 'Group' | 'Account';
 export type TaskType = 'view' | 'edit' | 'create';
-export type TaskCtxInstance = Event | Position | Motion | User | Group;
-export type InstanceId = string | null;
-export type ClassName = string;
+export type TaskContextInstance = Event | Position | Motion | User | Group;
 
 export interface TaskContext {
-  type: ClassName;
-  ctx?: InstanceId;
-  instance?: TaskCtxInstance;
-};
-
-export interface SideBarContext {
-  groups: Group[];
-  users: User[];
+  type: TaskContextType;
+  instanceId: string;
+  instance?: TaskContextInstance;
 };
 
 export interface TaskTab {
@@ -76,20 +79,43 @@ export interface TaskTab {
   taskType: TaskType
 };
 
+export interface Attribute {
+  name: string,
+  required: boolean,
+  type: string
+};
+
+export interface Relationship {
+  name: string,
+  required: boolean,
+  toClass: string,
+  singular: boolean,
+  mirrorRelationship?: string
+};
+
+export type SuperClass = string;
+
+export type SubClass = string;
+
+export interface ClassModel {
+  attributes: Attribute[],
+  relationships: Relationship[],
+  superClasses: SuperClass[],
+  subClasses: SubClass[]
+};
+
 export interface ClassModels {
-  [key: string]: Object
+  [key: string]: ClassModel
 };
 
 export interface TaskDefinitions {
   [key: string]: Task
 };
 
-
 export interface Context {
   taskDefinitions: TaskDefinitions,
   tasksRunning: TaskTab[],
   activeTask: string,
-  sidebar: SideBarContext,
   classModels?: ClassModels
   user?: string,
 };

@@ -36,7 +36,7 @@ const ViewGroup: React.FunctionComponent<ViewGroupProps> = (props) => {
           url: `/mira/get`,
           data: {
             className: task.context.type,
-            id: task.context.ctx,
+            id: task.context.instanceId,
             ...relationshipsToPopulate
           }
         };

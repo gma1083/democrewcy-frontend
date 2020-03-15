@@ -4,8 +4,8 @@ import "antd/dist/antd.css";
 import { NavLink } from 'react-router-dom';
 import { TaskBar } from '../index';
 import { withAppContext } from '../../../context';
-import { openTask, setSideBarContext, asyncRequest } from '../../../context/actions';
-import { Context, Group, Task, User, SideBarContext } from '../../../config/types';
+import { asyncRequest, openTask, openTaskWithInstanceId } from '../../../context/actions';
+import { Context, Group, Task, User } from '../../../config/types';
 import { getUserWithPositionsPopulated, getUsers } from '../../../context/requests';
 
 const { SubMenu } = Menu;
@@ -18,7 +18,9 @@ export interface SideBarProps {
 
 const SideBar: React.FunctionComponent<SideBarProps> = (props) => {
 
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState<boolean>(false);
+  const [groups, setGroups] = useState<Group[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const { dispatch } = props;
 
   useEffect(() => {
@@ -29,8 +31,8 @@ const SideBar: React.FunctionComponent<SideBarProps> = (props) => {
         let groups: any[] = userResponse?.data.positions.map((pos: any) => pos.group);
         let usersResponse = await asyncRequest(getUsers())
         let users: any[] = usersResponse?.data.instances;
-        const ctx: SideBarContext = { users, groups };
-        dispatch(setSideBarContext(ctx));
+        setUsers(users);
+        setGroups(groups);
       } 
       setLoading(false);
     }
@@ -43,6 +45,8 @@ const SideBar: React.FunctionComponent<SideBarProps> = (props) => {
 
   const dispatchViewGroupTask = (group: Group) => {
     // TODO
+    console.dir(group)
+    props.dispatch(openTaskWithInstanceId(props.state.taskDefinitions['View a Group'], group.id));
   };
   
   return (
@@ -69,7 +73,7 @@ const SideBar: React.FunctionComponent<SideBarProps> = (props) => {
             key="Groups"
             title={<span><Icon type="user" />Groups</span>}
           >
-            {props.state.sidebar?.groups?.map((group: Group) => 
+            {groups?.map((group: Group) => 
               <Menu.Item 
                 key={group.name} 
                 onClick={() => dispatchViewGroupTask(group)}
@@ -82,7 +86,7 @@ const SideBar: React.FunctionComponent<SideBarProps> = (props) => {
             key="Direct Messages"
             title={<span><Icon type="laptop" />Direct Messages</span>}
           >
-            {props.state.sidebar?.users?.map((user: User) => {
+            {users?.map((user: User) => {
               const name = `${user.firstName}.${user.lastName}`;
               return <Menu.Item key={name}>{name}</Menu.Item>
             })}

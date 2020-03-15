@@ -1,5 +1,5 @@
 import * as c from './constants';
-import { Task, Group, User, SideBarContext, TaskCtxInstance } from '../config/types';
+import { Task, User, TaskContextInstance } from '../config/types';
 import axios from '../config/axios';
 import { AxiosRequestConfig } from 'axios';
 
@@ -7,6 +7,14 @@ export const openTask = (task: Task) => ({
   type: c.OPEN_TASK,
   data: { 
     task
+  } 
+});
+
+export const openTaskWithInstanceId = (task: Task, instanceId: string) => ({
+  type: c.OPEN_TASK_WITH_INSTANCE_ID,
+  data: { 
+    task,
+    instanceId
   } 
 });
 
@@ -44,22 +52,15 @@ export const asyncRequestError = (err: any) => ({
   payload: err
 });
 
-export const setTaskContextId = (taskKey: string, ctx: string | null) => ({
+export const setTaskContextId = (taskKey: string, instanceId: string | null) => ({
   type: c.SET_TASK_CONTEXT_ID,
   data: {
     taskKey,
-    ctx
+    instanceId
   }
 });
 
-export const setSideBarContext = (ctx: SideBarContext | null) => ({
-  type: c.SET_SIDEBAR_CONTEXT,
-  data: {
-    ctx
-  }
-});
-
-export const setTaskContextInstance = (taskKey: string, instance: TaskCtxInstance | null) => ({
+export const setTaskContextInstance = (taskKey: string, instance: TaskContextInstance | null) => ({
   type: c.SET_TASK_CONTEXT_INSTANCE,
   data: {
     taskKey,
