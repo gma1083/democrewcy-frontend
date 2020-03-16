@@ -1,9 +1,9 @@
-import React, { FormEvent } from 'react';
-import { Form, message } from 'antd';
+import React, { FormEvent } from './node_modules/react';
+import { Form, message } from './node_modules/antd';
 import { TaskType, TaskTab } from '../../../config/types';
 import { Selector, Actions } from '..';
 import { closeTask, setTaskContextId } from '../../../context/actions';
-import { FormComponentProps } from "antd/lib/form/Form";
+import { FormComponentProps } from "./node_modules/antd/lib/form/Form";
 
 export interface ContextSelectorProps extends FormComponentProps {
   dispatch: Function,

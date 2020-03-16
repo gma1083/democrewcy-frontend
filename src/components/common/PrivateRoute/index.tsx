@@ -1,7 +1,7 @@
-import React from "react";
-import { Route, Redirect } from "react-router-dom";
-import "antd/dist/antd.css";
-import { Layout, PageHeader } from "antd";
+import React from "./node_modules/react";
+import { Route, Redirect } from "./node_modules/react-router-dom";
+import "./node_modules/antd/dist/antd.css";
+import { Layout, PageHeader } from "./node_modules/antd";
 import { User } from '../../../config/types';
 
 interface PrivateRouteProps {

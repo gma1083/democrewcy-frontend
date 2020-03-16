@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { message} from 'antd';
+import React, { useState } from './node_modules/react';
+import { message} from './node_modules/antd';
 // import { Steps } from 'antd'
 // const { Step } = Steps;
 export interface SequenceTaskProps {
