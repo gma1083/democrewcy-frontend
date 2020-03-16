@@ -1,13 +1,14 @@
+import { Request } from './types';
 
 export const getClassNames = () => ({
   method: 'get',
   url: `/mira/`
-});
+} as Request);
 
 export const getClassProperties = (className: string) => ({
   method: 'get',
   url: `/mira/${className}`
-});
+} as Request);
 
 
 export const createMotion = (motion: any) => ({
@@ -20,7 +21,7 @@ export const createMotion = (motion: any) => ({
     group: motion.group, 
     allowedVoteOptions: motion.allowedVoteOptions
   }
-});
+} as Request);
 
 export const createEvent = (event: any) => ({
   method: 'post',
@@ -33,7 +34,7 @@ export const createEvent = (event: any) => ({
     endTime: new Date(event.endTime).toString(),
     group: event.group,
   }
-});
+} as Request);
 
 export const createGroup = (group: any) => ({
   method: 'post',
@@ -46,7 +47,7 @@ export const createGroup = (group: any) => ({
     users: group.users,
     subGroups: group.subGroups
   }
-});
+} as Request);
 
 export const createUser = (user: any) => ({
   method: 'post',
@@ -59,7 +60,7 @@ export const createUser = (user: any) => ({
     password: user.password, 
     birthDate: user.birthDate
   } 
-});
+} as Request);
 
 export const getUserWithPositionsPopulated = (userId: string) => ({
   method: 'post',
@@ -71,7 +72,7 @@ export const getUserWithPositionsPopulated = (userId: string) => ({
       group: true
     }
   },
-});
+} as Request);
 
 export const getUsers = () => ({
   method: 'post',
@@ -81,4 +82,4 @@ export const getUsers = () => ({
     page: 0,
     pageSize: 100
   }
-})
+} as Request);

@@ -7,9 +7,7 @@ import { Layout } from 'antd';
 
 const App = () => {
   const PublicPages = Public.map((route: any) => {
-    const CurrentComponent = (Pages as any)[route.name] || (
-      <div>Welcome 2 democrewcy</div>
-    );
+    const CurrentComponent = (Pages as any)[route.name];
     return (
       <PublicRoute
         exact={route.exact}
@@ -21,7 +19,7 @@ const App = () => {
   });
 
   const PrivatePages = Private.map(route => {
-    const CurrentComponent = (Pages as any)[route.name] || Pages.LandingPage;
+    const CurrentComponent = (Pages as any)[route.name];
     // TODO: Switch to PrivateRoute when we add user state and security
     return (
       <PublicRoute

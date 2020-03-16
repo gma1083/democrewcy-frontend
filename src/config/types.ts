@@ -53,17 +53,19 @@ export interface Module {
   [key: string]: React.ReactNode
 };
 
+export type TaskType = 'view' | 'edit' | 'create';
+
+export type TaskContextType = 'Event'| 'Position' | 'Motion' | 'User' | 'Group' | 'Account';
+
+export type TaskContextInstance = Event | Position | Motion | User | Group;
+
 export interface Task {
   key: string,
   title: string,
   component: string,
-  type: string,
+  type: TaskType,
   ctxType: TaskContextType
 };
-
-export type TaskContextType = 'Event'| 'Position' | 'Motion' | 'User' | 'Group' | 'Account';
-export type TaskType = 'view' | 'edit' | 'create';
-export type TaskContextInstance = Event | Position | Motion | User | Group;
 
 export interface TaskContext {
   type: TaskContextType;
@@ -123,9 +125,22 @@ export interface Context {
 export interface Action {
   type: string;
   data?: any
-}
+};
 
 export interface Store {
   state: Context,
   dispatch: React.Dispatch<Action>
+};
+
+export interface Request {
+  method: 'get' | 'post' | 'put',
+  url: string,
+  data?: any
+};
+
+export interface Route {
+  name: string,
+  route: string,
+  exact: boolean,
+  allowedRoles?: string[]
 }
