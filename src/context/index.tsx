@@ -1,10 +1,10 @@
 import React, { useReducer } from 'react'
-import { Context } from '../config/types';
+import { Context, Action } from '../config/types';
 import { tasks } from '../config/tasks';
 import reducer from './reducer';
 import * as Tasks from '../components/tasks';
 
-const getDefaultContext = (): Context => ({
+const getDefaultContext = () => ({
   taskDefinitions: tasks,
   tasksRunning: [{
     title: 'View Dashboard',
@@ -26,18 +26,18 @@ const getDefaultContext = (): Context => ({
     taskType: 'view'
   }],
   activeTask: 'View Group-asdf87'
-});
+} as Context);
 
 const ctx = React.createContext({});
 
 const { Provider, Consumer } = ctx;
 
 interface AppProviderProps {
-  children: any
+  children: React.ReactNode
 }
 
 const AppProvider: React.SFC<AppProviderProps> = ({ children }) => {
-  let [state, dispatch] = useReducer(reducer, getDefaultContext());
+  let [state, dispatch] = useReducer(reducer as React.Reducer<Context, Action>, getDefaultContext());
 
   return (
     <Provider value={{ state, dispatch }}>
@@ -46,7 +46,7 @@ const AppProvider: React.SFC<AppProviderProps> = ({ children }) => {
   );
 }
 
-function withAppContext(Component: any) {
+function withAppContext(Component: React.ComponentType<any>) {
   return function WrapperComponent(props: any) {
       return (
           <Consumer>

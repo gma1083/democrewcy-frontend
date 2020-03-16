@@ -119,3 +119,13 @@ export interface Context {
   classModels?: ClassModels
   user?: string,
 };
+
+export interface Action {
+  type: string;
+  data?: any
+}
+
+export interface Store {
+  state: Context,
+  dispatch: React.Dispatch<Action>
+}

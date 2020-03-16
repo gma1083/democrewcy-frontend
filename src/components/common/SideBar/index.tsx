@@ -6,7 +6,7 @@ import { TaskBar } from '../index';
 import { withAppContext } from '../../../context';
 import { asyncRequest, openTask, openTaskWithInstanceId } from '../../../context/actions';
 import { Context, Group, Task, User } from '../../../config/types';
-import { getUserWithPositionsPopulated, getUsers } from '../../../context/requests';
+import { getUserWithPositionsPopulated, getUsers } from '../../../config/requests';
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;

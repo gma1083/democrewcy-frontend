@@ -8,10 +8,10 @@ import {
 import Actions from '../../common/Actions';
 import { closeTask, asyncRequest } from '../../../context/actions';
 import { TaskTab, TaskType } from '../../../config/types';
-import { createUser } from '../../../context/requests';
+import { createUser } from '../../../config/requests';
+import { FormComponentProps, GetFieldDecoratorOptions } from "antd/lib/form/Form";
 
-interface CreateAccountFormProps {
-  form: any,
+interface CreateAccountFormProps extends FormComponentProps {
   dispatch: Function
   task: TaskTab
 }
@@ -90,7 +90,7 @@ class CreateAccountForm extends React.Component<CreateAccountFormProps> {
       },
     };
 
-    const config = {
+    const config: GetFieldDecoratorOptions = {
       rules: [{ type: 'object', required: true, message: 'Please select a time.' }],
     };
 

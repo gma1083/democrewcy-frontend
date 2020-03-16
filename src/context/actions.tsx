@@ -1,5 +1,5 @@
 import * as c from './constants';
-import { Task, User, TaskContextInstance } from '../config/types';
+import { Task, User, TaskContextInstance, Action } from '../config/types';
 import axios from '../config/axios';
 import { AxiosRequestConfig } from 'axios';
 
@@ -8,7 +8,7 @@ export const openTask = (task: Task) => ({
   data: { 
     task
   } 
-});
+} as Action);
 
 export const openTaskWithInstanceId = (task: Task, instanceId: string) => ({
   type: c.OPEN_TASK_WITH_INSTANCE_ID,
@@ -16,41 +16,28 @@ export const openTaskWithInstanceId = (task: Task, instanceId: string) => ({
     task,
     instanceId
   } 
-});
+} as Action);
 
 export const closeTask = (taskKey: string) => ({
   type: c.CLOSE_TASK,
   data: { 
     taskKey
   } 
-});
+} as Action);
 
 export const setActiveTaskTab = (activeKey: string) => ({
   type: c.SET_ACTIVE_TASK_TAB,
   data: { 
     activeKey
   } 
-});
+} as Action);
 
 export const setUser = (user: User) => ({
   type: c.SET_USER,
   data: {
     user
   }
-});
-
-export const beginAsyncRequest = () => ({
-  type: c.BEGIN_ASYNC_REQUEST
-});
-
-export const asyncRequestCompleted = () => ({
-  type: c.ASYNC_REQUEST_COMPLETED
-});
-
-export const asyncRequestError = (err: any) => ({
-  type: c.ASYNC_REQUEST_ERROR,
-  payload: err
-});
+} as Action);
 
 export const setTaskContextId = (taskKey: string, instanceId: string | null) => ({
   type: c.SET_TASK_CONTEXT_ID,
@@ -58,7 +45,7 @@ export const setTaskContextId = (taskKey: string, instanceId: string | null) => 
     taskKey,
     instanceId
   }
-});
+} as Action);
 
 export const setTaskContextInstance = (taskKey: string, instance: TaskContextInstance | null) => ({
   type: c.SET_TASK_CONTEXT_INSTANCE,
@@ -66,14 +53,14 @@ export const setTaskContextInstance = (taskKey: string, instance: TaskContextIns
     taskKey,
     instance
   }
-});
+} as Action);
 
 export const setClassModels = (classModels: Object) => ({
   type: c.SET_CLASS_MODELS,
   data: {
     classModels
   }
-});
+} as Action);
 
 interface Options {
   method: string,

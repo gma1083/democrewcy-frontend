@@ -3,18 +3,18 @@ import { Form, message } from 'antd';
 import { TaskType, TaskTab } from '../../../config/types';
 import { Selector, Actions } from '..';
 import { closeTask, setTaskContextId } from '../../../context/actions';
+import { FormComponentProps } from "antd/lib/form/Form";
 
-export interface ContextSelectorProps {
-  form: any,
+export interface ContextSelectorProps extends FormComponentProps {
   dispatch: Function,
   task: TaskTab
 }
  
 class ContextSelector extends React.Component<ContextSelectorProps> {
-
   handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    this.props.form.validateFieldsAndScroll(async (err: Error, values: any) => {
+    console.dir(this.props)
+    this.props.form.validateFieldsAndScroll((err: Error, values: any) => {
       if (!err) {
         const { context } = values;
         const ctx = context[0].id;

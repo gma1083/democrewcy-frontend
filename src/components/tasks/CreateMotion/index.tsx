@@ -3,16 +3,15 @@ import { Form, Input, message } from 'antd';
 import { asyncRequest, closeTask } from '../../../context/actions';
 import { Actions, Selector } from '../../common/';
 import { TaskType, TaskTab } from '../../../config/types';
-import { createMotion } from '../../../context/requests';
-
+import { createMotion } from '../../../config/requests';
+import { FormComponentProps } from "antd/lib/form/Form";
 const { TextArea } = Input;
 
 const onChange = (e: any) => {
   console.log(e);
 };
 
-interface CreateMotionFormProps {
-  form: any,
+interface CreateMotionFormProps extends FormComponentProps {
   dispatch: Function,
   task: TaskTab
 }

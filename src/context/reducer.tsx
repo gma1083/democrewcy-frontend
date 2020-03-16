@@ -1,7 +1,7 @@
 import { getDefaultContext } from '.';
 import * as c from './constants';
 import * as Tasks from '../components/tasks';
-import { TaskTab, Task, Module } from '../config/types';
+import { TaskTab, Task, Module, Action, Context } from '../config/types';
 import shortid from 'shortid';
 
 const createNewTaskTab = (task: Task) => ({ 
@@ -13,9 +13,9 @@ const createNewTaskTab = (task: Task) => ({
     instanceId: ''
   },
   taskType: task.type
-});
+} as TaskTab);
 
-const reducer = (state: any, action: any) => {
+const reducer = (state: Context, action: Action) => {
   switch (action.type) {
     case c.CLEAR_STATE:
       return getDefaultContext();
@@ -47,22 +47,18 @@ const reducer = (state: any, action: any) => {
       stateCopy.activeTask = stateCopy.tasksRunning.length > 0 ? stateCopy.tasksRunning[0].key : '';
       return stateCopy;
     }
-    case c.BEGIN_ASYNC_REQUEST:
-      return { ...state, isLoading: true };
-    case c.ASYNC_REQUEST_COMPLETED:
-      return { ...state, isLoading: false };
-    case c.ASYNC_REQUEST_ERROR:
-      return { ...state, err: { status: true, message: action.payload } }
     case c.SET_TASK_CONTEXT_ID: {
       let stateCopy = { ...state };
       let task = stateCopy.tasksRunning.find((task: TaskTab) => task.key === action.data.taskKey);
-      task.context.instanceId = action.data.instanceId;
+      if (task)
+        task.context.instanceId = action.data.instanceId;
       return stateCopy;
     }
     case c.SET_TASK_CONTEXT_INSTANCE: {
       let stateCopy = { ...state };
       let task = stateCopy.tasksRunning.find((task: TaskTab) => task.key === action.data.taskKey);
-      task.context.instance = action.data.instance;
+      if (task)
+        task.context.instance = action.data.instance;
       return stateCopy;
     }
     case c.SET_CLASS_MODELS:

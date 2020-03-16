@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Select, notification, Spin } from 'antd';
 import axios from '../../../config/axios';
-import { ModeOption } from 'antd/lib/select';
-import { CancelToken } from '../../../config/types';
-
+import { ModeOption, LabeledValue } from 'antd/lib/select';
+import { CancelToken, NoommanModel } from '../../../config/types';
 const { Option } = Select;
 
 interface SelectorProps {
@@ -54,7 +53,7 @@ const Selector: React.FunctionComponent<SelectorProps> = ({
     }
   }, [className]);
 
-  const selectAndUpdateForm = (selectedInstanceId: any) => {
+  const selectAndUpdateForm = (selectedInstanceId: string | number | LabeledValue) => {
     const instance = data.find(item => item.id === selectedInstanceId);
     const currentSelections = getFormItem(formItemId);
     if (! currentSelections) {
@@ -72,7 +71,7 @@ const Selector: React.FunctionComponent<SelectorProps> = ({
 
   // When we set key = child.id we will get this id
   // for free when we call onSelect or onDeselect
-  const options = data?.map((child: any) => 
+  const options = data?.map((child: NoommanModel) => 
     <Option key={child.id}>
       {child.id} {child.className}
     </Option>)
@@ -86,8 +85,8 @@ const Selector: React.FunctionComponent<SelectorProps> = ({
         mode={mode}
         size={'large'}
         style={{ width: '100%' }}
-        onSelect={(instanceId) => selectAndUpdateForm(instanceId)}
-        onDeselect={(instanceId) => selectAndUpdateForm(instanceId)}
+        onSelect={(instanceId: string | number | LabeledValue) => selectAndUpdateForm(instanceId)}
+        onDeselect={(instanceId: string | number | LabeledValue) => selectAndUpdateForm(instanceId)}
       >
         {options}
       </Select>

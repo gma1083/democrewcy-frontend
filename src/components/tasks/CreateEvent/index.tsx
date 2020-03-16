@@ -10,16 +10,15 @@ import { Selector } from '../../common';
 import { asyncRequest, closeTask } from '../../../context/actions';
 import { TaskType, TaskTab } from '../../../config/types';
 import { Actions } from '../../../components/common';
-import { createEvent } from '../../../context/requests';
-
+import { createEvent } from '../../../config/requests';
+import { FormComponentProps, GetFieldDecoratorOptions } from "antd/lib/form/Form";
 const { TextArea } = Input;
 
 const onChange = (e: any) => {
   console.log(e);
 };
 
-interface CreateEventProps {
-  form: any,
+interface CreateEventProps extends FormComponentProps {
   dispatch: Function,
   task: TaskTab
 }
@@ -74,7 +73,7 @@ class CreateEvent extends React.Component<CreateEventProps> {
       },
     };
 
-    const config = {
+    const config: GetFieldDecoratorOptions = {
       rules: [{ type: 'object', required: true, message: 'Please select a time.' }],
     };
 

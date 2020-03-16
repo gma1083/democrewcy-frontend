@@ -6,7 +6,7 @@ import { PageHeader, Spin } from 'antd';
 import { setTaskContextId, asyncRequest, setTaskContextInstance, closeTask } from '../../../context/actions';
 import { CancelToken, TaskTab, Group, TaskType } from '../../../config/types';
 import { Actions } from '../../common';
-import { getClassProperties } from '../../../context/requests';
+import { getClassProperties } from '../../../config/requests';
 
 
 interface ViewGroupProps {

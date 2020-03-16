@@ -1,22 +1,18 @@
 import React, { FormEvent } from 'react';
-import {
-  Form,
-  Input,
-  message
-} from 'antd';
 import Selector from '../../common/Selector';
-import { asyncRequest, closeTask } from '../../../context/actions';
 import Actions from '../../common/Actions';
+import { Form, Input, message } from 'antd';
+import { asyncRequest, closeTask } from '../../../context/actions';
 import { TaskType, TaskTab } from '../../../config/types';
-import { createGroup } from '../../../context/requests';
+import { createGroup } from '../../../config/requests';
+import { FormComponentProps } from "antd/lib/form/Form";
 
 const { TextArea } = Input;
 
-interface CreateGroupFormProps {
-  form: any,
+interface CreateGroupFormProps extends FormComponentProps {
   dispatch: Function,
   task: TaskTab
-}
+};
 
 class CreateGroupForm extends React.Component<CreateGroupFormProps> {
   

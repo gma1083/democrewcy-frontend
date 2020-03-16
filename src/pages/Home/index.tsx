@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Layout, Tabs } from 'antd';
 import "antd/dist/antd.css";
 import { setActiveTaskTab, closeTask, asyncRequest, setClassModels } from '../../context/actions';
-import { getClassNames, getClassProperties } from '../../context/requests';
+import { getClassNames, getClassProperties } from '../../config/requests';
 import { withAppContext } from '../../context';
 import { Context, TaskTab } from '../../config/types';
 import { TaskLayout, ContextSelector } from '../../components/common';
