@@ -1,7 +1,7 @@
 import React, { FormEvent } from 'react';
 import { Form, Input, message } from 'antd';
 import { asyncRequest, closeTask } from '../../../context/actions';
-import { Actions, Selector } from '../../common/';
+import { Actions, Selector } from '../../common';
 import { TaskType, TaskTab } from '../../../config/types';
 import { createMotion } from '../../../config/requests';
 import { FormComponentProps } from "antd/lib/form/Form";

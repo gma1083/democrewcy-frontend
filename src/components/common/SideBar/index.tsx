@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Layout, Menu, Icon, Typography, Spin } from 'antd';
-import "antd/dist/antd.css";
-import { NavLink } from 'react-router-dom';
+import React, { useState, useEffect } from './node_modules/react';
+import { Layout, Menu, Icon, Typography, Spin } from './node_modules/antd';
+import "./node_modules/antd/dist/antd.css";
+import { NavLink } from './node_modules/react-router-dom';
 import { TaskBar } from '../index';
 import { withAppContext } from '../../../context';
 import { asyncRequest, openTask, openTaskWithInstanceId } from '../../../context/actions';

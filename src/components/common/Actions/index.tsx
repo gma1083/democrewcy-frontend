@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { Layout, Button } from 'antd';
+import * as React from './node_modules/react';
+import { Layout, Button } from './node_modules/antd';
 const { Footer } = Layout;
 
 type TaskType = 'view' | 'edit' | 'create';

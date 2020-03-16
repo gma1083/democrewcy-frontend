@@ -3,7 +3,7 @@ import { Card, PageHeader, Icon, Modal } from 'antd';
 import HorizontallyScrollabe from '../../../common/HorizontallyScrollable';
 import { Event } from '../../../../config/types';
 import { EmptyCard } from '../../../common';
-import "antd/dist/antd.css";
+import "../../../common/PrivateRoute/node_modules/antd/dist/antd.css";
 
 
 interface EventsProps {

@@ -1,9 +1,9 @@
-import * as React from 'react';
+import * as React from './node_modules/react';
 import './index.css';
-import { Icon, Input, AutoComplete } from 'antd';
-import { NavLink } from 'react-router-dom';
+import { Icon, Input, AutoComplete } from './node_modules/antd';
+import { NavLink } from './node_modules/react-router-dom';
 import { tasks } from '../../../config/tasks';
-import { SelectValue } from 'antd/lib/select';
+import { SelectValue } from './node_modules/antd/lib/select';
 import { TaskDefinitions, Task } from '../../../config/types';
 
 const { Option, OptGroup } = AutoComplete;

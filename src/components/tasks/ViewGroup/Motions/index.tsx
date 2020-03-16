@@ -1,6 +1,6 @@
 import React, { useState} from 'react';
 import { Card, PageHeader, Icon, Modal } from 'antd';
-import "antd/dist/antd.css";
+import "../../../common/PrivateRoute/node_modules/antd/dist/antd.css";
 import HorizontallyScrollabe from '../../../common/HorizontallyScrollable';
 import { Motion } from '../../../../config/types';
 import { EmptyCard } from '../../../common';

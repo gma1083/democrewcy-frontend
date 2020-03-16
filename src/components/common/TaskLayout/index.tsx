@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { PageHeader, Layout } from 'antd';
-import "antd/dist/antd.css";
+import * as React from './node_modules/react';
+import { PageHeader, Layout } from './node_modules/antd';
+import "./node_modules/antd/dist/antd.css";
 const { Content } = Layout;
 
 export interface TaskLayoutProps {

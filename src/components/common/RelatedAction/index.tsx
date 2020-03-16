@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Menu, Icon, Button } from 'antd';
-import { ClickParam } from 'antd/lib/menu';
+import React, { useState } from './node_modules/react';
+import { Menu, Icon, Button } from './node_modules/antd';
+import { ClickParam } from './node_modules/antd/lib/menu';
 
 const { SubMenu } = Menu;
 

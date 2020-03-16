@@ -9,7 +9,7 @@ import {
 import { Selector } from '../../common';
 import { asyncRequest, closeTask } from '../../../context/actions';
 import { TaskType, TaskTab } from '../../../config/types';
-import { Actions } from '../../../components/common';
+import { Actions } from '../../common';
 import { createEvent } from '../../../config/requests';
 import { FormComponentProps, GetFieldDecoratorOptions } from "antd/lib/form/Form";
 const { TextArea } = Input;

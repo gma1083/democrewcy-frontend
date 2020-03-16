@@ -1,5 +1,5 @@
-import React from 'react';
-import { Card, Skeleton } from 'antd';
+import React from './node_modules/react';
+import { Card, Skeleton } from './node_modules/antd';
 
 const EmptyCard: React.FunctionComponent = () => 
   <div

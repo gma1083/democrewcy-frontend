@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Select, notification, Spin } from 'antd';
+import React, { useState, useEffect } from './node_modules/react';
+import { Select, notification, Spin } from './node_modules/antd';
 import axios from '../../../config/axios';
-import { ModeOption, LabeledValue } from 'antd/lib/select';
+import { ModeOption, LabeledValue } from './node_modules/antd/lib/select';
 import { CancelToken, NoommanModel } from '../../../config/types';
 const { Option } = Select;
 
